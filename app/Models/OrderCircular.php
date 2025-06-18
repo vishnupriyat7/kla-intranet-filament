@@ -28,4 +28,11 @@ class OrderCircular extends Model
         'status',
         'section_id'
     ];
+    /**
+     * Get the section that owns the order circular.
+     */
+    public function sections()
+    {
+        return $this->belongsTo(Section::class, 'section_id');
+    }
 }
