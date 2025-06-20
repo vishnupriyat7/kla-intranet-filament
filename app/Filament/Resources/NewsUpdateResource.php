@@ -17,7 +17,7 @@ class NewsUpdateResource extends Resource
 {
     protected static ?string $model = NewsUpdate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bell';
 
     public static function form(Form $form): Form
     {
