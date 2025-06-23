@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class OrderCircularResource extends Resource
 {
@@ -194,7 +195,7 @@ class OrderCircularResource extends Resource
                 Tables\Columns\TextColumn::make('keywords')
                     ->sortable()
                     ->searchable()
-                     ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->date('d-m-Y')
                     ->sortable()
@@ -243,7 +244,7 @@ class OrderCircularResource extends Resource
                     ->icon('heroicon-s-eye')
                     ->modalHeading(fn($record) => 'View PDF: ' . $record->title)
                     ->modalContent(function ($record) {
-                        $url = \Storage::disk('public')->url($record->path);
+                        $url = \Illuminate\Support\Facades\Storage::url($record->path);
                         return new \Illuminate\Support\HtmlString(
                             '<div style="height: 80vh; padding: 1rem; overflow: auto;">' .
                                 view('filament.pdf-modal', ['url' => $url])->render() .
@@ -279,7 +280,6 @@ class OrderCircularResource extends Resource
                     }),
             ])
             ->defaultSort('created_at', 'desc');
-
     }
 
     public static function getRelations(): array
@@ -297,4 +297,5 @@ class OrderCircularResource extends Resource
             'edit' => Pages\EditOrderCircular::route('/{record}/edit'),
         ];
     }
+
 }
