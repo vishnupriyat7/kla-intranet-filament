@@ -1,9 +1,8 @@
 @extends('layouts.default')
 
-@section('title', 'Employees List')
+{{-- @section('title', 'Employees List') --}}
 
 @section('content')
-
     <div class="container-fluid populer-news py-5">
         <div class="container py-5">
             <h1>Employees</h1>
@@ -13,35 +12,42 @@
                 @if(isset($error))
                     <div class="alert alert-danger">{{ $error }}</div>
                 @else
-                    <table class="table table-bordered">
+                    <table id="employeeTable" class="table table-bordered display">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Company</th>
-                                <th>Actions</th>
+                                <th>Designation</th>
+                                <th>Section</th>
+                                <th>Pen</th>
+                                {{-- <th>Photo</th> --}}
+                                {{-- <th>Actions</th> --}}
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach($employees as $employee)
-                                <tr>
-                                    <td>{{ $employee['id'] }}</td>
-                                    <td>{{ $employee['name'] }}</td>
-                                    <td>{{ $employee['email'] }}</td>
-                                    <td>{{ $employee['phone'] ?? 'N/A' }}</td>
-                                    <td>{{ $employee['company']['name'] ?? 'N/A' }}</td>
-                                    <td>
-                                        <a href="{{ route('home.employee-show', $employee['id']) }}"
-                                            class="btn btn-primary btn-sm">View</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+
                     </table>
                 @endif
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            $('#employeeTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('employees.data') }}',
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' }, // Index column
+                    { data: 'name', name: 'name' },
+                    { data: 'designation', name: 'designation' },
+                    { data: 'section', name: 'section' },
+                    { data: 'pen', name: 'pen' }
+                    // Add other columns based on your data structure
+                ]
+            });
+        });
+    </script>
 @endsection

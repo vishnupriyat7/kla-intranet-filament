@@ -19,8 +19,10 @@ Route::get('/upload-request', [HomeController::class, 'uploadRequest'])->name('h
 Route::post('/upload-request/save', [HomeController::class, 'storeUploadRequest'])->name('home.store-upload-request');
 Route::get('/upload-request/check-status', action: [HomeController::class, 'checkStatus'])->name('home.check-upload-request');
 Route::get('/advanced-search', [HomeController::class, 'advancedSearch'])->name('home.advanced-search');
-Route::get('/employees', [HomeController::class, 'employeeList'])->name('home.employees');
-Route::get('/employees/{id}', [HomeController::class, 'employeeShow'])->name('home.employee-show');
+
+Route::get('/employees', [EmployeeController::class, 'index'])->name('home.employees');
+Route::get('/employees/data', [EmployeeController::class, 'getEmployees'])->name('employees.data');
+// Route::get('/employees/{id}', [HomeController::class, 'employeeShow'])->name('home.employee-show');
 
 
 Route::get('/dashboard', function () {

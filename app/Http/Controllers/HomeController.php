@@ -415,32 +415,4 @@ class HomeController extends Controller
             ->get();
         return view('orders-circular.upload_request_pending', compact('order_pendings'));
     }
-
-    public function employeeList()
-    {
-         try {
-            $response = Http::get('https://jsonplaceholder.typicode.com/users');
-            if ($response->successful()) {
-                $employees = $response->json();
-                return view('employees.index', compact('employees'));
-            }
-            return view('employees.index', ['error' => 'Failed to fetch employees']);
-        } catch (\Exception $e) {
-            return view('employees.index', ['error' => 'An error occurred: ' . $e->getMessage()]);
-        }
-    }
-
-     public function employeeShow($id)
-    {
-        try {
-            $response = Http::get("https://jsonplaceholder.typicode.com/users/{$id}");
-            if ($response->successful()) {
-                $employee = $response->json();
-                return view('employees.show', compact('employee'));
-            }
-            return view('employees.show', ['error' => 'Employee not found']);
-        } catch (\Exception $e) {
-            return view('employees.show', ['error' => 'An error occurred: ' . $e->getMessage()]);
-        }
-    }
 }
