@@ -22,7 +22,7 @@ class EmployeeController extends Controller
     public function getEmployees(Request $request)
     {
         try {
-            $response = Http::get('http://localhost:8002/api/v1/employee-data');
+            $response = Http::get('http://localhost:8000/api/v1/employee-data');
 
             if ($response->successful()) {
                 $employees = $response->json(); // ✅ FIXED HERE

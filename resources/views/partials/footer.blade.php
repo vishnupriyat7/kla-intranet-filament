@@ -28,8 +28,8 @@
                     <p class="text-secondary line-h">Address: <span class="text-white" style="font-size: 14px;">Kerala
                             Legislature Secretariat, Vikas Bhavan PO, TVM-33, Kerala</span>
                     </p>
-                    <p class="text-secondary line-h">Email: <span class="text-white">Example@gmail.com</span></p>
-                    <p class="text-secondary line-h">Phone: <span class="text-white">+0123 4567 8910</span></p>
+                    <p class="text-secondary line-h">Email: <span class="text-white">itsection@niyamasabha.in</span></p>
+                    <p class="text-secondary line-h">Phone: <span class="text-white">0471 2512516</span></p>
                     <div class="d-flex line-h">
                         <a class="btn btn-light me-2 btn-md-square rounded-circle" href=""><i
                                 class="fab fa-twitter text-dark"></i></a>
