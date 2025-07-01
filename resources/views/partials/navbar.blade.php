@@ -20,11 +20,11 @@
                     </div>
                     <div class="overflow-hidden" style="width: 900px;">
                         <div id="note" class="ps-2">
-                            <img src="img/features-fashion.jpg"
+                            {{-- <img src="img/features-fashion.jpg"
                                 class="img-fluid rounded-circle border border-3 border-primary me-2"
-                                style="width: 30px; height: 30px;" alt="">
+                                style="width: 30px; height: 30px;" alt=""> --}}
                             <a href="{{ route('home.index') }}">
-                                <p class="text-white mb-0 link-hover">Welcome to INTRANET Service of KERALA LEGISLATURE
+                                <p class="mb-0 link-hover">Welcome to INTRANET Service of KERALA LEGISLATURE
                                     SECRETARIAT</p>
                             </a>
                         </div>
@@ -37,7 +37,7 @@
                         {{-- <span class="text-body">Thiruvananthapuram</span> --}}
                         <!-- Replace static location with live time -->
                         <span class="text-body" id="kolkata-time">Loading IST...</span>
-                        <div class="d-flex icon">
+                        {{-- <div class="d-flex icon">
                             <p class="mb-0 text-white me-2">Follow Us:</p>
                             <a href="" class="me-2"><i class="fab fa-facebook-f text-body link-hover"></i></a>
                             <a href="" class="me-2"><i class="fab fa-twitter text-body link-hover"></i></a>
@@ -46,7 +46,7 @@
                             <a href="" class="me-2"><i class="fab fa-linkedin-in text-body link-hover"></i></a>
                             <a href="" class="me-2"><i class="fab fa-skype text-body link-hover"></i></a>
                             <a href="" class=""><i class="fab fa-pinterest-p text-body link-hover"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -108,8 +108,7 @@
                                 {{-- <li>
                                     <a class="dropdown-item" href="" target="_blank">ERP Module</a>
                                 </li> --}}
-                                <a class="dropdown-item" href="http://192.168.11.12/idcard/index.php"
-                                    target="_blank">ID
+                                <a class="dropdown-item" href="http://192.168.11.12/idcard/index.php" target="_blank">ID
                                     Card Proforma</a>
                                 {{-- <a class="dropdown-item" href="http://192.168.11.12/hallbooking/index.php"
                                     target="_blank">Conference Hall Booking</a> --}}
@@ -123,44 +122,40 @@
                                 <a class="dropdown-item"
                                     href="https://www.spark.gov.in/webspark/(S(n425hz24mxho4mv4ojp4yzk0))/sparklogin.aspx"
                                     target="_blank">Spark</a>
-                                <a class="dropdown-item" href="https://prism.kerala.gov.in/"
-                                    target="_blank">Prism</a>
-                                    <a class="dropdown-item" href="https://score.kerala.gov.in/"
-                                    target="_blank">Score</a>
+                                <a class="dropdown-item" href="https://prism.kerala.gov.in/" target="_blank">Prism</a>
+                                <a class="dropdown-item" href="https://score.kerala.gov.in/" target="_blank">Score</a>
 
 
 
                             </div>
                         </div>
 
-                        <div class="nav-item dropdown">
+                        {{-- <div class="nav-item dropdown">
                             <a href="{{ route('home.index') }}" class="nav-link dropdown-toggle"
                                 data-bs-toggle="dropdown"> Periodicals
                             </a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($periodicals as $periodical)
-                                    {{-- <a class="dropdown-item" href="{{ asset('storage/' . $periodical->path) }}"
-                                        target="_blank">{{ $periodical->periodicalMaster->name ?? 'N/A' }}</a> --}}
-                                    <a href="{{ asset('storage/' . $periodical->path) }}" class="dropdown-item"
-                                        data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                        data-pdf="{{ asset('storage/' . $periodical->path) }}"
-                                        data-title="{{ $periodical->periodicalMaster->name }}">
-                                        {{-- <i class="bi bi-eye-fill" style="font-size:18px;"></i> --}}
-                                        {{ $periodical->periodicalMaster->name ?? 'N/A' }}
-                                    </a>
+                                <a href="{{ asset('storage/' . $periodical->path) }}" class="dropdown-item"
+                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                    data-pdf="{{ asset('storage/' . $periodical->path) }}"
+                                    data-title="{{ $periodical->periodicalMaster->name }}">
+                                    {{ $periodical->periodicalMaster->name ?? 'N/A' }}
+                                </a>
                                 @endforeach
 
 
                             </div>
-                        </div>
+                        </div> --}}
+                        <a href="{{ route('home.employees') }}"
+                            class="nav-item nav-link {{ request()->routeIs('home.employees') ? 'active' : '' }}">Employee Corner</a>
                         <a href="{{ route('home.upload-request') }}"
                             class="nav-item nav-link {{ request()->routeIs('home.upload-request') ? 'active' : '' }}">Upload
                             Request</a>
                         {{-- <a href="contact.html" class="nav-item nav-link">Search</a> --}}
                         <button
                             class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto">
-                            <a href="{{ route('home.advanced-search') }}"><i
-                                    class="fas fa-search text-primary"></i></a>
+                            <a href="{{ route('home.advanced-search') }}"><i class="fas fa-search text-primary"></i></a>
                         </button>
 
                     </div>

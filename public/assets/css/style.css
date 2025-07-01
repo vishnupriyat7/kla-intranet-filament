@@ -211,15 +211,20 @@ body {
     animation-timing-function: ease-in-out;
     display: flex;
     align-items: center;
+    color: orange;
 }
 
 @keyframes noteAnimate {
     from {
-        left: -735px;
-    }
-    to {
         left: 900px;
     }
+    to {
+        left: -735px;
+    }
+}
+
+#note p {
+    color: orange;
 }
 
 /*** Topbar End ***/
