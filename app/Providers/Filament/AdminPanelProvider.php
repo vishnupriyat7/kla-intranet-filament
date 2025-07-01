@@ -33,7 +33,16 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 // 'primary' => Color::Amber,
                 'primary' => '#3C5DF0',
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'primary' => Color::Indigo,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
+            ->brandName('KLA INTRANET')
+            ->favicon(asset('images/favicon.png'))
+            ->font('Poppins')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -43,7 +52,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
-                 \App\Filament\Resources\OrderCircularResource\Widgets\OrderStats::class, // Added OrderStats
+                \App\Filament\Resources\OrderCircularResource\Widgets\OrderStats::class, // Added OrderStats
             ])
             ->middleware([
                 EncryptCookies::class,
