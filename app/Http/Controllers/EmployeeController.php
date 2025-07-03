@@ -40,17 +40,17 @@ class EmployeeController extends Controller
             ], 500);
         }
     }
-    // public function employeeShow($id)
-    // {
-    //     try {
-    //         $response = Http::get("https://jsonplaceholder.typicode.com/users/{$id}");
-    //         if ($response->successful()) {
-    //             $employee = $response->json();
-    //             return view('employees.show', compact('employee'));
-    //         }
-    //         return view('employees.show', ['error' => 'Employee not found']);
-    //     } catch (\Exception $e) {
-    //         return view('employees.show', ['error' => 'An error occurred: ' . $e->getMessage()]);
-    //     }
-    // }
+    public function employeeShow($id)
+    {
+        try {
+            $response = Http::get("http://localhost:8000/api/v1/employee-data/{$id}");
+            if ($response->successful()) {
+                $employee = $response->json();
+                return view('employees.show', compact('employee'));
+            }
+            return view('employees.show', ['error' => 'Employee not found']);
+        } catch (\Exception $e) {
+            return view('employees.show', ['error' => 'An error occurred: ' . $e->getMessage()]);
+        }
+    }
 }
