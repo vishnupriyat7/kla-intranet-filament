@@ -29,6 +29,11 @@ class EmployeeController extends Controller
 
                 return DataTables::of($employees)
                     ->addIndexColumn()
+                    ->editColumn('avatar', function ($row) {
+                        $url = asset('http://localhost:8000/storage/avatars/' . $row['avatar']);
+                        return '<img src="' . $url . '" width="300" height="400" class="img-thumbnail" />';
+                    })
+                    ->rawColumns(['avatar'])
                     ->make(true);
             }
 
