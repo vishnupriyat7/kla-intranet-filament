@@ -25,7 +25,7 @@ class OrderCircularResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('section_id')
-                    ->required()
+                    // ->required()
                     ->relationship('sections', 'name'),
                 Forms\Components\Select::make('type')
                     ->options([
@@ -67,7 +67,7 @@ class OrderCircularResource extends Resource
                         'Service' => 'Service Related',
                         'Member' => 'Members Related',
                     ])
-                    ->required()
+                    // ->required()
                     ->visible(fn(callable $get) => in_array($get('go_type'), ['M', 'R', 'P']) || $get('type') === 'O')
                     ->reactive()
                     ->default('Service')
