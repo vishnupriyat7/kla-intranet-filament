@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-{{-- @section('title', 'Employees List') --}}
+@section('title', 'Employees List')
 
 @section('content')
     <div class="container-fluid populer-news py-5">
@@ -18,10 +18,7 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Designation</th>
-                                <th>Section</th>
-                                <th>Pen</th>
-                                <th>Photo</th>
-                                {{-- <th>Actions</th> --}}
+                                <th>Actions</th>
                             </tr>
                         </thead>
 
@@ -43,10 +40,7 @@
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' }, // Index column
                     { data: 'name', name: 'name' },
                     { data: 'designation', name: 'designation' },
-                    { data: 'section', name: 'section' },
-                    { data: 'pen', name: 'pen' },
-                    { data: 'avatar', name: 'avatar', orderable: false, searchable: false }
-                    // Add other columns based on your data structure
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
             });
         });

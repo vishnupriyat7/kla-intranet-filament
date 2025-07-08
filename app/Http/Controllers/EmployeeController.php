@@ -33,7 +33,11 @@ class EmployeeController extends Controller
                         $url = asset('http://localhost:8000/storage/avatars/' . $row['avatar']);
                         return '<img src="' . $url . '" width="300" height="400" class="img-thumbnail" />';
                     })
-                    ->rawColumns(['avatar'])
+                    ->addColumn('action', function ($row) {
+                        $viewUrl = route('employees.show', $row['attendanceId']); // Adjust route name as needed
+                        return '<a href="' . $viewUrl . '" class="btn btn-sm btn-primary">View</a>';
+                    })
+                    ->rawColumns(['action', 'avatar'])
                     ->make(true);
             }
 
@@ -45,13 +49,15 @@ class EmployeeController extends Controller
             ], 500);
         }
     }
-    public function employeeShow($id)
+    public function employeeShow($attendanceId)
     {
         try {
-            $response = Http::get("http://localhost:8000/api/v1/employee-data/{$id}");
+            $response = Http::get("http://localhost:8000/api/v1/employee-data");
+            $employees = $response->json();
+            $filteredEmployee = collect($employees)->firstWhere('attendanceId', $attendanceId);
             if ($response->successful()) {
                 $employee = $response->json();
-                return view('employees.show', compact('employee'));
+                return view('employees.show', compact('filteredEmployee'));
             }
             return view('employees.show', ['error' => 'Employee not found']);
         } catch (\Exception $e) {

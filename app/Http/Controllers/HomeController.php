@@ -387,7 +387,7 @@ class HomeController extends Controller
 
             $orderResults = $query->orderBy('date')->get(); // Limit to 100 results
         }
-        $results = $orderResults;
+        $results = sizeof($orderResults) > 0 ? $orderResults : null;
         $orderType = $request->order_type;
 
         // Fetch periodicals
