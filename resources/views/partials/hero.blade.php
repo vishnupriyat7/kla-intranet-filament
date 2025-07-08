@@ -1,7 +1,7 @@
 <!-- Hero Section Start -->
 <div class="container-fluid hero py-5 position-relative">
     <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
-    <div class="container py-5" style="position: relative; z-index: 1;">
+    <div class="container py-3" style="position: relative; z-index: 1;">
         <div class="tab-class mb-1">
             <div class="row g-4">
                 <div class="col-lg-7 col-xl-7">
@@ -215,9 +215,22 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark dropdown-toggle"
                                             href="#" role="button" data-bs-toggle="dropdown">
                                             <i class="fas fa-user-circle fa-2x mb-2" style="color: #dc3545"></i>
-                                            <span>Mail ID</span>
+                                            <span>Contacts</span>
                                         </a>
-                                        <div class="dropdown-menu text-center">
+                                        <div class="dropdown-menu">
+                                            <span class="dropdown-item">
+                                                {{-- <i class="fas fa-angle-right text-white me-2"></i> --}}
+                                                <a class="btn-link"
+                                                    href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
+                                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
+                                                    data-title="Employees"> Employees </a> /
+                                                <a class="btn-link"
+                                                    href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
+                                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/uploads/guidelines/OfficeOrder_ guide.pdf') }}"
+                                                    data-title="Office Order Guide">Sections </a>
+                                            </span>
                                             <a class="dropdown-item"
                                                 href="http://192.168.11.12/data/All%20employee%20Mail%20ID.pdf"
                                                 target="_blank"><i class="fas fa-users me-2"></i> Employees</a>
@@ -232,7 +245,7 @@
                                             <i class="fas fa-book fa-2x mb-2" style="color: #2d39dd"></i>
                                             <span>User Manual</span>
                                         </a>
-                                        <div class="dropdown-menu text-center">
+                                        <div class="dropdown-menu">
 
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"

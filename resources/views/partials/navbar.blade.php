@@ -129,7 +129,7 @@
 
                             </div>
                         </div> --}}
-                        <div class="nav-item dropdown">
+                        {{-- <div class="nav-item dropdown">
                             <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 User Manuals
                             </a>
@@ -141,7 +141,7 @@
                                     data-pdf="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"
                                     data-title="Official Mail Management">Official Mail Management</a>
                                 <span class="dropdown-item">
-                                    {{-- <i class="fas fa-angle-right text-white me-2"></i> --}}
+
                                     <a class="btn-link"
                                         href="{{ asset('storage/uploads/guidelines/GOnumber_guide.pdf') }}"
                                         data-bs-toggle="modal" data-bs-target="#pdfModal"
@@ -164,10 +164,8 @@
                                     data-pdf="{{ asset('storage/uploads/guidelines/e-KLA_User Manual 7.0.pdf') }}"
                                     data-title="e-KLA">e-KLA</a>
 
-
-
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="nav-item dropdown">
                             <a href="{{ route('home.index') }}" class="nav-link dropdown-toggle"
@@ -192,6 +190,11 @@
                         <a href="{{ route('home.upload-request') }}"
                             class="nav-item nav-link {{ request()->routeIs('home.upload-request') ? 'active' : '' }}">Upload
                             Request</a>
+                              <a href="http://192.168.11.12/"
+                            class="nav-item nav-link {{ request()->routeIs('home.upload-request') ? 'active' : '' }}" target="_blank">Intranet OLD</a>
+
+
+
                         {{-- <a href="contact.html" class="nav-item nav-link">Search</a> --}}
                         <button
                             class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto">
