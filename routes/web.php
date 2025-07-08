@@ -22,7 +22,7 @@ Route::get('/advanced-search', [HomeController::class, 'advancedSearch'])->name(
 
 Route::get('/employees', [EmployeeController::class, 'index'])->name('home.employees');
 Route::get('/employees/data', [EmployeeController::class, 'getEmployees'])->name('employees.data');
-Route::get('/employees/filters', [EmployeeController::class, 'getFilters'])->name('employees.filters');
+// Route::get('/employees/filters', [EmployeeController::class, 'getFilters'])->name('employees.filters');
 // Route::get('/employees/{id}', [HomeController::class, 'employeeShow'])->name('home.employee-show');
 
 

@@ -134,14 +134,36 @@
                                 User Manuals
                             </a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                {{-- <a class="dropdown-item" href="http://192.168.11.12/data/Resetting 20of 20NIC 20eMail 20Password_KLS.pdf/"
-                                    target="_blank">Guidelines For Official Mail Management</a> --}}
+
                                 <a class="dropdown-item"
                                     href="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"
-                                    target="_blank">Guidelines For Official Mail Management</a>
+                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                    data-pdf="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"
+                                    data-title="Official Mail Management">Official Mail Management</a>
+                                <span class="dropdown-item">
+                                    {{-- <i class="fas fa-angle-right text-white me-2"></i> --}}
+                                    <a class="btn-link"
+                                        href="{{ asset('storage/uploads/guidelines/GOnumber_guide.pdf') }}"
+                                        data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                        data-pdf="{{ asset('storage/uploads/guidelines/GOnumber_guide.pdf') }}"
+                                        data-title="GO Guide"> GO </a> /
+                                    <a class="btn-link"
+                                        href="{{ asset('storage/uploads/guidelines/OfficeOrder_ guide.pdf') }}"
+                                        data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                        data-pdf="{{ asset('storage/uploads/guidelines/OfficeOrder_ guide.pdf') }}"
+                                        data-title="Office Order Guide">Office Order </a>in e-Office
+                                </span>
+                                <a class="dropdown-item"
+                                    href="{{ asset('storage/uploads/guidelines/e-officeguidelines.pdf') }}"
+                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                    data-pdf="{{ asset('storage/uploads/guidelines/e-officeguidelines.pdf') }}"
+                                    data-title="e-Office (e-KLA)">e-Office (e-KLA)</a>
+                                <a class="dropdown-item"
+                                    href="{{ asset('storage/uploads/guidelines/e-KLA_User Manual 7.0.pdf') }}"
+                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                    data-pdf="{{ asset('storage/uploads/guidelines/e-KLA_User Manual 7.0.pdf') }}"
+                                    data-title="e-KLA">e-KLA</a>
 
-                                {{-- <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
-                                    href="https://email.gov.in/" target="_blank"> --}}
 
 
                             </div>
@@ -202,25 +224,6 @@
 <!-- Navbar End -->
 
 
-<!-- Modal Search Start -->
-<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content rounded-0">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body d-flex align-items-center">
-                <div class="input-group w-75 mx-auto d-flex">
-                    <input type="search" class="form-control p-3" placeholder="keywords"
-                        aria-describedby="search-icon-1">
-                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Search End -->
 <!-- Modal Search Start -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
