@@ -22,6 +22,7 @@ class OrderCircular extends Model
         'sub_sub_type',
         'number',
         'date',
+        'year',
         'title',
         'keywords',
         'path',

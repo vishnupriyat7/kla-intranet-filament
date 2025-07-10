@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- Single Product Start -->
-    <div class="container-fluid populer-news py-5">
-        <div class="container py-5">
+    <div class="container-fluid populer-news py-3">
+        <div class="container">
             <h1>New Order/Circular Upload Request</h1>
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#checkStatusModal">

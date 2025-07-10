@@ -1,34 +1,34 @@
-@extends('layouts.default')
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <!-- Left side: Employee Details -->
+            <div class="col-md-8">
+                <h5 class="card-title">{{ $filteredEmployee['name'] }}</h5>
+                <p class="card-text"><strong>Designation:</strong>
+                    {{ $filteredEmployee['designation'] ?? 'N/A' }} </p>
+                <p class="card-text"><strong>Section:</strong>
+                    {{ $filteredEmployee['section'] ? $filteredEmployee['section'] : 'N/A' }}</p>
+                <p class="card-text"><strong>Pen:</strong>
+                    {{ $filteredEmployee['pen'] ? $filteredEmployee['pen'] : 'N/A' }}</p>
+                <p class="card-text"><strong>Attendance Id:</strong>
+                    {{ $filteredEmployee['attendanceId'] }}</p>
+                <p class="card-text"><strong>KLA Id:</strong>
+                    {{ $filteredEmployee['klaid'] ? $filteredEmployee['klaid'] : 'N/A'}}</p>
+                <p class="card-text"><strong>Mobile:</strong>
+                    {{ $filteredEmployee['mobile'] ? $filteredEmployee['mobile'] : 'N/A' }}</p>
+                <p class="card-text"><strong>Email:</strong>
+                    {{ $filteredEmployee['email'] ? $filteredEmployee['email'] : 'N/A' }}</p>
+            </div>
 
-@section('title', 'Employee Details')
-
-@section('content')
-    <div class="container-fluid populer-news py-5">
-        <div class="container py-5">
-            <h1>Employees</h1>
-        </div>
-        <div class="container py-12 d-flex justify-content-center">
-            <div class="col-12">
-                <h1>Employee Details</h1>
-                <a href="{{ route('home.employees') }}" class="btn btn-secondary mb-3">Back to List</a>
-                @if(isset($error))
-                    <div class="alert alert-danger">{{ $error }}</div>
+            <!-- Right side: Employee Image -->
+            <div class="col-md-4 text-center">
+                @if($filteredEmployee['avatar'])
+                    <img src="http://localhost:8000/storage/avatars/{{ $filteredEmployee['avatar'] }}" alt="Employee Photo"
+                        class="img-fluid rounded" >
                 @else
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $filteredEmployee['name'] }}</h5>
-                            <p class="card-text"><strong>Designation:</strong> {{ $filteredEmployee['designation'] ?? 'N/A' }}
-                            </p>
-                            <p class="card-text"><strong>Section:</strong> {{ $filteredEmployee['section'] ?? 'N/A' }}</p>
-                            <p class="card-text"><strong>Pen:</strong> {{ $filteredEmployee['pen'] ?? 'N/A' }}</p>
-                            <p class="card-text"><strong>Attendance Id:</strong>
-                                {{ $filteredEmployee['attendanceId'] ?? 'N/A' }}</p>
-                            <p class="card-text"><strong>Mobile:</strong> {{ $filteredEmployee['mobile'] ?? 'N/A' }}</p>
-                            <p class="card-text"><strong>Email:</strong> {{ $filteredEmployee['email'] ?? 'N/A' }}</p>
-                        </div>
-                    </div>
+                    <p>No photo available</p>
                 @endif
             </div>
         </div>
     </div>
-@endsection
+</div>

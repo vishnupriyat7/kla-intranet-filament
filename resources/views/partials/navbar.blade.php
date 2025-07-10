@@ -12,17 +12,16 @@
         <div class="container px-0">
             <div class="topbar-top d-flex justify-content-between flex-lg-wrap">
                 <div class="top-info flex-grow-0">
-                    <span class="rounded-circle btn-sm-square bg-primary me-2">
-                        <i class="fas fa-bolt text-white"></i>
+                    <span><img src="storage/img/Government_of_Kerala_Logo.png"
+                                class="img-fluid me-2"
+                                style="width: 30px; height: 30px;" alt="">
                     </span>
                     <div class="pe-2 me-3 border-end border-white d-flex align-items-center">
                         <p class="mb-0 text-white fs-6 fw-normal">KLA</p>
                     </div>
                     <div class="overflow-hidden" style="width: 900px;">
                         <div id="note" class="ps-2">
-                            {{-- <img src="img/features-fashion.jpg"
-                                class="img-fluid rounded-circle border border-3 border-primary me-2"
-                                style="width: 30px; height: 30px;" alt=""> --}}
+
                             <a href="{{ route('home.index') }}">
                                 <p class="mb-0 link-hover">Welcome to INTRANET Service of KERALA LEGISLATURE
                                     SECRETARIAT</p>
@@ -89,7 +88,7 @@
                             </div>
                         </div>
 
-                        <div class="nav-item dropdown">
+                        {{-- <div class="nav-item dropdown">
                             <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 Tools/Applications
                             </a>
@@ -105,13 +104,13 @@
                                 </div>
                                 <a class="dropdown-item" href="https://eniyamasabha.in/auth/login"
                                     target="_blank">e-Niyamasabha</a>
-                                {{-- <li>
+                                <li>
                                     <a class="dropdown-item" href="" target="_blank">ERP Module</a>
-                                </li> --}}
+                                </li>
                                 <a class="dropdown-item" href="http://192.168.11.12/idcard/index.php" target="_blank">ID
                                     Card Proforma</a>
-                                {{-- <a class="dropdown-item" href="http://192.168.11.12/hallbooking/index.php"
-                                    target="_blank">Conference Hall Booking</a> --}}
+                                <a class="dropdown-item" href="http://192.168.11.12/hallbooking/index.php"
+                                    target="_blank">Conference Hall Booking</a>
                                 <a class="dropdown-item" href="http://172.24.18.21:8080/share/page"
                                     target="_blank">Centralised Storage</a>
                                 <a class="dropdown-item" href="http://172.24.18.18/" target="_blank">LIS</a>
@@ -125,6 +124,23 @@
                                 <a class="dropdown-item" href="https://prism.kerala.gov.in/" target="_blank">Prism</a>
                                 <a class="dropdown-item" href="https://score.kerala.gov.in/" target="_blank">Score</a>
 
+
+
+                            </div>
+                        </div> --}}
+                        <div class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                User Manuals
+                            </a>
+                            <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                {{-- <a class="dropdown-item" href="http://192.168.11.12/data/Resetting 20of 20NIC 20eMail 20Password_KLS.pdf/"
+                                    target="_blank">Guidelines For Official Mail Management</a> --}}
+                                <a class="dropdown-item"
+                                    href="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"
+                                    target="_blank">Guidelines For Official Mail Management</a>
+
+                                {{-- <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                    href="https://email.gov.in/" target="_blank"> --}}
 
 
                             </div>
@@ -148,14 +164,16 @@
                             </div>
                         </div> --}}
                         <a href="{{ route('home.employees') }}"
-                            class="nav-item nav-link {{ request()->routeIs('home.employees') ? 'active' : '' }}">Employee Corner</a>
+                            class="nav-item nav-link {{ request()->routeIs('home.employees') ? 'active' : '' }}">Employee
+                            Corner</a>
                         <a href="{{ route('home.upload-request') }}"
                             class="nav-item nav-link {{ request()->routeIs('home.upload-request') ? 'active' : '' }}">Upload
                             Request</a>
                         {{-- <a href="contact.html" class="nav-item nav-link">Search</a> --}}
                         <button
                             class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto">
-                            <a href="{{ route('home.advanced-search') }}"><i class="fas fa-search text-primary"></i></a>
+                            <a href="{{ route('home.advanced-search') }}"><i
+                                    class="fas fa-search text-primary"></i></a>
                         </button>
 
                     </div>
