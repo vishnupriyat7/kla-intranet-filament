@@ -8,6 +8,7 @@
 
 <!-- Navbar start -->
 <div class="container-fluid sticky-top px-0">
+    {{-- <div class="nav-bg"> --}}
     <div class="container-fluid topbar bg-dark d-none d-lg-block">
         <div class="container px-0">
             <div class="topbar-top d-flex justify-content-between flex-lg-wrap">
@@ -128,43 +129,23 @@
 
                             </div>
                         </div> --}}
-                        {{-- <div class="nav-item dropdown">
+                        <div class="nav-item dropdown">
                             <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 User Manuals
                             </a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-
+                                {{-- <a class="dropdown-item" href="http://192.168.11.12/data/Resetting 20of 20NIC 20eMail 20Password_KLS.pdf/"
+                                    target="_blank">Guidelines For Official Mail Management</a> --}}
                                 <a class="dropdown-item"
                                     href="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"
-                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                    data-pdf="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"
-                                    data-title="Official Mail Management">Official Mail Management</a>
-                                <span class="dropdown-item">
+                                    target="_blank">Guidelines For Official Mail Management</a>
 
-                                    <a class="btn-link"
-                                        href="{{ asset('storage/uploads/guidelines/GOnumber_guide.pdf') }}"
-                                        data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                        data-pdf="{{ asset('storage/uploads/guidelines/GOnumber_guide.pdf') }}"
-                                        data-title="GO Guide"> GO </a> /
-                                    <a class="btn-link"
-                                        href="{{ asset('storage/uploads/guidelines/OfficeOrder_ guide.pdf') }}"
-                                        data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                        data-pdf="{{ asset('storage/uploads/guidelines/OfficeOrder_ guide.pdf') }}"
-                                        data-title="Office Order Guide">Office Order </a>in e-Office
-                                </span>
-                                <a class="dropdown-item"
-                                    href="{{ asset('storage/uploads/guidelines/e-officeguidelines.pdf') }}"
-                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                    data-pdf="{{ asset('storage/uploads/guidelines/e-officeguidelines.pdf') }}"
-                                    data-title="e-Office (e-KLA)">e-Office (e-KLA)</a>
-                                <a class="dropdown-item"
-                                    href="{{ asset('storage/uploads/guidelines/e-KLA_User Manual 7.0.pdf') }}"
-                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                    data-pdf="{{ asset('storage/uploads/guidelines/e-KLA_User Manual 7.0.pdf') }}"
-                                    data-title="e-KLA">e-KLA</a>
+                                {{-- <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                    href="https://email.gov.in/" target="_blank"> --}}
+
 
                             </div>
-                        </div> --}}
+                        </div>
 
                         {{-- <div class="nav-item dropdown">
                             <a href="{{ route('home.index') }}" class="nav-link dropdown-toggle"
@@ -189,11 +170,6 @@
                         <a href="{{ route('home.upload-request') }}"
                             class="nav-item nav-link {{ request()->routeIs('home.upload-request') ? 'active' : '' }}">Upload
                             Request</a>
-                              <a href="http://192.168.11.12/"
-                            class="nav-item nav-link {{ request()->routeIs('home.upload-request') ? 'active' : '' }}" target="_blank">Intranet OLD</a>
-
-
-
                         {{-- <a href="contact.html" class="nav-item nav-link">Search</a> --}}
                         <button
                             class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto">
@@ -226,6 +202,25 @@
 <!-- Navbar End -->
 
 
+<!-- Modal Search Start -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex align-items-center">
+                <div class="input-group w-75 mx-auto d-flex">
+                    <input type="search" class="form-control p-3" placeholder="keywords"
+                        aria-describedby="search-icon-1">
+                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Search End -->
 <!-- Modal Search Start -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
