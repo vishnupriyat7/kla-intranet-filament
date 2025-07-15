@@ -44,7 +44,6 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(asset('images/favicon.png'))
             ->font('Poppins')
             ->maxContentWidth('full') // Set content width to full
-            ->viteTheme(['resources/css/filament.css', 'resources/js/filament.js'])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
