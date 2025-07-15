@@ -208,7 +208,16 @@ class OrderCircularResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->formatStateUsing(fn($state) => $state == '1' ? '<span class="badge bg-success">Published</span>' : '<span class="badge bg-danger">Unpublished</span>')
                     ->html()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('title_length')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('error_type')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
@@ -236,6 +245,14 @@ class OrderCircularResource extends Resource
                     ->label('Section')
                     ->preload()
                     ->searchable(),
+                Tables\Filters\Filter::make('title_length')
+                    ->label('Title Length < 50')
+                    ->query(function ($query) {
+                        return $query->whereRaw('CHAR_LENGTH(title) < 50');
+                    })
+                    ->toggle(),
+
+
 
             ])
             ->actions([
@@ -297,5 +314,4 @@ class OrderCircularResource extends Resource
             'edit' => Pages\EditOrderCircular::route('/{record}/edit'),
         ];
     }
-
 }

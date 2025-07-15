@@ -9,4 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateOrderCircular extends CreateRecord
 {
     protected static string $resource = OrderCircularResource::class;
+
+    protected function afterSave(): void
+    {
+        $this->record->title_length = mb_strlen($this->form->getState()['title'], 'UTF-8');
+        $this->record->save();
+    }
 }

@@ -27,6 +27,8 @@ class OrderCircular extends Model
         'keywords',
         'path',
         'status',
+        'title_length',
+        'error_type',
         'section_id'
     ];
     /**
