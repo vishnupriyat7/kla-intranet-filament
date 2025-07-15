@@ -7,7 +7,7 @@
 
 
 <!-- Navbar start -->
-<div class="container-fluid sticky-top px-0 features">
+<div class="container-fluid sticky-top px-0">
     <div class="container-fluid topbar bg-dark d-none d-lg-block">
         <div class="container px-0">
             <div class="topbar-top d-flex justify-content-between flex-lg-wrap">
