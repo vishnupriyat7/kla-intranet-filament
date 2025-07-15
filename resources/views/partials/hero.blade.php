@@ -197,8 +197,16 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://eniyamasabha.in/auth/login" target="_blank">
-                                            <i class="fas fa-university fa-2x mb-2" style="color: #17a2b8"></i>
+                                            <i class="fas fa-university fa-2x mb-2" style="color:  #6610f2"></i>
                                             <span>e-Niyamasabha</span>
+                                        </a>
+                                    </div>
+                                    <!-- Overtime Allowance Portal -->
+                                    <div class="col-4 mb-4">
+                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                            href="http://172.24.18.16/login" target="_blank">
+                                            <i class="fas fa-money-check-alt fa-2x mb-2" style="color:  #17a2b8"></i>
+                                            <span>Overtime Allowance</span>
                                         </a>
                                     </div>
 
@@ -218,8 +226,8 @@
                                             <span>Contacts</span>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <span class="dropdown-item">
-                                                {{-- <i class="fas fa-angle-right text-white me-2"></i> --}}
+                                            {{-- <span class="dropdown-item">
+                                                <i class="fas fa-angle-right text-white me-2"></i>
                                                 <a class="btn-link"
                                                     href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
                                                     data-bs-toggle="modal" data-bs-target="#pdfModal"
@@ -230,19 +238,39 @@
                                                     data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/uploads/guidelines/OfficeOrder_ guide.pdf') }}"
                                                     data-title="Office Order Guide">Sections </a>
-                                            </span>
+                                                <a class="btn-link" href="http://192.168.11.12/mailid-sect.html"
+                                                    target="_blank">Sections</a>
+                                            </span> --}}
                                             <a class="dropdown-item"
-                                                href="http://192.168.11.12/data/All%20employee%20Mail%20ID.pdf"
-                                                target="_blank"><i class="fas fa-users me-2"></i> Employees</a>
-                                            <a class="dropdown-item" href="http://192.168.11.12/mailid-sect.html"
-                                                target="_blank"><i class="fas fa-building me-2"></i> Section</a>
+                                                href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
+                                                data-title="Employees"><i class="fas fa-users me-2"></i>Employees</a>
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
+                                                data-title="Sections"><i class="fas fa-building me-2"></i>Sections</a>
+
+                                            <a class="dropdown-item"
+                                                href="http://www.niyamasabha.org/codes/pa_MLAs.htm" target="_blank"><i
+                                                    class="fas fa-user-tie me-2"></i>PA to MLAs</a>
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/contacts/Telephone Directory - 2024.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/contacts/Telephone Directory - 2024.pdf') }}"
+                                                data-title="Telephone Directory"><i
+                                                    class="fas fa-address-book me-2"></i>Telephone Directory </a>
+                                            <a class="dropdown-item"
+                                                href="http://www.niyamasabha.org/codes/tele_legsec_2021.htm"
+                                                target="_blank"><i class="fas fa-phone-volume me-2"></i>KLA</a>
                                         </div>
                                     </div>
                                     <!-- User Manual Dropdown -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark dropdown-toggle"
                                             href="#" role="button" data-bs-toggle="dropdown">
-                                            <i class="fas fa-book fa-2x mb-2" style="color: #2d39dd"></i>
+                                            <i class="fas fa-book-open fa-2x mb-2" style="color: #4647bb"></i>
                                             <span>User Manual</span>
                                         </a>
                                         <div class="dropdown-menu">
@@ -313,14 +341,7 @@
                                             <span>Digital Archives</span>
                                         </a>
                                     </div>
-                                    <!-- Overtime Allowance Portal -->
-                                    <div class="col-4 mb-4">
-                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
-                                            href="http://172.24.18.16/login" target="_blank">
-                                            <i class="fas fa-money-check-alt fa-2x mb-2" style="color: #6610f2"></i>
-                                            <span>Overtime Allowance</span>
-                                        </a>
-                                    </div>
+
                                     <!-- Spark Portal -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
@@ -355,6 +376,38 @@
                                             <span>AEBAS</span>
                                         </a>
                                     </div>
+
+                                    <!--Annual Index of Records-  -->
+                                    <div class="col-4 mb-4">
+                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark dropdown-toggle"
+                                            href="#" role="button" data-bs-toggle="dropdown">
+                                            <i class="fas fa-clipboard fa-2x mb-2" style="color: #d638bc"></i>
+                                            <span>Annual Index of Records</span>
+                                        </a>
+                                        <div class="dropdown-menu">
+
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/records/Annual Index-2014.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/records/Annual Index-2014.pdf') }}"
+                                                data-title="Annual Index 2014">2014</a>
+
+
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/records/Annual Index-2013.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/records/Annual Index-2013.pdf') }}"
+                                                data-title="Annual Index 2013">2013</a>
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/records/Annual Index-2012.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/records/Annual Index-2012.pdf') }}"
+                                                data-title="Annual Index 2012">2012</a>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                         </div>
