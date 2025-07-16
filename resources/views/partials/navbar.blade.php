@@ -129,23 +129,23 @@
 
                             </div>
                         </div> --}}
-                        <div class="nav-item dropdown">
+                        {{-- <div class="nav-item dropdown">
                             <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 User Manuals
                             </a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                {{-- <a class="dropdown-item" href="http://192.168.11.12/data/Resetting 20of 20NIC 20eMail 20Password_KLS.pdf/"
-                                    target="_blank">Guidelines For Official Mail Management</a> --}}
+                                <a class="dropdown-item" href="http://192.168.11.12/data/Resetting 20of 20NIC 20eMail 20Password_KLS.pdf/"
+                                    target="_blank">Guidelines For Official Mail Management</a>
                                 <a class="dropdown-item"
                                     href="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"
                                     target="_blank">Guidelines For Official Mail Management</a>
 
-                                {{-- <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
-                                    href="https://email.gov.in/" target="_blank"> --}}
+                                <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                    href="https://email.gov.in/" target="_blank">
 
 
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="nav-item dropdown">
                             <a href="{{ route('home.index') }}" class="nav-link dropdown-toggle"

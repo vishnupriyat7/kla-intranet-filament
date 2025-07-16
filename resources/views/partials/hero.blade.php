@@ -382,7 +382,7 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark dropdown-toggle"
                                             href="#" role="button" data-bs-toggle="dropdown">
                                             <i class="fas fa-clipboard fa-2x mb-2" style="color: #d638bc"></i>
-                                            <span>Annual Index of Records</span>
+                                            <span>AIR</span>
                                         </a>
                                         <div class="dropdown-menu">
 
