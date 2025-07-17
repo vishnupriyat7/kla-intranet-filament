@@ -10,8 +10,11 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage; // Add this import
 
 class PeriodicalMasterResource extends Resource
 {
@@ -27,14 +30,15 @@ class PeriodicalMasterResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('img')
-                ->required()
-                ->disk('public') // Store the file in the public disk
-                ->directory('uploads/periodicals') // Directory within the disk
-                ->preserveFilenames() // Optional: Preserve the original filename
-                ->acceptedFileTypes(['image/*']) // Accept only image files
-                ->maxSize(1024 * 5)
-                ->image()// Max file size: 5 MB
-                  ->imageEditor(),
+                    ->required()
+                    ->disk('public') // Store the file in the public disk
+                    ->directory('uploads/periodicals') // Directory within the disk
+                    ->preserveFilenames() // Optional: Preserve the original filename
+                    ->acceptedFileTypes(['image/*']) // Accept only image files
+                    ->maxSize(1024 * 5)
+                    ->image() // Max file size: 5 MB
+                    ->imageEditor()
+                    ->openable(),
             ]);
     }
 
@@ -50,7 +54,11 @@ class PeriodicalMasterResource extends Resource
                 Tables\Columns\ImageColumn::make('img')
                     ->disk('public')
                     ->size(50)
-                    ->circular(),
+                    ->circular()
+                    ->defaultImageUrl(url('images/default-placeholder.png')) // Fallback if image is missing
+                    ->getStateUsing(function ($record) {
+                        return $record->img ? Storage::disk('public')->url($record->img) : null;
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -65,8 +73,8 @@ class PeriodicalMasterResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                ->label('')
-                ->color('warning'),
+                    ->label('')
+                    ->color('warning'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
