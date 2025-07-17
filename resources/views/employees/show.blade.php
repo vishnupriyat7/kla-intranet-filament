@@ -23,8 +23,8 @@
             <!-- Right side: Employee Image -->
             <div class="col-md-4 text-center">
                 @if($filteredEmployee['avatar'])
-                    <img src="http://localhost:8000/storage/avatars/{{ $filteredEmployee['avatar'] }}" alt="Employee Photo"
-                        class="img-fluid rounded" >
+                    <img src="{{ env('EMPLOYEE_IMG_URL') . '/' . $filteredEmployee['avatar'] }}" alt="Employee Photo"
+                        class="img-fluid rounded">
                 @else
                     <p>No photo available</p>
                 @endif

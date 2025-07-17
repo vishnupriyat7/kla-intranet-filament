@@ -15,12 +15,11 @@ class EmployeeController extends Controller
 
     public function getEmployees(Request $request)
     {
+        $apiUrl = env('EMPLOYEE_API_URL');
         try {
-            $response = Http::get('http://localhost:8000/api/v1/employee-data');
-
+            $response = Http::get($apiUrl);
             if ($response->successful()) {
-                $employees = $response->json(); // ✅ FIXED HERE
-
+                $employees = $response->json();
                 return DataTables::of($employees)
                     ->addIndexColumn()
                     ->addColumn('action', function ($row) {
@@ -38,12 +37,12 @@ class EmployeeController extends Controller
     }
     public function employeeShow($attendanceId)
     {
+        $apiUrl = env('EMPLOYEE_API_URL');
         try {
-            $response = Http::get("http://localhost:8000/api/v1/employee-data");
+            $response = Http::get($apiUrl);
             $employees = $response->json();
             $filteredEmployee = collect($employees)->firstWhere('attendanceId', $attendanceId);
             if ($response->successful()) {
-                // return $filteredEmployee;
                 return view('employees.show', compact('filteredEmployee'));
             }
             return view('employees.show', ['error' => 'Employee not found']);
