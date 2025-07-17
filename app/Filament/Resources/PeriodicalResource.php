@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\PeriodicalMaster;
+use Illuminate\Support\Facades\Storage;
 
 class PeriodicalResource extends Resource
 {
@@ -38,13 +39,23 @@ class PeriodicalResource extends Resource
                     ->maxSize(10240) // 10MB max size
                     ->directory('uploads/periodicals/pdf')
                     ->disk('public')
-                  ->openable(), // Updated to use openable() instead of enableOpen()
+                    ->openable() // Updated to use openable() instead of enableOpen()
+                    ->afterStateUpdated(function ($state, $record, callable $set) {
+                        // Delete the old file if it exists and a new file is uploaded
+                        if ($record && $record->path && $state && Storage::disk('public')->exists($record->path)) {
+                            Storage::disk('public')->delete($record->path);
+                        }
+                    }),
                 Forms\Components\Textarea::make('keywords')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Select::make('status')
+                ->options([
+                        '1' => 'Published',
+                        '0' => 'Unpublished',
+                    ])
                     ->required()
-                    ->maxLength(255)
                     ->default(0),
+
             ]);
     }
 

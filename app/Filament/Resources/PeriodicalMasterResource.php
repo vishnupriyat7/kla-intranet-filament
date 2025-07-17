@@ -55,10 +55,7 @@ class PeriodicalMasterResource extends Resource
                     ->disk('public')
                     ->size(50)
                     ->circular()
-                    ->defaultImageUrl(url('images/default-placeholder.png')) // Fallback if image is missing
-                    ->getStateUsing(function ($record) {
-                        return $record->img ? Storage::disk('public')->url($record->img) : null;
-                    }),
+                    ->defaultImageUrl(url('images/default-placeholder.png')),// Fallback if image is missing
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
