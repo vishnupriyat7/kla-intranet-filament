@@ -26,7 +26,7 @@
                     <img src="{{ env('EMPLOYEE_IMG_URL') . '/' . $filteredEmployee['avatar'] }}" alt="Employee Photo"
                         class="img-fluid rounded">
                 @else
-                    <p>No photo available</p>
+                    <p>No Photo Available</p>
                 @endif
             </div>
         </div>
