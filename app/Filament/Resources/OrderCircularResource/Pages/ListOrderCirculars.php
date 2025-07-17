@@ -16,4 +16,10 @@ class ListOrderCirculars extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+    //  protected function getHeaderWidgets(): array
+    //    {
+    //        return [
+    //            OrderCircularResource\Widgets\OrderStats::class,
+    //        ];
+    //    }
 }

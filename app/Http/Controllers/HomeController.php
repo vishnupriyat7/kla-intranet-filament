@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -379,13 +380,14 @@ class HomeController extends Controller
             if ($request->filled('keyword')) {
                 $query->where(function ($q) use ($request) {
                     $q->where('title', 'LIKE', "%{$request->keyword}%")
-                        ->orWhere('keywords', 'LIKE', "%{$request->keyword}%");
+                        ->orWhere('keywords', 'LIKE', "%{$request->keyword}%")
+                        ->orWhere('number', 'LIKE', "%{$request->keyword}%");
                 });
             }
 
             $orderResults = $query->orderBy('date')->get(); // Limit to 100 results
         }
-        $results = $orderResults;
+        $results = sizeof($orderResults) > 0 ? $orderResults : null;
         $orderType = $request->order_type;
 
         // Fetch periodicals

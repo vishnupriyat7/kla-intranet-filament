@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('go_type',3)->nullable();
             $table->string('number');
             $table->date('date');
+            $table->string('year',4)->nullable();
             $table->string('title');
             $table->string('keywords')->nullable();
             $table->string('path');

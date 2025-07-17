@@ -1,6 +1,6 @@
 <head>
     <meta charset="utf-8">
-    <title>Newsers - Free HTML Magazine Template</title>
+    <title>KLA | Intranet</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -23,14 +23,13 @@
     <link href="{{ asset('assets/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
     {{-- For Yajra Datatables --}}
-    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.1.8/main.min.css" rel="stylesheet"> --}}
-
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+
 </head>

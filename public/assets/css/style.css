@@ -64,7 +64,7 @@ body {
     background: var(--bs-primary) !important;
 }
 #order-circular .nav-pills .nav-link.active {
-   background-color:  #f4f6f8;
+    background-color: #f4f6f8;
 }
 /*** Spinner Start ***/
 #spinner {
@@ -211,23 +211,40 @@ body {
     animation-timing-function: ease-in-out;
     display: flex;
     align-items: center;
+    color: orange;
 }
 
 @keyframes noteAnimate {
     from {
-        left: -735px;
-    }
-    to {
         left: 900px;
     }
+    to {
+        left: -735px;
+    }
+}
+
+#note p {
+    color: orange;
 }
 
 /*** Topbar End ***/
 
 /*** Navbar Start ***/
+/* .nav-bg {
+    background:
+        linear-gradient(
+            rgba(2, 90, 131, 0.9),
+            rgba(77, 58, 102, 0.9)
+        ),
+        url(../img/nav-bg.webp);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
 .navbar .navbar-nav .nav-link {
     padding: 10px 15px;
-    font-weight: 400;
+    font-weight: 700;
     font-family: "Fredoka", sans-serif;
     font-size: 16px;
     transition: 0.5s;

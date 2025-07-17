@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- Single Product Start -->
-    <div class="container-fluid py-5" id="order-circular">
-        <div class="container py-5">
+    <div class="container-fluid py-3" id="order-circular">
+        <div class="container">
             <!-- Title -->
             <h1>{{ $orderType }}</h1>
             </br>

@@ -52,5 +52,5 @@
         </table>
     </div>
 @else
-    <div class="alert alert-danger mt-4">{{ $error }}</div>
+    <div class="alert alert-danger mt-4">No data available for these parameters...</div>
 @endif

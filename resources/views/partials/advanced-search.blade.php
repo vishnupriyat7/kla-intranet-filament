@@ -19,7 +19,7 @@
                         <div class="row g-4">
                             <!-- Order Type Selection -->
                             <div class="col-md-4">
-                                <label for="orderType" class="form-label">Select Order Type</label>
+                                <label for="orderType" class="form-label">Select Order Type <span class="text-danger">*</span></label>
                                 <select class="form-select" id="orderType" name="order_type" required>
                                     <option value="">Choose...</option>
                                     <option value="G" {{ request('order_type') == 'G' ? 'selected' : '' }}>Govt. Order
@@ -34,7 +34,7 @@
                             <!-- Year Selection -->
                             <div class="col-md-4">
                                 <label for="year" class="form-label">Select Year</label>
-                                <select class="form-select" id="year" name="year">
+                                <select class="form-select" id="year" name="year" onchange="disableDate()">
                                     <option value="">Choose...</option>
                                     @for ($i = date('Y'); $i >= 2000; $i--)
                                         <option value="{{ $i }}" {{ request('year') == $i ? 'selected' : '' }}>
@@ -189,4 +189,18 @@
                 });
         });
     });
+
+   function disableDate() {
+        var year = $('#year').val();
+        var month = $('#month').val();
+        if (year !== "" || month !== "") {
+            $('#from_date').val('');
+            $('#to_date').val('');
+            $('#from_date').prop('disabled', true);
+            $('#to_date').prop('disabled', true);
+        } else {
+            $('#from_date').prop('disabled', false);
+            $('#to_date').prop('disabled', false);
+        }
+    }
 </script>

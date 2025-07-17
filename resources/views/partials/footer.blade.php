@@ -28,8 +28,8 @@
                     <p class="text-secondary line-h">Address: <span class="text-white" style="font-size: 14px;">Kerala
                             Legislature Secretariat, Vikas Bhavan PO, TVM-33, Kerala</span>
                     </p>
-                    <p class="text-secondary line-h">Email: <span class="text-white">Example@gmail.com</span></p>
-                    <p class="text-secondary line-h">Phone: <span class="text-white">+0123 4567 8910</span></p>
+                    <p class="text-secondary line-h">Email: <span class="text-white">itsection@niyamasabha.in</span></p>
+                    <p class="text-secondary line-h">Phone: <span class="text-white">0471 2512516</span></p>
                     <div class="d-flex line-h">
                         <a class="btn btn-light me-2 btn-md-square rounded-circle" href=""><i
                                 class="fab fa-twitter text-dark"></i></a>
@@ -42,7 +42,60 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-xl-3">
+                <div class="d-flex flex-column text-start footer-item-3">
+                    <h4 class="mb-4 text-white">Travel Desk</h4>
+                    <span>
+                        <i class="fas fa-angle-right text-white me-2"></i>
+                        <a class="btn-link text-white" href="https://onlineksrtcswift.com/" target="_blank">KSRTC</a> /
+                        <a class ="btn-link text-white" href="https://www.irctc.co.in/nget/train-search"
+                            target="_blank">IRCTC Online
+                            Booking</a>
+                    </span>
+                    <span>
+                        <i class="fas fa-angle-right text-white me-2"></i>
+                        <a class="btn-link text-white" href="https://www.google.com/travel/flights?gl=IN&hl=en"
+                            target="_blank ">Air Travel</a>
 
+                    </span>
+                    <span>
+                        <i class="fas fa-angle-right text-white me-2"></i>
+                        <a class="btn-link text-white"
+                            href="https://gad.kerala.gov.in/index.php/en/online-guest-house-booking-0"
+                            target="_blank">Guest House</a> /
+                        <a class ="btn-link text-white" href="https://resthouse.pwd.kerala.gov.in/resthouse"
+                            target="_blank">Rest
+                            House</a>
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-3">
+                <div class="d-flex flex-column text-start footer-item-3">
+                    <h4 class="mb-4 text-white">Useful Links</h4>
+                    <a class="btn-link text-white" href="http://www.niyamasabha.org/" target="_blank"><i
+                            class="fas fa-angle-right text-white me-2"></i>
+                        Kerala Niyamasabha</a>
+                    <a class="btn-link text-white" href="https://kerala.gov.in/" target="_blank"><i
+                            class="fas fa-angle-right text-white me-2"></i>
+                        Government of Kerala</a>
+                    <a class="btn-link text-white" href="https://www.agker.cag.gov.in/" target="_blank"><i
+                            class="fas fa-angle-right text-white me-2"></i>
+                        Accountant General Kerala</a>
+                    <span>
+                        <i class="fas fa-angle-right text-white me-2"></i>
+                        <a class="btn-link text-white" href="https://sansad.in/ls" target="_blank">Lok Sabha</a> /
+                        <a class="btn-link text-white" href="https://sansad.in/rs" target="_blank">Rajya Sabha</a>
+                    </span>
+                    <span>
+                        <i class="fas fa-angle-right text-white me-2"></i>
+                        <a class="btn-link text-white" href="https://www.keralapsc.gov.in/" target="_blank">K.P.S.C</a>
+                        /
+                        <a class ="btn-link text-white" href="https://upsc.gov.in/" target="_blank">U.P.S.C</a>
+                    </span>
+
+
+                </div>
+            </div>
             <div class="col-lg-6 col-xl-3">
                 <div class="footer-item-2">
                     {{-- <div class="d-flex flex-column mb-4">
@@ -84,40 +137,8 @@
                     </div> --}}
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-3">
-                <div class="d-flex flex-column text-start footer-item-3">
-                    <h4 class="mb-4 text-white">Useful Links</h4>
-                    <a class="btn-link text-white" href="http://www.niyamasabha.org/"><i
-                            class="fas fa-angle-right text-white me-2"></i>
-                        Kerala Niyamasabha</a>
-                    <a class="btn-link text-white" href="https://kerala.gov.in/"><i
-                            class="fas fa-angle-right text-white me-2"></i>
-                        Government of Kerala</a>
-                    <a class="btn-link text-white" href="https://www.agker.cag.gov.in/"><i
-                            class="fas fa-angle-right text-white me-2"></i>
-                        Accountant General Kerala</a>
-                    <span>
-                        <i class="fas fa-angle-right text-white me-2"></i>
-                        <a class="btn-link text-white" href="https://sansad.in/ls">Lok Sabha</a> /
-                        <a class="btn-link text-white" href="https://sansad.in/rs">Rajya Sabha</a>
-                    </span>
-                    <span>
-                        <i class="fas fa-angle-right text-white me-2"></i>
-                        <a class="btn-link text-white" href="https://www.keralapsc.gov.in/">K.P.S.C</a> /
-                        <a class ="btn-link text-white" href="https://upsc.gov.in/">U.P.S.C</a>
-                    </span>
-                    <span>
-                        <i class="fas fa-angle-right text-white me-2"></i>
-                        <a class="btn-link text-white" href="https://onlineksrtcswift.com/">KSRTC</a> /
-                        <a class ="btn-link text-white" href="https://www.irctc.co.in/nget/train-search">IRCTC Online
-                            Booking</a>
-                    </span>
-                    <a class="btn-link text-white" href="https://gem.gov.in/"><i
-                            class="fas fa-angle-right text-white me-2"></i>
-                        GeM</a>
 
-                </div>
-            </div>
+
             {{-- <div class="col-lg-6 col-xl-3">
                 <div class="footer-item-4">
                     <h4 class="mb-4 text-white">Our Gallary</h4>
@@ -191,8 +212,6 @@
 <a href="#" class="btn btn-primary border-2 border-white rounded-circle back-to-top"><i
         class="fa fa-arrow-up"></i></a>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <!-- JavaScript Libraries -->
@@ -204,7 +223,7 @@
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
 <!-- jQuery (required for DataTables) -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -216,4 +235,3 @@
 
 <!-- Template Javascript -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
-
