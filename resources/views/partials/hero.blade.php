@@ -4,9 +4,9 @@
     <div class="container py-3" style="position: relative; z-index: 1;">
         <div class="tab-class mb-1">
             <div class="row g-4">
-                <div class="col-lg-7 col-xl-7">
+                <div class="col-xl-7 col-xxl-7">
                     <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
-                        <h1 class="mb-4">What’s New</h1>
+                        <h3 class="mb-4">What’s New</h3>
                         <ul class="nav nav-pills d-inline-flex text-center">
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill active me-2" data-bs-toggle="pill"
@@ -14,6 +14,7 @@
                                     <span class="text-dark" style="width: 100px;">Govt.Order</span>
                                 </a>
                             </li>
+
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
                                     <span class="text-dark" style="width: 100px;">Offc.Order</span>
@@ -93,8 +94,7 @@
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
                                                 <a href="{{ route('home.order-circular', 'oo') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
-      hover-bg-primary text-hover-white border-primary">
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark hover-bg-primary text-hover-white border-primary">
                                                     View All >>
                                                 </a>
                                             </div>
@@ -170,11 +170,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-xl-5">
+                <div class="col-xxl-5 col-xl-5">
                     <div class="row g-4">
                         <div class="col-12">
                             <div class="p-3 rounded border h-100" style="min-height: 600px;">
-                                <h2 class="mb-5">Tools/Application</h2>
+                                <h3 class="mb-5">Tools/Application</h3>
                                 <div class="row g-4 text-center tools-application">
                                     <!-- Attendance -->
                                     <div class="col-4 mb-4">
@@ -390,19 +390,19 @@
                                                 href="{{ asset('storage/uploads/records/Annual Index-2014.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/records/Annual Index-2014.pdf') }}"
-                                                data-title="Annual Index 2014">2014</a>
+                                                data-title="Annual Index 2014">Annual Index Report 2014</a>
 
 
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/records/Annual Index-2013.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/records/Annual Index-2013.pdf') }}"
-                                                data-title="Annual Index 2013">2013</a>
+                                                data-title="Annual Index 2013">Annual Index Report 2013</a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/records/Annual Index-2012.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/records/Annual Index-2012.pdf') }}"
-                                                data-title="Annual Index 2012">2012</a>
+                                                data-title="Annual Index 2012">Annual Index Report 2012</a>
                                         </div>
                                     </div>
 
