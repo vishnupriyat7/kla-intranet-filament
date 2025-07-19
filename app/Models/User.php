@@ -32,6 +32,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    // public function canAccessFilament(): bool
+    // {
+    //     return str_ends_with($this->email, 'admin@yourdomain.com') && $this->hasVerifiedEmail();
+    // }
 
     /**
      * Get the attributes that should be cast.

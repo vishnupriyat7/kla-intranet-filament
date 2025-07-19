@@ -171,7 +171,7 @@
                                 class="nav-item nav-link {{ request()->routeIs('home.employees') ? 'active' : '' }}">Employee
                                 Corner</a>
                             <a href="http://172.24.18.28/attendance-mgmt-backend/booking_tv"
-                                class="nav-item nav-link">Today's Committees</a>
+                                class="nav-item nav-link" target="_blank">Today's Meetings</a>
                             <a href="{{ route('home.upload-request') }}"
                                 class="nav-item nav-link {{ request()->routeIs('home.upload-request') ? 'active' : '' }}">Upload
                                 Request</a>

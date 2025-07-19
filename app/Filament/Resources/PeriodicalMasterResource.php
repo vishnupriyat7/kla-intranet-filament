@@ -21,6 +21,9 @@ class PeriodicalMasterResource extends Resource
     protected static ?string $model = PeriodicalMaster::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationGroup = 'Periodical Management';
+    protected static ?string $navigationLabel = 'Masters';
+
 
     public static function form(Form $form): Form
     {

@@ -8,10 +8,10 @@
                     {{ $filteredEmployee['designation'] ?? 'N/A' }} </p>
                 <p class="card-text"><strong>Section:</strong>
                     {{ $filteredEmployee['section'] ? $filteredEmployee['section'] : 'N/A' }}</p>
-                <p class="card-text"><strong>Pen:</strong>
+                {{-- <p class="card-text"><strong>Pen:</strong>
                     {{ $filteredEmployee['pen'] ? $filteredEmployee['pen'] : 'N/A' }}</p>
                 <p class="card-text"><strong>Attendance Id:</strong>
-                    {{ $filteredEmployee['attendanceId'] }}</p>
+                    {{ $filteredEmployee['attendanceId'] }}</p> --}}
                 <p class="card-text"><strong>KLA Id:</strong>
                     {{ $filteredEmployee['klaid'] ? $filteredEmployee['klaid'] : 'N/A'}}</p>
                 <p class="card-text"><strong>Mobile:</strong>

@@ -20,6 +20,8 @@ class PeriodicalResource extends Resource
     protected static ?string $model = Periodical::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+    protected static ?string $navigationGroup = 'Periodical Management';
+
 
     public static function form(Form $form): Form
     {

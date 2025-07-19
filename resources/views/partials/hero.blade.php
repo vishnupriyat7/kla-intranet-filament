@@ -17,7 +17,7 @@
 
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
-                                    <span class="text-dark" style="width: 100px;">Offc.Order</span>
+                                    <span class="text-dark" style="width: 100px;">Office Order</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
