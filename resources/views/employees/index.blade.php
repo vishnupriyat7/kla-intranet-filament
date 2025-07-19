@@ -58,7 +58,8 @@
                     { data: 'name', name: 'name' },
                     { data: 'designation', name: 'designation' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
-                ]
+                ],
+                order: [1, 'asc']
             });
 
             $('#employeeTable').on('click', '.view-employee', function () {
