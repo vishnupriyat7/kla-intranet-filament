@@ -4,28 +4,33 @@
     <div class="container py-3" style="position: relative; z-index: 1;">
         <div class="tab-class mb-1">
             <div class="row g-4">
-                <div class="col-lg-7 col-xl-7">
+                <div class="col-xl-7 col-xxl-7">
                     <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
-                        <h1 class="mb-4">What’s New</h1>
+                        <h3 class="mb-4">What’s New</h3>
                         <ul class="nav nav-pills d-inline-flex text-center">
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill active me-2" data-bs-toggle="pill"
                                     href="#tab-1">
-                                    <span class="text-dark" style="width: 100px;">Govt.Order</span>
+                                    <span class="text-dark" style="width: 100px;">GO MS</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
-                                    <span class="text-dark" style="width: 100px;">Offc.Order</span>
+                                    <span class="text-dark" style="width: 100px;">GO RT</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
-                                    <span class="text-dark" style="width: 100px;">Circular</span>
+                                    <span class="text-dark" style="width: 100px;">Office Order</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
+                                    <span class="text-dark" style="width: 100px;">Circular</span>
+                                </a>
+                            </li>
+                            <li class="nav-item mb-3">
+                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-5">
                                     <span class="text-dark" style="width: 100px;">News</span>
                                 </a>
                             </li>
@@ -37,18 +42,12 @@
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
-                                        @foreach ($gos as $go)
+                                        @foreach ($goms as $go)
                                             <div class="mb-4">
-
-                                                {{-- <i class="bi bi-link"></i> --}}
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
-
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $go->path) }}"
                                                     data-title="{{ $go->title }}">
-                                                    {{-- <i class="ri-eye-fill"></i> --}}
                                                     {{ $go->title }}
                                                 </a>
                                                 <small class="text-body d-block">
@@ -59,8 +58,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -73,12 +71,39 @@
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
+                                        @foreach ($gort as $go)
+                                            <div class="mb-4">
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $go->path) }}"
+                                                    data-title="{{ $go->title }}">
+                                                    {{ $go->title }}
+                                                </a>
+                                                <small class="text-body d-block">
+                                                    <i class="fas fa-calendar-alt me-1"></i>
+                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
+                                                </small>
+                                            </div>
+                                        @endforeach
+                                        <div class="mt-2 d-flex justify-content-center">
+                                            <div class="col-4">
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                            hover-bg-primary text-hover-white border-primary">View
+                                                    All >></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-pane fade show p-0">
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($oos as $oo)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $oo->path) }}"
                                                     data-title="{{ $oo->title }}">
                                                     {{-- <i class="fas fa-solid fa-paperclip me-1"></i> --}}
@@ -93,8 +118,7 @@
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
                                                 <a href="{{ route('home.order-circular', 'oo') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
-      hover-bg-primary text-hover-white border-primary">
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark hover-bg-primary text-hover-white border-primary">
                                                     View All >>
                                                 </a>
                                             </div>
@@ -103,16 +127,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="tab-3" class="tab-pane fade show p-0">
+                        <div id="tab-4" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($crcls as $crclr)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $crclr->path) }}"
                                                     data-title="{{ $crclr->title }}">
                                                     {{-- <i class="fas fa-solid fa-paperclip me-1"></i> --}}
@@ -126,8 +148,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'cr') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'cr') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -136,14 +157,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="tab-4" class="tab-pane fade show p-0">
+                        <div id="tab-5" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($newsupdates as $news)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
                                                 <a href="{{ asset('storage/' . $news->path) }}" class="h6"
                                                     data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $news->path) }}"
@@ -158,8 +178,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('updatesmore') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('updatesmore') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -170,27 +189,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-xl-5">
+                <div class="col-xxl-5 col-xl-5">
                     <div class="row g-4">
                         <div class="col-12">
                             <div class="p-3 rounded border h-100" style="min-height: 600px;">
-                                <h2 class="mb-5">Tools/Application</h2>
+                                <h3 class="mb-5">Tools/Application</h3>
                                 <div class="row g-4 text-center tools-application">
-                                    <!-- Attendance -->
-                                    <div class="col-4 mb-4">
-                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
-                                            href="http://172.24.18.28/attendance-app/" target="_blank">
-                                            <i class="fas fa-user-check fa-2x mb-2"
-                                                style="color: rgb(60, 93, 240)"></i>
-                                            <span>Attendance</span>
-                                        </a>
-                                    </div>
                                     <!-- E office -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://e-kla.kerala.gov.in/SSOComponent/auth.php" target="_blank">
                                             <i class="fas fa-laptop-code fa-2x mb-2" style="color: #ec4297"></i>
                                             <span>E office</span>
+                                        </a>
+                                    </div>
+                                    <!-- Attendance -->
+                                    <div class="col-4 mb-4">
+                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                            href="http://172.24.18.28/attendance-app/" target="_blank">
+                                            <i class="fas fa-user-check fa-2x mb-2" style="color: rgb(60, 93, 240)"></i>
+                                            <span>Attendance</span>
                                         </a>
                                     </div>
                                     <!-- e-Niyamasabha -->
@@ -201,21 +219,20 @@
                                             <span>e-Niyamasabha</span>
                                         </a>
                                     </div>
-                                    <!-- Overtime Allowance Portal -->
-                                    <div class="col-4 mb-4">
-                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
-                                            href="http://172.24.18.16/login" target="_blank">
-                                            <i class="fas fa-money-check-alt fa-2x mb-2" style="color:  #17a2b8"></i>
-                                            <span>Overtime Allowance</span>
-                                        </a>
-                                    </div>
-
                                     <!-- Official eMail -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://email.gov.in/" target="_blank">
                                             <i class="fas fa-envelope fa-2x mb-2" style="color: #28a745"></i>
                                             <span>Official eMail</span>
+                                        </a>
+                                    </div>
+                                    <!-- Overtime Allowance Portal -->
+                                    <div class="col-4 mb-4">
+                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                            href="http://172.24.18.16/login" target="_blank">
+                                            <i class="fas fa-money-check-alt fa-2x mb-2" style="color:  #17a2b8"></i>
+                                            <span>Overtime Allowance</span>
                                         </a>
                                     </div>
                                     <!-- Mail ID Dropdown -->
@@ -252,9 +269,8 @@
                                                 data-pdf="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
                                                 data-title="Sections"><i class="fas fa-building me-2"></i>Sections</a>
 
-                                            <a class="dropdown-item"
-                                                href="http://www.niyamasabha.org/codes/pa_MLAs.htm" target="_blank"><i
-                                                    class="fas fa-user-tie me-2"></i>PA to MLAs</a>
+                                            <a class="dropdown-item" href="http://www.niyamasabha.org/codes/pa_MLAs.htm"
+                                                target="_blank"><i class="fas fa-user-tie me-2"></i>PA to MLAs</a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/Telephone Directory - 2024.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
@@ -363,8 +379,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://www.incometax.gov.in/iec/foportal/" target="_blank">
-                                            <i class="fas fa-file-invoice-dollar fa-2x mb-2"
-                                                style="color: #28a745"></i>
+                                            <i class="fas fa-file-invoice-dollar fa-2x mb-2" style="color: #28a745"></i>
                                             <span>Income Tax e-filing</span>
                                         </a>
                                     </div>
@@ -390,19 +405,19 @@
                                                 href="{{ asset('storage/uploads/records/Annual Index-2014.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/records/Annual Index-2014.pdf') }}"
-                                                data-title="Annual Index 2014">2014</a>
+                                                data-title="Annual Index 2014">Annual Index Report 2014</a>
 
 
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/records/Annual Index-2013.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/records/Annual Index-2013.pdf') }}"
-                                                data-title="Annual Index 2013">2013</a>
+                                                data-title="Annual Index 2013">Annual Index Report 2013</a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/records/Annual Index-2012.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/records/Annual Index-2012.pdf') }}"
-                                                data-title="Annual Index 2012">2012</a>
+                                                data-title="Annual Index 2012">Annual Index Report 2012</a>
                                         </div>
                                     </div>
 
@@ -502,10 +517,10 @@
         "retina_detect": true
     });
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var pdfModal = document.getElementById("pdfModal");
 
-        pdfModal.addEventListener("show.bs.modal", function(event) {
+        pdfModal.addEventListener("show.bs.modal", function (event) {
             var link = event.relatedTarget; // Link that triggered the modal
             var pdfUrl = link.getAttribute("data-pdf");
             var pdfTitle = link.getAttribute("data-title");
@@ -515,7 +530,7 @@
             document.getElementById("pdfViewer").src = pdfUrl;
         });
 
-        pdfModal.addEventListener("hidden.bs.modal", function() {
+        pdfModal.addEventListener("hidden.bs.modal", function () {
             document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
         });
     });

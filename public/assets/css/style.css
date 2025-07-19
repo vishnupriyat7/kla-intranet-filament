@@ -1,6 +1,8 @@
 @font-face {
     font-family: "Meera Malayalam";
     src: url("/assets/fonts/Meera.ttf") format("truetype");
+     font-weight: normal;
+    font-style: normal;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@100..900&display=swap");
@@ -10,7 +12,7 @@ body {
 }
 
 .hero .h6 {
-    font-family: "Noto Sans Malayalam", "Montserrat", sans-serif;
+    font-family: "Meera Malayalam","Noto Sans Malayalam", "Montserrat", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 1.25rem;
@@ -282,14 +284,14 @@ body {
 .dropdown .dropdown-menu a:hover {
     /* background: var(--bs-secondary);
     color: var(--bs-primary); */
-    background: linear-gradient(#FFAE6D);
+    background: linear-gradient(#e5b793);
 }
 
 .navbar .nav-item:hover .dropdown-menu {
     transform: rotateX(0deg);
     visibility: visible;
     /* background: var(--bs-light) !important; */
-    background: linear-gradient(#FECD70);
+    background: linear-gradient(#bfeaf0);
     border-radius: 10px !important;
     transition: 0.5s;
     opacity: 1;

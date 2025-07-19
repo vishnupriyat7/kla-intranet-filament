@@ -21,6 +21,9 @@ class PeriodicalMasterResource extends Resource
     protected static ?string $model = PeriodicalMaster::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationGroup = 'Periodical Management';
+    protected static ?string $navigationLabel = 'Masters';
+
 
     public static function form(Form $form): Form
     {
@@ -55,10 +58,7 @@ class PeriodicalMasterResource extends Resource
                     ->disk('public')
                     ->size(50)
                     ->circular()
-                    ->defaultImageUrl(url('images/default-placeholder.png')) // Fallback if image is missing
-                    ->getStateUsing(function ($record) {
-                        return $record->img ? Storage::disk('public')->url($record->img) : null;
-                    }),
+                    ->defaultImageUrl(url('images/default-placeholder.png')),// Fallback if image is missing
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
