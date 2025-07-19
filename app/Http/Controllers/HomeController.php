@@ -27,7 +27,14 @@ class HomeController extends Controller
             ->orderBy('date', 'desc')
             ->limit(5)
             ->get();
-        $gos = OrderCircular::where('type', 'G')
+        $goms = OrderCircular::where('type', 'G')
+            ->where('go_type', 'M')
+            ->where('status', '1') // Fetch records in range
+            ->orderBy('date', 'desc')
+            ->limit(5)
+            ->get();
+        $gort = OrderCircular::where('type', 'G')
+            ->where('go_type', 'R')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
             ->limit(5)
@@ -57,7 +64,7 @@ class HomeController extends Controller
             ->whereYear('date', Carbon::now()->year)
             ->where('status', '1')
             ->count();
-        return view('home', compact('periodicals', 'newsupdates', 'gos', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount'));
+        return view('home', compact('periodicals', 'newsupdates', 'goms', 'gort', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount'));
     }
 
     public function indexOther()
