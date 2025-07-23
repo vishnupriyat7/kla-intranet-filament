@@ -295,7 +295,15 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-        $sections = Section::get();
+        // $sections = Section::get();
+        $excludeSection = ['office', 'js', 'joint', 'deputy', 'as', 'special', 'librarian', 'chief', 'e-niyamasabha'];
+        $sections = Section::where(function ($query) use ($excludeSection) {
+            foreach ($excludeSection as $section) {
+                $query->where('name', 'not like', $section . '%');
+            }
+        })
+            ->orderBy('name', 'asc')
+            ->get();
         $save_request = '';
         return view('orders-circular.upload_request', compact('periodicals', 'save_request', 'sections'));
     }
