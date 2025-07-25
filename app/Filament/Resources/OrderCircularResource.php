@@ -22,11 +22,20 @@ class OrderCircularResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $excludeKeywords = ['office', 'js', 'joint', 'deputy', 'as', 'special', 'librarian', 'chief', 'e-niyamasabha'];
         return $form
             ->schema([
                 Forms\Components\Select::make('section_id')
-                    // ->required()
-                    ->relationship('sections', 'name'),
+                    ->relationship(
+                        name: 'sections',
+                        titleAttribute: 'name',
+                        modifyQueryUsing: function ($query) use ($excludeKeywords) {
+                            foreach ($excludeKeywords as $keyword) {
+                                $query->where('name', 'not like', '%' . $keyword . '%');
+                            }
+                            return $query;
+                        }
+                    ),
                 Forms\Components\Select::make('type')
                     ->options([
                         'G' => 'Govt Order',
