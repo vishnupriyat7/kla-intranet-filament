@@ -263,7 +263,7 @@ class OrderCircularResource extends Resource
                     ->modalContent(function ($record) {
                         $url = \Illuminate\Support\Facades\Storage::url($record->path);
                         return new \Illuminate\Support\HtmlString(
-                            '<div style="height: 80vh; padding: 1rem; overflow: auto;">' .
+                            '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
                                 view('filament.pdf-modal', ['url' => $url])->render() .
                                 '</div>'
                         );
