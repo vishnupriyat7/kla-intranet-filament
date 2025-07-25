@@ -475,6 +475,10 @@ body {
 /*** Banner Section End ***/
 
 /*** Footer Start ***/
+.footer {
+    background-color:#0a1f44
+
+}
 .footer button:hover {
     background: var(--bs-white) !important;
     color: var(--bs-primary) !important;
