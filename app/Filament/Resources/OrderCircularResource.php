@@ -71,37 +71,35 @@ class OrderCircularResource extends Resource
                         $set('sub_sub_type', null);
                     }),
                 Forms\Components\Select::make('sub_type')
-                    ->label('Service / Member Related')
+                    ->label('Category')
                     ->options([
                         'Service' => 'Service Related',
-                        'Member' => 'Members Related',
+                        'Account' => 'Account Related',
+                        'Other' => 'Other'
                     ])
                     // ->required()
                     ->visible(fn(callable $get) => in_array($get('go_type'), ['M', 'R', 'P']) || $get('type') === 'O')
                     ->reactive()
-                    ->default('Service')
+                    // ->default('Service')
                     ->afterStateUpdated(function (callable $set) {
                         $set('sub_sub_type', null);
                     }),
                 Forms\Components\Select::make('sub_sub_type')
-                    ->label('Category')
-                    ->options(function (callable $get) {
-                        $type = $get('type');
-                        $options = [
-                            'CR' => 'Claim / Reimbursements',
-                            'TP' => 'Transfer & Posting',
-                            'PA' => 'PA Postings',
-                            'AR' => 'Accounts Related',
-                            'G' => 'General',
-                        ];
+                    ->label('Sub Category')
+                    // ->options(function (callable $get) {
+                    ->options([
+                        // $type = $get('type');
+                        // $options = [
+                        'CR' => 'Claim / Reimbursements',
+                        'TP' => 'Transfer & Posting',
+                        'G' => 'General',
+                        // ];
                         // Remove PA option if type is Circular
-                        if ($type === 'C') {
-                            unset($options['PA']);
-                        }
-                        return $options;
-                    })
+                        // return $options;
+                        // })
+                    ])
                     ->required()
-                    ->visible(fn(callable $get) => in_array($get('sub_type'), ['Service', 'Member']) || $get('type') === 'C')
+                    // ->visible(fn(callable $get) => in_array($get('sub_type'), ['Service', 'Member']) || $get('type') === 'C')
                     ->reactive(),
                 Forms\Components\TextInput::make('number')
                     ->required()
@@ -273,8 +271,8 @@ class OrderCircularResource extends Resource
                         $url = \Illuminate\Support\Facades\Storage::url($record->path);
                         return new \Illuminate\Support\HtmlString(
                             '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
-                                view('filament.pdf-modal', ['url' => $url])->render() .
-                                '</div>'
+                            view('filament.pdf-modal', ['url' => $url])->render() .
+                            '</div>'
                         );
                     })
                     ->modalSubmitAction(false) // Remove the default "Submit" button

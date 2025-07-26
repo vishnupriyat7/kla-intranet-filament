@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
-class Category extends Model
+class tag extends Model
 {
     use HasFactory, Notifiable;
 
@@ -16,7 +16,7 @@ class Category extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name_eng',
-        'name_mal'
+        'phrase',
+        'status'
     ];
 }
