@@ -201,7 +201,7 @@ class HomeController extends Controller
                     } elseif ($order->type == 'O') {
                         return 'O.O.' . 'No.' . $order->number ?: '-';
                     } elseif ($order->type == 'C') {
-                        return 'Cir. ' . 'No.' . $order->number ?: '-';
+                        return 'Cir.' . 'No.' . $order->number ?: '-';
                     }
                     return '-';
                 })

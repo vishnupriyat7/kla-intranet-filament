@@ -121,6 +121,7 @@
             $(tableId).DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true, // Ensure responsive plugin is enabled
                 ajax: {
                     url: '{{ route('home.order-circular', ['type' => $orderTypeKey]) }}',
                     method: 'GET',
@@ -178,10 +179,16 @@
                 createdRow: function(row, data, dataIndex) {
                     $('td:eq(1)', row).css('white-space', 'nowrap');
                     $('td:eq(2)', row).css('white-space', 'nowrap');
+
                 }
             });
 
-            console.log(`DataTable initialized for ${tableId}`);
+            // Adjust table layout after initialization
+            setTimeout(() => {
+                table.columns.adjust().responsive.recalc();
+            }, 100); // Small delay to ensure tab is fully visible
+
+            // console.log(`DataTable initialized for ${tableId}`);
         }
 
         // Handle month tab clicks for both Manuscript and Routine
@@ -201,10 +208,21 @@
             console.error('No active month tab found on page load.');
         }
 
-        const routineActive = document.querySelector('.month-tab[data-type="R"].active');
-        if (routineActive) {
-            console.log('Manually triggering Routine tab init');
-            initializeDataTable(routineActive);
-        }
+        // const routineActive = document.querySelector('.month-tab[data-type="R"].active');
+        // if (routineActive) {
+        //     console.log('Manually triggering Routine tab init');
+        //     initializeDataTable(routineActive);
+        // }
+        // Ensure Routine tab tables are adjusted when the Routine tab is shown
+        document.querySelectorAll('a[data-bs-toggle="tab"][href="#routine"]').forEach(routineTab => {
+            routineTab.addEventListener('shown.bs.tab', function() {
+                const activeMonthTab = document.querySelector(
+                    '.month-tab[data-type="R"].active');
+                if (activeMonthTab) {
+                    console.log('Routine tab shown, adjusting active month table');
+                    initializeDataTable(activeMonthTab);
+                }
+            });
+        });
     });
 </script>
