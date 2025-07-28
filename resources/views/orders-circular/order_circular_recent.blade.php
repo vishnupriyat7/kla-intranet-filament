@@ -187,7 +187,21 @@
                         {
                             data: 'number',
                             name: 'number',
-                            className: 'text-nowrap fs-10 text-dark' // No wrap, medium font, dark text
+                            className: 'text-nowrap fs-10 text-dark', // No wrap, medium font, dark text
+                            render: function(data, type, row) {
+                                // Parse DD-MM-YYYY date format
+                                let year = 'Unknown';
+                                if (row.date) {
+                                    const [day, month, yearStr] = row.date.split('-');
+                                    const parsedDate = new Date(
+                                        `${yearStr}-${month}-${day}`);
+                                    if (!isNaN(parsedDate)) {
+                                        year = parsedDate.getFullYear();
+                                    }
+                                }
+                                return `${data}/${year}/KLA`;
+                            }
+
                         },
                         {
                             data: 'date',

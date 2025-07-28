@@ -5,8 +5,8 @@
             @foreach ($months as $month)
                 <li class="nav-item mb-3">
                     <a class="d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('m') ? 'active' : '' }} month-tab"
-                        data-bs-toggle="pill" href="#{{ $type }}-tab-{{ $month['no'] }}" data-month="{{ $month['no'] }}"
-                        data-type="{{ $type }}">
+                        data-bs-toggle="pill" href="#{{ $type }}-tab-{{ $month['no'] }}"
+                        data-month="{{ $month['no'] }}" data-type="{{ $type }}">
                         <span class="text-dark" style="width: 200px;">
                             {{ $month['name'] }}
                         </span>
@@ -78,11 +78,11 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         // PDF modal logic
         const pdfModal = document.getElementById("pdfModal");
 
-        pdfModal.addEventListener("show.bs.modal", function (event) {
+        pdfModal.addEventListener("show.bs.modal", function(event) {
             const link = event.relatedTarget;
             const pdfUrl = link.getAttribute("data-pdf");
             const pdfTitle = link.getAttribute("data-title");
@@ -91,7 +91,7 @@
             document.getElementById("pdfViewer").src = pdfUrl;
         });
 
-        pdfModal.addEventListener("hidden.bs.modal", function () {
+        pdfModal.addEventListener("hidden.bs.modal", function() {
             document.getElementById("pdfViewer").src = "";
         });
 
@@ -122,20 +122,20 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route("home.order-circular", ["type" => $orderTypeKey]) }}',
+                    url: '{{ route('home.order-circular', ['type' => $orderTypeKey]) }}',
                     method: 'GET',
                     data: {
                         month: month,
                         go_type: type,
                         _t: new Date().getTime()
                     },
-                    error: function (xhr, status, error) {
-                        console.error(`AJAX error for type ${type}, month ${month}:`, status, error);
+                    error: function(xhr, status, error) {
+                        console.error(`AJAX error for type ${type}, month ${month}:`, status,
+                            error);
                         console.error('Response:', xhr.responseText);
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         className: 'text-center fs-6'
@@ -143,7 +143,19 @@
                     {
                         data: 'number',
                         name: 'number',
-                        className: 'text-nowrap fs-10 text-dark'
+                        className: 'text-nowrap fs-10 text-dark',
+                        render: function(data, type, row) {
+                            // Parse DD-MM-YYYY date format
+                            let year = 'Unknown';
+                            if (row.date) {
+                                const [day, month, yearStr] = row.date.split('-');
+                                const parsedDate = new Date(`${yearStr}-${month}-${day}`);
+                                if (!isNaN(parsedDate)) {
+                                    year = parsedDate.getFullYear();
+                                }
+                            }
+                            return `${data}/${year}/KLA`;
+                        }
                     },
                     {
                         data: 'date',
@@ -163,7 +175,7 @@
                         className: 'text-center fs-5'
                     }
                 ],
-                createdRow: function (row, data, dataIndex) {
+                createdRow: function(row, data, dataIndex) {
                     $('td:eq(1)', row).css('white-space', 'nowrap');
                     $('td:eq(2)', row).css('white-space', 'nowrap');
                 }
@@ -174,7 +186,7 @@
 
         // Handle month tab clicks for both Manuscript and Routine
         document.querySelectorAll('.month-tab').forEach(tab => {
-            tab.addEventListener('shown.bs.tab', function (event) {
+            tab.addEventListener('shown.bs.tab', function(event) {
                 console.log('Tab shown:', event.target);
                 initializeDataTable(event.target);
             });
