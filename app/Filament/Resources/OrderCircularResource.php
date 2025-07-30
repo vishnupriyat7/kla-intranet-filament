@@ -3,16 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderCircularResource\Pages;
-use App\Filament\Resources\OrderCircularResource\RelationManagers;
 use App\Models\OrderCircular;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters;
+use Filament\Tables\Actions;
+use App\Models\Tag;
 
 class OrderCircularResource extends Resource
 {
@@ -25,7 +29,7 @@ class OrderCircularResource extends Resource
         $excludeKeywords = ['office', 'js', 'joint', 'deputy', 'as', 'special', 'librarian', 'chief', 'e-niyamasabha'];
         return $form
             ->schema([
-                Forms\Components\Select::make('section_id')
+                Select::make('section_id')
                     ->relationship(
                         name: 'sections',
                         titleAttribute: 'name',
@@ -36,7 +40,7 @@ class OrderCircularResource extends Resource
                             return $query;
                         }
                     ),
-                Forms\Components\Select::make('type')
+                Select::make('type')
                     ->options([
                         'G' => 'Govt Order',
                         'O' => 'Office Order',
@@ -45,7 +49,6 @@ class OrderCircularResource extends Resource
                     ->required()
                     ->reactive()
                     ->afterStateUpdated(function (callable $set, $state) {
-                        // Reset dependent fields when type changes
                         if ($state !== 'G') {
                             $set('go_type', null);
                         }
@@ -57,11 +60,12 @@ class OrderCircularResource extends Resource
                             $set('sub_sub_type', null);
                         }
                     }),
-                Forms\Components\Select::make('go_type')
+                Select::make('go_type')
+                    ->label('Go Type')
                     ->options([
-                        'M' => 'സർക്കാർ ഉത്തരവുകൾ കയ്യെഴുത്തു (Govt.Order Manuscript)',
-                        'R' => 'സർക്കാർ ഉത്തരവുകൾ സാധാ (Govt.Order Routine)',
-                        'P' => 'സർക്കാർ ഉത്തരവുകൾ അച്ചടി (Govt.Order Print)',
+                        'M' => 'സ.ഉ. കയ്യെഴുത്തു (G.O Manuscript)',
+                        'R' => 'സ.ഉ. സാധാ (G.O Routine)',
+                        'P' => 'സ.ഉ. അച്ചടി (G.O Print)',
                     ])
                     ->required()
                     ->visible(fn(callable $get) => $get('type') === 'G')
@@ -70,48 +74,49 @@ class OrderCircularResource extends Resource
                         $set('sub_type', null);
                         $set('sub_sub_type', null);
                     }),
-                Forms\Components\Select::make('sub_type')
+                Select::make('sub_type')
                     ->label('Category')
                     ->options([
                         'Service' => 'Service Related',
                         'Account' => 'Account Related',
                         'Other' => 'Other'
                     ])
-                    // ->required()
-                    ->visible(fn(callable $get) => in_array($get('go_type'), ['M', 'R', 'P']) || $get('type') === 'O')
+                    ->visible(fn(callable $get) => $get('type') === 'G' || $get('type') === 'O')
                     ->reactive()
-                    // ->default('Service')
                     ->afterStateUpdated(function (callable $set) {
                         $set('sub_sub_type', null);
                     }),
-                Forms\Components\Select::make('sub_sub_type')
+                Select::make('sub_sub_type')
                     ->label('Sub Category')
-                    // ->options(function (callable $get) {
                     ->options([
-                        // $type = $get('type');
-                        // $options = [
                         'CR' => 'Claim / Reimbursements',
                         'TP' => 'Transfer & Posting',
-                        'G' => 'General',
-                        // ];
-                        // Remove PA option if type is Circular
-                        // return $options;
-                        // })
+                        'G' => 'General'
                     ])
                     ->required()
-                    // ->visible(fn(callable $get) => in_array($get('sub_type'), ['Service', 'Member']) || $get('type') === 'C')
                     ->reactive(),
-                Forms\Components\TextInput::make('number')
+                TextInput::make('number')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('date')
+                Components\DatePicker::make('date')
                     ->required(),
-                Forms\Components\Textarea::make('title')
+                Components\Textarea::make('title')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('keywords')
+                CheckboxList::make('tags')
+                    ->label('Related To')
+                    ->options(Tag::all()->pluck('phrase', 'id'))
+                    ->columns(4)
+                    ->columnSpanFull()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $names = Tag::whereIn('id', $state)->pluck('phrase')->toArray();
+                        $set('keywords', implode(', ', $names));
+                    }),
+                TextInput::make('keywords')
+                    ->label('Keywords (If any)')
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('path')
+                Components\FileUpload::make('path')
                     ->required()
                     ->acceptedFileTypes(['application/pdf'])
                     ->maxSize(1024000) // 1GB max size (matching controller validation)
@@ -133,7 +138,7 @@ class OrderCircularResource extends Resource
                             Storage::disk('public')->delete($record->path);
                         }
                     }),
-                Forms\Components\Select::make('status')
+                Select::make('status')
                     ->options([
                         '1' => 'Published',
                         '0' => 'Unpublished',
@@ -147,16 +152,15 @@ class OrderCircularResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('#') // Add serial number column
+                TextColumn::make('#') // Add serial number column
                     ->label('S.No') // Label for the column
                     ->rowIndex(), // Automatically generates a serial number
-
-                Tables\Columns\TextColumn::make('sections.name')
+                TextColumn::make('sections.name')
                     ->label('Section')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->formatStateUsing(function ($state) {
                         return match ($state) {
                             'G' => 'Govt Order',
@@ -167,7 +171,7 @@ class OrderCircularResource extends Resource
                     })
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('go_type')
+                TextColumn::make('go_type')
                     ->formatStateUsing(function ($state) {
                         return match ($state) {
                             'M' => 'സ.ഉ.കയ്യെഴുത്തു (GO.Manuscript)',
@@ -178,92 +182,94 @@ class OrderCircularResource extends Resource
                     })
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('sub_type')
+                TextColumn::make('sub_type')
                     ->label('Service/Member')
                     ->formatStateUsing(fn($state) => $state ?: '-')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('sub_sub_type')
+                TextColumn::make('sub_sub_type')
                     ->label('Category')
-                    ->formatStateUsing(fn($state) => $state ?: '-')
+                    ->formatStateUsing(function ($state) {
+                        return match ($state) {
+                            'G' => 'General',
+                            'CR' => 'Claim / Reimbersment',
+                            'TP' => 'Transfer & Posting',
+                            default => $state ?: '-',
+                        };
+                    })
                     ->sortable()
                     ->searchable(),
-
-                Tables\Columns\TextColumn::make('number')
+                TextColumn::make('number')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->date('d-m-Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('keywords')
+                TextColumn::make('keywords')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->date('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->formatStateUsing(fn($state) => $state == '1' ? '<span class="badge bg-success">Published</span>' : '<span class="badge bg-danger">Unpublished</span>')
                     ->html()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('title_length')
+                TextColumn::make('title_length')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('error_type')
+                TextColumn::make('error_type')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('type')
+                SelectFilter::make('type')
                     ->options([
                         'G' => 'Govt Order',
                         'O' => 'Office Order',
                         'C' => 'Circular',
                     ])
                     ->label('Type'),
-                Tables\Filters\SelectFilter::make('go_type')
+                SelectFilter::make('go_type')
                     ->options([
                         'M' => 'സ.ഉ.കയ്യെഴുത്തു (GO.Manuscript)',
                         'R' => 'സ.ഉ.സാധാ (GO.Routine)',
                         'P' => 'സ.ഉ.അച്ചടി (GO.Print)',
                     ])
                     ->label('GO Type'),
-                Tables\Filters\SelectFilter::make('status')
+                SelectFilter::make('status')
                     ->options([
                         '1' => 'Published',
                         '0' => 'Unpublished',
                     ])
                     ->label('Status'),
-                Tables\Filters\SelectFilter::make('section_id')
+                SelectFilter::make('section_id')
                     ->relationship('sections', 'name')
                     ->label('Section')
                     ->preload()
                     ->searchable(),
-                Tables\Filters\Filter::make('title_length')
+                Filters\Filter::make('title_length')
                     ->label('Title Length < 50')
                     ->query(function ($query) {
                         return $query->whereRaw('CHAR_LENGTH(title) < 50');
                     })
                     ->toggle(),
-
-
-
             ])
             ->actions([
-                Tables\Actions\Action::make('view_pdf')
+                Actions\Action::make('view_pdf')
                     ->label('')
                     ->icon('heroicon-s-eye')
                     ->modalHeading(fn($record) => 'View PDF: ' . $record->title)
@@ -278,12 +284,12 @@ class OrderCircularResource extends Resource
                     ->modalSubmitAction(false) // Remove the default "Submit" button
                     ->modalCancelActionLabel('Close') // Label for the close button
                     ->modalWidth('5xl'), // Set the modal width (adjust as needed)
-                Tables\Actions\EditAction::make()
+                Actions\EditAction::make()
                     ->label('') // Remove the label
                     ->color('warning'), // Sets button to yellow (Tailwind text-yellow-500)
 
 
-                Tables\Actions\DeleteAction::make()
+                Actions\DeleteAction::make()
                     ->label('') // Remove the label
                     ->before(function ($record) {
                         // Delete associated file before deleting record
@@ -293,7 +299,7 @@ class OrderCircularResource extends Resource
                     }),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make()
+                Actions\DeleteBulkAction::make()
                     ->before(function ($records) {
                         // Delete associated files before deleting records
                         foreach ($records as $record) {
