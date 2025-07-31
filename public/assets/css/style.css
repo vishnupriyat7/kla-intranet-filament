@@ -284,14 +284,14 @@ body {
 .dropdown .dropdown-menu a:hover {
     /* background: var(--bs-secondary);
     color: var(--bs-primary); */
-    background: linear-gradient(#e5b793);
+    background: linear-gradient(#def3ee);
 }
 
 .navbar .nav-item:hover .dropdown-menu {
     transform: rotateX(0deg);
     visibility: visible;
     /* background: var(--bs-light) !important; */
-    background: linear-gradient(#bfeaf0);
+    background: linear-gradient(#ADA2FF, #C0DEFF);
     border-radius: 10px !important;
     transition: 0.5s;
     opacity: 1;
