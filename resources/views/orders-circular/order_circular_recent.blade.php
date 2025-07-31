@@ -5,7 +5,15 @@
     <div class="container-fluid py-3" id="order-circular">
         <div class="container">
             <!-- Title -->
-            <h1>{{ $orderType }}</h1>
+           <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="mb-0">{{ $orderType }}</h1>
+                <button class="btn-search btn border border-danger bg-prev-btn my-auto">
+                    <a href="{{ route('home.advanced-search') }}">
+                    Previous Orders
+                     {{-- <i class="fas fa-search text-primary fs-4"></i> --}}
+                    </a>
+                </button>
+            </div>
             </br>
             @if ($orderTypeKey == 'go')
                 <!-- Tabs for Manuscript, Routine, Print -->

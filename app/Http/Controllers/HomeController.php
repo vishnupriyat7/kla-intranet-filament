@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -157,13 +156,15 @@ class HomeController extends Controller
                 ->get();
             $orderType = 'Circular';
         }
-        $months = collect(range(0, 5))->map(function ($i) {
+        $base = now()->startOfMonth();
+        $months = collect(range(5, 0))->map(function ($i) use ($base) {
+            $date = $base->copy()->subMonths($i);
             return [
-                'no' => now()->subMonths(5 - $i)->format('m'),  // Month number (1-12)
-                'name' => now()->subMonths(5 - $i)->format('F') . ' ' . now()->subMonths(5 - $i)->format('Y'),   // Full month name (January, February, etc.)
+                'no' => $date->format('m'),
+                'year' => $date->format('Y'),
+                'name' => $date->format('F Y'),
             ];
-        });
-
+        })->values();
         // Check if the request is an Ajax call
         if ($request->ajax()) {
             $month = $request->get('month');
@@ -234,7 +235,6 @@ class HomeController extends Controller
         $results = collect();
         if ($request->has('anysearch')) {
             $search = $request->anysearch;
-
             // Get all table names from the database, excluding system tables
             $tables = DB::select("SHOW TABLES");
             $excludedTables = [
@@ -273,11 +273,6 @@ class HomeController extends Controller
                 $results = $results->merge($tableResults);
             }
         }
-
-        // return response()->json($results);
-
-        // $orders = $query->paginate(20);
-
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
