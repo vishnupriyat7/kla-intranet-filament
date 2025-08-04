@@ -522,7 +522,8 @@ body {
 /*** Footer End ***/
 
 /** Common **/
-.bg-prev-btn {
-    background-color: rgb(40, 40, 126);
-}
+/* .bg-prev-btn {
+    background-color:  var(--bs-primary);
+
+} */
 /** Common End **/

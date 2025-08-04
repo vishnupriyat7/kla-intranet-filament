@@ -341,4 +341,5 @@ class OrderCircularResource extends Resource
             'edit' => Pages\EditOrderCircular::route('/{record}/edit'),
         ];
     }
+
 }
