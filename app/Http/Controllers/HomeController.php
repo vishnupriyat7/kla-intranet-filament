@@ -133,7 +133,6 @@ class HomeController extends Controller
         $startDate = Carbon::now()->subMonths(5)->startOfMonth(); // 5 months ago (1st day)
         $endDate = Carbon::now()->endOfMonth(); // Last day of the current month
         $typeKey = $request->type;
-
         if ($request->type == 'go') {
             $orders = OrderCircular::where('type', 'G')
                 ->where('status', '1')
@@ -189,7 +188,6 @@ class HomeController extends Controller
             $orders = $orders->filter(function ($order) use ($month) {
                 return \Carbon\Carbon::parse($order->date)->format('m') == str_pad($month, 2, '0', STR_PAD_LEFT);
             });
-            // \Log::info('Filtered Orders:', ['orders' => $orders]);
             return DataTables::of($orders)
                 ->addIndexColumn()
                 ->addColumn('number', function ($order) {
@@ -253,21 +251,17 @@ class HomeController extends Controller
 
             foreach ($tables as $table) {
                 $tableName = array_values((array) $table)[0];
-
                 // Skip system tables
                 if (in_array($tableName, $excludedTables)) {
                     continue;
                 }
-
                 // Get all column names from the current table
                 $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
-
                 // Build the query for the current table
                 $query = DB::table($tableName);
                 foreach ($columns as $column) {
                     $query->orWhere($column, 'LIKE', "%{$search}%");
                 }
-
                 // Merge the results with the previous ones
                 $tableResults = $query->get();
                 $results = $results->merge($tableResults);
