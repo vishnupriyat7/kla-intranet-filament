@@ -7,7 +7,7 @@ use App\Models\OrderCircular;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Storage;
+
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -17,6 +17,10 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters;
 use Filament\Tables\Actions;
 use App\Models\Tag;
+use Dom\Text;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 class OrderCircularResource extends Resource
 {
@@ -145,6 +149,7 @@ class OrderCircularResource extends Resource
                     ])
                     ->required()
                     ->default('0'),
+
             ]);
     }
 
@@ -213,6 +218,9 @@ class OrderCircularResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('path')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->date('d-m-Y')
                     ->sortable()
@@ -233,6 +241,12 @@ class OrderCircularResource extends Resource
                 TextColumn::make('error_type')
                     ->sortable()
                     ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updatedBy.name')
+                    ->label('Updated By')
+                    ->sortable()
+                    ->searchable()
+                    ->formatStateUsing(fn($state) => $state ?? 'N/A')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
@@ -277,8 +291,8 @@ class OrderCircularResource extends Resource
                         $url = \Illuminate\Support\Facades\Storage::url($record->path);
                         return new \Illuminate\Support\HtmlString(
                             '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
-                            view('filament.pdf-modal', ['url' => $url])->render() .
-                            '</div>'
+                                view('filament.pdf-modal', ['url' => $url])->render() .
+                                '</div>'
                         );
                     })
                     ->modalSubmitAction(false) // Remove the default "Submit" button
