@@ -7,7 +7,6 @@ use App\Models\OrderCircular;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
-
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -17,9 +16,8 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters;
 use Filament\Tables\Actions;
 use App\Models\Tag;
-use Dom\Text;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\Radio;
 
 
 class OrderCircularResource extends Resource
@@ -107,8 +105,16 @@ class OrderCircularResource extends Resource
                 Components\Textarea::make('title')
                     ->required()
                     ->columnSpanFull(),
+                Radio::make('title_lingo')
+                    ->label('Title Language')
+                    ->options([
+                        'E' => 'English',
+                        'M' => 'Malayalam'
+                    ])
+                    ->inline() // Optional: display options horizontally
+                    ->required(),
                 CheckboxList::make('tags')
-                    ->label('Related To')
+                    ->label('Order Related To')
                     ->options(Tag::all()->pluck('phrase', 'id'))
                     ->columns(4)
                     ->columnSpanFull()
@@ -291,8 +297,8 @@ class OrderCircularResource extends Resource
                         $url = \Illuminate\Support\Facades\Storage::url($record->path);
                         return new \Illuminate\Support\HtmlString(
                             '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
-                                view('filament.pdf-modal', ['url' => $url])->render() .
-                                '</div>'
+                            view('filament.pdf-modal', ['url' => $url])->render() .
+                            '</div>'
                         );
                     })
                     ->modalSubmitAction(false) // Remove the default "Submit" button
@@ -323,7 +329,7 @@ class OrderCircularResource extends Resource
                         }
                     }),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('date', 'desc');
     }
 
     public static function getRelations(): array
