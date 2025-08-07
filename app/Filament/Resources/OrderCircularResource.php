@@ -18,6 +18,7 @@ use Filament\Tables\Actions;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\Radio;
+use Illuminate\Support\Facades\DB;
 
 
 class OrderCircularResource extends Resource
@@ -270,6 +271,50 @@ class OrderCircularResource extends Resource
                         'P' => 'സ.ഉ.അച്ചടി (GO.Print)',
                     ])
                     ->label('GO Type'),
+
+
+                // Year-wise filter
+                \Filament\Tables\Filters\SelectFilter::make('year')
+                    ->options(function () {
+                        $years = \Illuminate\Support\Facades\DB::table('order_circulars')
+                            ->selectRaw('YEAR(date) as year')
+                            ->whereNotNull('date')
+                            ->distinct()
+                            ->orderBy('year', 'desc')
+                            ->pluck('year')
+                            ->mapWithKeys(function ($year) {
+                                return [$year => (string) $year];
+                            })
+                            ->toArray();
+                        return $years;
+                    })
+                    ->label('Year')
+                    ->query(function ($query, $data) {
+                        if ($data['value']) {
+                            $query->whereYear('date', $data['value']);
+                        }
+                    }),
+                \Filament\Tables\Filters\SelectFilter::make('month')
+                    ->options([
+                        '1' => 'January',
+                        '2' => 'February',
+                        '3' => 'March',
+                        '4' => 'April',
+                        '5' => 'May',
+                        '6' => 'June',
+                        '7' => 'July',
+                        '8' => 'August',
+                        '9' => 'September',
+                        '10' => 'October',
+                        '11' => 'November',
+                        '12' => 'December',
+                    ])
+                    ->label('Month')
+                    ->query(function ($query, $data) {
+                        if ($data['value']) {
+                            $query->whereMonth('date', $data['value']);
+                        }
+                    }),
                 SelectFilter::make('status')
                     ->options([
                         '1' => 'Published',
@@ -281,6 +326,9 @@ class OrderCircularResource extends Resource
                     ->label('Section')
                     ->preload()
                     ->searchable(),
+
+
+
                 Filters\Filter::make('title_length')
                     ->label('Title Length < 50')
                     ->query(function ($query) {
@@ -297,8 +345,8 @@ class OrderCircularResource extends Resource
                         $url = \Illuminate\Support\Facades\Storage::url($record->path);
                         return new \Illuminate\Support\HtmlString(
                             '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
-                            view('filament.pdf-modal', ['url' => $url])->render() .
-                            '</div>'
+                                view('filament.pdf-modal', ['url' => $url])->render() .
+                                '</div>'
                         );
                     })
                     ->modalSubmitAction(false) // Remove the default "Submit" button
