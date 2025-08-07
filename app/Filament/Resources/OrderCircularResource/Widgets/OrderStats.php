@@ -76,9 +76,7 @@ class OrderStats extends BaseWidget
                         '<span style="color: #2d20e7ff; font-weight: normal;">GO: ' . $userStats['government_order'] . '</span> | ' .
                             '<span style="color: #ca24afff; font-weight: normal;">OO: ' . $userStats['office_order'] . '</span> | ' .
                             '<span style="color: #119627ff; font-weight: normal;">Cir: ' . $userStats['circular'] . '</span><br><br>' .
-                            '<span style="color: #16a34a;">Published: ' . $userStats['published'] . '</span> | ' .
-                            '<span style="color: #dc2626;">Unpublished: ' . $userStats['unpublished'] . '</span><br><br>' .
-                            'GO Breakdown: ' .
+                            'GO Type: ' .
                             '<span style="color: #2d20e7ff; font-weight: normal;">Go.M: ' . $userStats['go_manuscript'] . '</span> | ' .
                             '<span style="color: #2d20e7ff; font-weight: normal;">Go.R: ' . $userStats['go_routine'] . '</span> | ' .
                             '<span style="color: #2d20e7ff; font-weight: normal;">Go.P: ' . $userStats['go_print'] . '</span>'
