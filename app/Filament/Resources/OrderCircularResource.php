@@ -198,7 +198,8 @@ class OrderCircularResource extends Resource
                     ->label('Service/Member')
                     ->formatStateUsing(fn($state) => $state ?: '-')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('sub_sub_type')
                     ->label('Category')
                     ->formatStateUsing(function ($state) {
@@ -210,7 +211,8 @@ class OrderCircularResource extends Resource
                         };
                     })
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('number')
                     ->sortable()
                     ->searchable(),
