@@ -7,9 +7,9 @@ use App\Models\OrderCircular;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
-use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -18,8 +18,6 @@ use Filament\Tables\Actions;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\Radio;
-use Illuminate\Support\Facades\DB;
-
 
 class OrderCircularResource extends Resource
 {
@@ -103,7 +101,7 @@ class OrderCircularResource extends Resource
                     ->maxLength(255),
                 Components\DatePicker::make('date')
                     ->required(),
-                Components\Textarea::make('title')
+                Textarea::make('title')
                     ->required()
                     ->columnSpanFull(),
                 Radio::make('title_lingo')
@@ -112,19 +110,20 @@ class OrderCircularResource extends Resource
                         'E' => 'English',
                         'M' => 'Malayalam'
                     ])
-                    ->inline() // Optional: display options horizontally
+                    ->inline()
                     ->required(),
-                CheckboxList::make('tags')
+                Select::make('tags')
                     ->label('Order Related To')
                     ->options(Tag::all()->pluck('phrase', 'id'))
-                    ->columns(4)
-                    ->columnSpanFull()
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
                     ->reactive()
                     ->afterStateUpdated(function ($state, callable $set) {
                         $names = Tag::whereIn('id', $state)->pluck('phrase')->toArray();
                         $set('keywords', implode(', ', $names));
                     }),
-                TextInput::make('keywords')
+                Textarea::make('keywords')
                     ->label('Keywords (If any)')
                     ->maxLength(255),
                 Components\FileUpload::make('path')
@@ -156,7 +155,6 @@ class OrderCircularResource extends Resource
                     ])
                     ->required()
                     ->default('0'),
-
             ]);
     }
 
@@ -271,10 +269,8 @@ class OrderCircularResource extends Resource
                         'P' => 'സ.ഉ.അച്ചടി (GO.Print)',
                     ])
                     ->label('GO Type'),
-
-
                 // Year-wise filter
-                \Filament\Tables\Filters\SelectFilter::make('year')
+                SelectFilter::make('year')
                     ->options(function () {
                         $years = \Illuminate\Support\Facades\DB::table('order_circulars')
                             ->selectRaw('YEAR(date) as year')
@@ -294,7 +290,7 @@ class OrderCircularResource extends Resource
                             $query->whereYear('date', $data['value']);
                         }
                     }),
-                \Filament\Tables\Filters\SelectFilter::make('month')
+                SelectFilter::make('month')
                     ->options([
                         '1' => 'January',
                         '2' => 'February',
@@ -326,9 +322,6 @@ class OrderCircularResource extends Resource
                     ->label('Section')
                     ->preload()
                     ->searchable(),
-
-
-
                 Filters\Filter::make('title_length')
                     ->label('Title Length < 50')
                     ->query(function ($query) {
@@ -345,8 +338,8 @@ class OrderCircularResource extends Resource
                         $url = \Illuminate\Support\Facades\Storage::url($record->path);
                         return new \Illuminate\Support\HtmlString(
                             '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
-                                view('filament.pdf-modal', ['url' => $url])->render() .
-                                '</div>'
+                            view('filament.pdf-modal', ['url' => $url])->render() .
+                            '</div>'
                         );
                     })
                     ->modalSubmitAction(false) // Remove the default "Submit" button
@@ -355,8 +348,6 @@ class OrderCircularResource extends Resource
                 Actions\EditAction::make()
                     ->label('') // Remove the label
                     ->color('warning'), // Sets button to yellow (Tailwind text-yellow-500)
-
-
                 Actions\DeleteAction::make()
                     ->label('') // Remove the label
                     ->before(function ($record) {
