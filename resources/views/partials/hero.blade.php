@@ -44,13 +44,21 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($goms as $go)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $go->path) }}"
                                                     data-title="{{ $go->title }}">
-                                                    {{ $go->title }}
+                                                    @if($go->title_lingo == 'E')
+                                                        G. O. (Ms.) No.
+                                                        {{ $go->number }} dated
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - Kerala Legislative Assembly - {{ $go->title }}
+                                                    @else
+                                                        സ. ഉ. (കയ്യെഴുത്ത്) നം.
+                                                        {{ $go->number }} തീയതി
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
+                                                    @endif
                                                 </a>
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
@@ -60,8 +68,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -76,13 +83,21 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($gort as $go)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $go->path) }}"
                                                     data-title="{{ $go->title }}">
-                                                    {{ $go->title }}
+                                                    @if($go->title_lingo == 'E')
+                                                        G. O. (Rt.) No.
+                                                        {{ $go->number }} dated
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - Kerala Legislative Assembly - {{ $go->title }}
+                                                    @else
+                                                        സ. ഉ. (സാധാ) നം.
+                                                        {{ $go->number }} തീയതി
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
+                                                    @endif
                                                 </a>
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
@@ -92,8 +107,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -108,15 +122,21 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($oos as $oo)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $oo->path) }}"
                                                     data-title="{{ $oo->title }}">
-                                                    Office Order No.
-                                                    {{ $oo->number }}/{{ \Carbon\Carbon::parse($oo->date)->year }}/KLS
-                                                    - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $oo->title }}
+                                                    @if($oo->title_lingo == 'E')
+                                                        Office Order No.
+                                                        {{ $oo->number }} dated
+                                                        {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
+                                                        - Kerala Legislative Assembly - {{ $oo->title }}
+                                                    @else
+                                                        ഓഫീസ് ഉത്തരവ് നമ്പർ
+                                                        {{ $oo->number }} തീയതി
+                                                        {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $oo->title }}
+                                                    @endif
                                                 </a>
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
@@ -142,14 +162,22 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($crcls as $crclr)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $crclr->path) }}"
                                                     data-title="{{ $crclr->title }}">
                                                     {{-- <i class="fas fa-solid fa-paperclip me-1"></i> --}}
-                                                    {{ $crclr->title }}
+                                                    @if($crclr->title_lingo == 'E')
+                                                        Number.
+                                                        {{ $crclr->number }} dated
+                                                        {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
+                                                        - Kerala Legislative Assembly - {{ $crclr->title }}
+                                                    @else
+                                                        നമ്പര്‍.
+                                                        {{ $crclr->number }} തീയതി
+                                                        {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $crclr->title }}
+                                                    @endif
                                                 </a>
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
@@ -159,8 +187,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'cr') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'cr') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -175,8 +202,7 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($newsupdates as $news)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
                                                 <a href="{{ asset('storage/' . $news->path) }}" class="h6"
                                                     data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $news->path) }}"
@@ -191,8 +217,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('updatesmore') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('updatesmore') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -221,8 +246,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="http://172.24.18.28/attendance-app/" target="_blank">
-                                            <i class="fas fa-user-check fa-2x mb-2"
-                                                style="color: rgb(60, 93, 240)"></i>
+                                            <i class="fas fa-user-check fa-2x mb-2" style="color: rgb(60, 93, 240)"></i>
                                             <span>Attendance</span>
                                         </a>
                                     </div>
@@ -284,9 +308,8 @@
                                                 data-pdf="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
                                                 data-title="Sections"><i class="fas fa-building me-2"></i>Sections</a>
 
-                                            <a class="dropdown-item"
-                                                href="http://www.niyamasabha.org/codes/pa_MLAs.htm" target="_blank"><i
-                                                    class="fas fa-user-tie me-2"></i>PA to MLAs</a>
+                                            <a class="dropdown-item" href="http://www.niyamasabha.org/codes/pa_MLAs.htm"
+                                                target="_blank"><i class="fas fa-user-tie me-2"></i>PA to MLAs</a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/Telephone Directory - 2024.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
@@ -402,8 +425,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://www.incometax.gov.in/iec/foportal/" target="_blank">
-                                            <i class="fas fa-file-invoice-dollar fa-2x mb-2"
-                                                style="color: #28a745"></i>
+                                            <i class="fas fa-file-invoice-dollar fa-2x mb-2" style="color: #28a745"></i>
                                             <span>Income Tax e-filing</span>
                                         </a>
                                     </div>
@@ -466,8 +488,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <iframe id="pdfViewer" src="" width="100%" height="700px"
-                        style="border: none;"></iframe>
+                    <iframe id="pdfViewer" src="" width="100%" height="700px" style="border: none;"></iframe>
                 </div>
             </div>
         </div>
@@ -477,10 +498,10 @@
 {{-- Hero Section End --}}
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var pdfModal = document.getElementById("pdfModal");
 
-        pdfModal.addEventListener("show.bs.modal", function(event) {
+        pdfModal.addEventListener("show.bs.modal", function (event) {
             var link = event.relatedTarget; // Link that triggered the modal
             var pdfUrl = link.getAttribute("data-pdf");
             var pdfTitle = link.getAttribute("data-title");
@@ -490,7 +511,7 @@
             document.getElementById("pdfViewer").src = pdfUrl;
         });
 
-        pdfModal.addEventListener("hidden.bs.modal", function() {
+        pdfModal.addEventListener("hidden.bs.modal", function () {
             document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
         });
     });
