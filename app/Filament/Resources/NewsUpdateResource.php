@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\NewsUpdateResource\Pages;
-use App\Filament\Resources\NewsUpdateResource\RelationManagers;
 use App\Models\NewsUpdate;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 
 class NewsUpdateResource extends Resource
@@ -25,13 +22,13 @@ class NewsUpdateResource extends Resource
         return $form
             ->schema([
                 Forms\Components\DatePicker::make('date'),
-                Forms\Components\TextInput::make('title')
+                Forms\Components\Textarea::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->rows(3)
+                    ->columnSpanFull(),
                 Forms\Components\FileUpload::make('path')
-                    ->required()
+                    // ->required()
                     ->acceptedFileTypes(['application/pdf'])
-
                     ->maxSize(1048576) // 1GB (1024MB)
                     ->disk('public')
                     ->directory(function (callable $get) {
@@ -85,7 +82,7 @@ class NewsUpdateResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                 Tables\Filters\SelectFilter::make('status')
+                Tables\Filters\SelectFilter::make('status')
                     ->options([
                         '1' => 'Published',
                         '0' => 'Unpublished',
@@ -98,11 +95,11 @@ class NewsUpdateResource extends Resource
                     ->icon('heroicon-s-eye')
                     ->modalHeading(fn($record) => 'View News Update: ' . $record->title)
                     ->modalContent(function ($record) {
-                        $url = \Storage::disk('public')->url($record->path);
+                        $url = Storage::disk('public')->url($record->path);
                         return new \Illuminate\Support\HtmlString(
                             '<div style="height: 80vh; padding: 1rem; overflow: auto;">' .
-                                view('filament.pdf-modal', ['url' => $url])->render() .
-                                '</div>'
+                            view('filament.pdf-modal', ['url' => $url])->render() .
+                            '</div>'
                         );
                     })
                     ->modalSubmitAction(false) // Remove the default "Submit" button
@@ -118,7 +115,7 @@ class NewsUpdateResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-              ->defaultSort('created_at', 'desc');
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array

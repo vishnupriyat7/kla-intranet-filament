@@ -113,7 +113,7 @@ class OrderCircularResource extends Resource
                     ->inline()
                     ->required(),
                 Select::make('tags')
-                    ->label('Order Related To')
+                    ->label('Order Related To (Multiple Selection)')
                     ->options(Tag::all()->pluck('phrase', 'id'))
                     ->multiple()
                     ->searchable()
@@ -335,7 +335,7 @@ class OrderCircularResource extends Resource
                     ->icon('heroicon-s-eye')
                     ->modalHeading(fn($record) => 'View PDF: ' . $record->title)
                     ->modalContent(function ($record) {
-                        $url = \Illuminate\Support\Facades\Storage::url($record->path);
+                        $url = Storage::url($record->path);
                         return new \Illuminate\Support\HtmlString(
                             '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
                             view('filament.pdf-modal', ['url' => $url])->render() .

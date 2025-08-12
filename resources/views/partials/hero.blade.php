@@ -208,7 +208,7 @@
                                                     data-pdf="{{ asset('storage/' . $news->path) }}"
                                                     data-title="{{ $news->title }}">
                                                     {{-- <i class="fas fa-comment-dots me-1"></i> --}}
-                                                    {{ $news->title }}
+                                                    {!! $news->title !!}
                                                 </a>
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
