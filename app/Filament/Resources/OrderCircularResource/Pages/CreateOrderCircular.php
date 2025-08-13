@@ -15,4 +15,9 @@ class CreateOrderCircular extends CreateRecord
         $this->record->title_length = mb_strlen($this->form->getState()['title'], 'UTF-8');
         $this->record->save();
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
