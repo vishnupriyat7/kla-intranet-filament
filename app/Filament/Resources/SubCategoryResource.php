@@ -9,22 +9,36 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Forms\Components\Grid;
+use Filament\Tables\Actions;
 
 class SubCategoryResource extends Resource
 {
     protected static ?string $model = SubCategory::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
+    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationLabel = 'Sub-Category';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Select::make('category_id')
-                    ->relationship(
-                        name: 'categories',
-                        titleAttribute: 'name',
-                    ),
+                Grid::make(3)
+                    ->schema([
+                        Select::make('category_id')
+                            ->relationship(
+                                name: 'category',
+                                titleAttribute: 'name',
+                            ),
+                        TextInput::make('code')
+                            ->required(),
+                        TextInput::make('name')
+                            ->required()
+                    ])
             ]);
     }
 
@@ -32,17 +46,31 @@ class SubCategoryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('#')
+                    ->label('#')
+                    ->rowIndex(),
+                TextColumn::make('category.name')
+                    ->label('Category')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('name')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('category_id')
+                    ->relationship('category', 'name')
+                    ->label('Category')
+                    ->preload()
+                    ->searchable(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make()->label(''),
+                Actions\DeleteAction::make()->label('')
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

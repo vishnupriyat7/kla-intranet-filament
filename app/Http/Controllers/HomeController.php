@@ -28,24 +28,28 @@ class HomeController extends Controller
             ->get();
         $goms = OrderCircular::where('type', 'G')
             ->where('go_type', 'M')
-            ->where('status', '1') // Fetch records in range
-            ->orderBy('date', 'desc')
+            ->where('status', '1')
+            ->orderBy('date', 'desc')// Fetch records in range
+            ->orderBy('number', 'desc')
             ->limit(5)
             ->get();
         $gort = OrderCircular::where('type', 'G')
             ->where('go_type', 'R')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
+            ->orderBy('number', 'desc')
             ->limit(5)
             ->get();
         $oos = OrderCircular::where('type', 'O')
             ->where('status', '1')
             ->orderBy('date', 'desc')
+            ->orderBy('number', 'desc')
             ->limit(5)
             ->get();
         $crcls = OrderCircular::where('type', 'C')
             ->where('status', '1')
             ->orderBy('date', 'desc')
+            ->orderBy('number', 'desc')
             ->limit(5)
             ->get();
         $goCount = OrderCircular::where('type', 'G')
@@ -284,12 +288,7 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-        $excludeSection = ['office', 'js', 'joint', 'deputy', 'as', 'special', 'librarian', 'chief'];
-        $sections = Section::where(function ($query) use ($excludeSection) {
-            foreach ($excludeSection as $section) {
-                $query->where('name', 'not like', $section . '%');
-            }
-        })
+        $sections = Section::where('status', 1)
             ->orderBy('name', 'asc')
             ->get();
         $save_request = '';
@@ -333,7 +332,7 @@ class HomeController extends Controller
         ]);
         return redirect()->route('home.upload-request')->with('success', 'Your request has been saved successfully.');
     }
-    // Function for advanced search for order, circular, office order and news updates
+    // Function for advanced search for order, circular, office order
     public function advancedSearch(Request $request)
     {
         $orderResults = collect();
@@ -388,12 +387,10 @@ class HomeController extends Controller
                 });
             }
 
-            $orderResults = $query->orderBy('date')->get(); // Limit to 100 results
+            $orderResults = $query->where('status', '1')->orderBy('date')->get();
         }
         $results = sizeof($orderResults) > 0 ? $orderResults : null;
         $orderType = $request->order_type;
-
-        // Fetch periodicals
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')

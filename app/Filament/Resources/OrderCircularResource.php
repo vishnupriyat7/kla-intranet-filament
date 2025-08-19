@@ -22,22 +22,18 @@ use Filament\Forms\Components\Radio;
 class OrderCircularResource extends Resource
 {
     protected static ?string $model = OrderCircular::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
 
     public static function form(Form $form): Form
     {
-        $excludeKeywords = ['office', 'js', 'joint', 'deputy', 'as', 'special', 'librarian', 'chief'];
         return $form
             ->schema([
                 Select::make('section_id')
                     ->relationship(
                         name: 'sections',
                         titleAttribute: 'name',
-                        modifyQueryUsing: function ($query) use ($excludeKeywords) {
-                            foreach ($excludeKeywords as $keyword) {
-                                $query->where('name', 'not like', '%' . $keyword . '%');
-                            }
+                        modifyQueryUsing: function ($query) {
+                            $query->where('status', 1);
                             return $query;
                         }
                     ),
@@ -79,35 +75,12 @@ class OrderCircularResource extends Resource
                     ->relationship(
                         name: 'category',
                         titleAttribute: 'name',
-
                     ),
-                    Select::make('sub_sub_type')
+                Select::make('sub_sub_type')
                     ->relationship(
                         name: 'subcategory',
                         titleAttribute: 'name',
-
                     ),
-                // Select::make('sub_type')
-                //     ->label('Category')
-                //     ->options([
-                //         'Service' => 'Service Related',
-                //         'Account' => 'Account Related',
-                //         'Other' => 'Other'
-                //     ])
-                //     ->visible(fn(callable $get) => $get('type') === 'G' || $get('type') === 'O')
-                //     ->reactive()
-                //     ->afterStateUpdated(function (callable $set) {
-                //         $set('sub_sub_type', null);
-                //     }),
-                // Select::make('sub_sub_type')
-                //     ->label('Sub Category')
-                //     ->options([
-                //         'CR' => 'Claim / Reimbursements',
-                //         'TP' => 'Transfer & Posting',
-                //         'G' => 'General'
-                //     ])
-                //     ->required()
-                //     ->reactive(),
                 TextInput::make('number')
                     ->required()
                     ->maxLength(255),
@@ -204,12 +177,12 @@ class OrderCircularResource extends Resource
                     })
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('sub_type')
+                TextColumn::make('category.name')
                     ->label('Service/Member')
                     ->formatStateUsing(fn($state) => $state ?: '-')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('sub_sub_type')
+                TextColumn::make('subcategory.name')
                     ->label('Category')
                     ->formatStateUsing(function ($state) {
                         return match ($state) {

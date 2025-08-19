@@ -14,8 +14,10 @@ use Filament\Tables\Columns\TextColumn;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
+    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationLabel = 'Category';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -40,7 +42,8 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Actions\EditAction::make(),
+                Actions\EditAction::make()->label(''),
+                Actions\DeleteAction::make()->label('')
             ])
             ->bulkActions([
                 Actions\BulkActionGroup::make([

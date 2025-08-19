@@ -8,5 +8,15 @@ use Illuminate\Notifications\Notifiable;
 
 class Section extends Model
 {
-    //
+    use HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'name',
+        'status'
+    ];
 }
