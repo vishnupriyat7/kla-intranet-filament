@@ -284,7 +284,7 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-        $excludeSection = ['office', 'js', 'joint', 'deputy', 'as', 'special', 'librarian', 'chief', 'e-niyamasabha'];
+        $excludeSection = ['office', 'js', 'joint', 'deputy', 'as', 'special', 'librarian', 'chief'];
         $sections = Section::where(function ($query) use ($excludeSection) {
             foreach ($excludeSection as $section) {
                 $query->where('name', 'not like', $section . '%');

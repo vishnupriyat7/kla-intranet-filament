@@ -27,7 +27,7 @@ class OrderCircularResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $excludeKeywords = ['office', 'js', 'joint', 'deputy', 'as', 'special', 'librarian', 'chief', 'e-niyamasabha'];
+        $excludeKeywords = ['office', 'js', 'joint', 'deputy', 'as', 'special', 'librarian', 'chief'];
         return $form
             ->schema([
                 Select::make('section_id')
@@ -76,26 +76,38 @@ class OrderCircularResource extends Resource
                         $set('sub_sub_type', null);
                     }),
                 Select::make('sub_type')
-                    ->label('Category')
-                    ->options([
-                        'Service' => 'Service Related',
-                        'Account' => 'Account Related',
-                        'Other' => 'Other'
-                    ])
-                    ->visible(fn(callable $get) => $get('type') === 'G' || $get('type') === 'O')
-                    ->reactive()
-                    ->afterStateUpdated(function (callable $set) {
-                        $set('sub_sub_type', null);
-                    }),
-                Select::make('sub_sub_type')
-                    ->label('Sub Category')
-                    ->options([
-                        'CR' => 'Claim / Reimbursements',
-                        'TP' => 'Transfer & Posting',
-                        'G' => 'General'
-                    ])
-                    ->required()
-                    ->reactive(),
+                    ->relationship(
+                        name: 'category',
+                        titleAttribute: 'name',
+
+                    ),
+                    Select::make('sub_sub_type')
+                    ->relationship(
+                        name: 'subcategory',
+                        titleAttribute: 'name',
+
+                    ),
+                // Select::make('sub_type')
+                //     ->label('Category')
+                //     ->options([
+                //         'Service' => 'Service Related',
+                //         'Account' => 'Account Related',
+                //         'Other' => 'Other'
+                //     ])
+                //     ->visible(fn(callable $get) => $get('type') === 'G' || $get('type') === 'O')
+                //     ->reactive()
+                //     ->afterStateUpdated(function (callable $set) {
+                //         $set('sub_sub_type', null);
+                //     }),
+                // Select::make('sub_sub_type')
+                //     ->label('Sub Category')
+                //     ->options([
+                //         'CR' => 'Claim / Reimbursements',
+                //         'TP' => 'Transfer & Posting',
+                //         'G' => 'General'
+                //     ])
+                //     ->required()
+                //     ->reactive(),
                 TextInput::make('number')
                     ->required()
                     ->maxLength(255),
@@ -370,7 +382,10 @@ class OrderCircularResource extends Resource
                         }
                     }),
             ])
-            ->defaultSort('date', 'desc');
+            ->defaultSort('date', 'desc')
+            ->persistFiltersInSession()
+            ->persistSearchInSession()
+            ->persistSortInSession();
     }
 
     public static function getRelations(): array

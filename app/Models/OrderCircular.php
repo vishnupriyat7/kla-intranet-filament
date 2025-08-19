@@ -71,4 +71,14 @@ class OrderCircular extends Model
             }
         });
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'sub_type');
+    }
+
+    public function subcategory()
+    {
+        return $this->belongsTo(SubCategory::class, 'sub_sub_type');
+    }
 }
