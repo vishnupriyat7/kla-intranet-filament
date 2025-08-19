@@ -52,7 +52,11 @@
                         @if (!$hasOrders)
                             <div class="alert alert-warning d-flex align-items-center" role="alert">
                                 <i class="fas fa-exclamation-triangle me-2"></i>
-                                <span>No {{ $type == 'M' ? 'Govt.Order Manuscript' : 'Govt.Order Routine' }} uploaded
+                                {{-- <span>No {{ $type == 'M' ? 'Govt.Order Manuscript' : 'Govt.Order Routine' }} uploaded
+                                    for this month.</span> --}}
+                                <span>No
+                                    {{ $type == 'M' ? 'Govt.Order Manuscript' : ($type == 'R' ? 'Govt.Order Routine' : 'Govt.Order Print') }}
+                                    uploaded
                                     for this month.</span>
                             </div>
                         @endif
@@ -192,37 +196,60 @@
         }
 
         // Handle month tab clicks for both Manuscript and Routine
+        // document.querySelectorAll('.month-tab').forEach(tab => {
+        //     tab.addEventListener('shown.bs.tab', function(event) {
+        //         console.log('Tab shown:', event.target);
+        //         initializeDataTable(event.target);
+        //     });
+        // });
+
+        // Initialize DataTables for all tabs (Manuscript, Routine, Print) when shown
+        document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(parentTab => {
+            parentTab.addEventListener('shown.bs.tab', function(event) {
+                const parentTabId = event.target.getAttribute('href');
+                const type = parentTabId === '#manuscript' ? 'M' :
+                    parentTabId === '#routine' ? 'R' :
+                    parentTabId === '#print' ? 'P' : null;
+
+                if (type) {
+                    // Find the active month tab for the current type
+                    const activeMonthTab = document.querySelector(
+                        `.month-tab[data-type="${type}"].active`);
+                    if (activeMonthTab) {
+                        console.log(
+                            `Parent tab ${parentTabId} shown, initializing DataTable for type ${type}`
+                        );
+                        initializeDataTable(activeMonthTab);
+                    } else {
+                        console.error(`No active month tab found for type ${type}`);
+                    }
+                }
+            });
+        });
+
+        // Handle month tab clicks
         document.querySelectorAll('.month-tab').forEach(tab => {
             tab.addEventListener('shown.bs.tab', function(event) {
-                console.log('Tab shown:', event.target);
+                console.log('Month tab shown:', event.target);
                 initializeDataTable(event.target);
             });
         });
 
-        // Initialize DataTable for the active month tab on page load
-        const activeTab = document.querySelector('.month-tab.active');
-        if (activeTab) {
-            console.log('Active tab on page load:', activeTab);
-            initializeDataTable(activeTab);
-        } else {
-            console.error('No active month tab found on page load.');
-        }
+        // Initialize DataTable for the active tab on page load
+        const activeParentTab = document.querySelector('a[data-bs-toggle="tab"].active');
+        if (activeParentTab) {
+            const parentTabId = activeParentTab.getAttribute('href');
+            const type = parentTabId === '#manuscript' ? 'M' :
+                parentTabId === '#routine' ? 'R' :
+                parentTabId === '#print' ? 'P' : null;
 
-        // const routineActive = document.querySelector('.month-tab[data-type="R"].active');
-        // if (routineActive) {
-        //     console.log('Manually triggering Routine tab init');
-        //     initializeDataTable(routineActive);
-        // }
-        // Ensure Routine tab tables are adjusted when the Routine tab is shown
-        document.querySelectorAll('a[data-bs-toggle="tab"][href="#routine"]').forEach(routineTab => {
-            routineTab.addEventListener('shown.bs.tab', function() {
-                const activeMonthTab = document.querySelector(
-                    '.month-tab[data-type="R"].active');
+            if (type) {
+                const activeMonthTab = document.querySelector(`.month-tab[data-type="${type}"].active`);
                 if (activeMonthTab) {
-                    console.log('Routine tab shown, adjusting active month table');
+                    console.log(`Initializing DataTable for active tab ${parentTabId} on page load`);
                     initializeDataTable(activeMonthTab);
                 }
-            });
-        });
+            }
+        }
     });
 </script>

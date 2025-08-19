@@ -133,6 +133,8 @@ class HomeController extends Controller
         $startDate = Carbon::now()->subMonths(5)->startOfMonth(); // 5 months ago (1st day)
         $endDate = Carbon::now()->endOfMonth(); // Last day of the current month
         $typeKey = $request->type;
+
+        // Fetch orders based on type
         if ($request->type == 'go') {
             $orders = OrderCircular::where('type', 'G')
                 ->where('status', '1')
@@ -140,6 +142,11 @@ class HomeController extends Controller
                 ->orderBy('date', 'desc')
                 ->get();
             $orderType = 'Government Order';
+
+            // Check for print orders (go_type = 'P') within the last 6 months
+            $hasPrintOrders = $orders->filter(function ($order) {
+                return $order->go_type == 'P';
+            })->isNotEmpty();
         } elseif ($request->type == 'oo') {
             $orders = OrderCircular::where('type', 'O')
                 ->where('status', '1')
@@ -147,6 +154,7 @@ class HomeController extends Controller
                 ->orderBy('date', 'desc')
                 ->get();
             $orderType = 'Office Order';
+            $hasPrintOrders = false; // No print orders for Office Order
         } elseif ($request->type == 'cr') {
             $orders = OrderCircular::where('type', 'C')
                 ->where('status', '1')
@@ -154,7 +162,9 @@ class HomeController extends Controller
                 ->orderBy('date', 'desc')
                 ->get();
             $orderType = 'Circular';
+            $hasPrintOrders = false; // No print orders for Circular
         }
+        // Generate months for the last 6 months
         $base = now()->startOfMonth();
         $months = collect(range(5, 0))->map(function ($i) use ($base) {
             $date = $base->copy()->subMonths($i);
@@ -191,16 +201,30 @@ class HomeController extends Controller
             return DataTables::of($orders)
                 ->addIndexColumn()
                 ->addColumn('number', function ($order) {
+                    // if ($order->type == 'G') {
+                    //     if ($order->go_type == 'M') {
+                    //         return 'G.' . 'O.' . ('(Ms).') . 'No.' . $order->number ?: '-';
+                    //     } else {
+                    //         return 'G.' . 'O.' . ('(Rt).') . 'No.' . $order->number ?: '-';
+                    //     }
+                    // } elseif ($order->type == 'O') {
+                    //     return 'O.O.' . 'No.' . $order->number ?: '-';
+                    // } elseif ($order->type == 'C') {
+                    //     return 'Cir.' . 'No.' . $order->number ?: '-';
+                    // }
+                    // return '-';
                     if ($order->type == 'G') {
                         if ($order->go_type == 'M') {
-                            return 'G.' . 'O.' . ('(Ms).') . 'No.' . $order->number ?: '-';
-                        } else {
-                            return 'G.' . 'O.' . ('(Rt).') . 'No.' . $order->number ?: '-';
+                            return 'G.O.(Ms).No.' . $order->number ?: '-';
+                        } elseif ($order->go_type == 'R') {
+                            return 'G.O.(Rt).No.' . $order->number ?: '-';
+                        } elseif ($order->go_type == 'P') {
+                            return 'G.O.(P).No.' . $order->number ?: '-';
                         }
                     } elseif ($order->type == 'O') {
-                        return 'O.O.' . 'No.' . $order->number ?: '-';
+                        return 'O.O.No.' . $order->number ?: '-';
                     } elseif ($order->type == 'C') {
-                        return 'Cir.' . 'No.' . $order->number ?: '-';
+                        return 'Cir.No.' . $order->number ?: '-';
                     }
                     return '-';
                 })
@@ -224,7 +248,7 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))
+        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals', 'hasPrintOrders'))
             ->with('orderTypeKey', $request->type);
     }
 
