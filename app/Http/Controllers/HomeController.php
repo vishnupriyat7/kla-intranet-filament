@@ -24,29 +24,35 @@ class HomeController extends Controller
             ->get();
         $newsupdates = NewsUpdate::where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(5)
+            ->limit(6)
             ->get();
         $goms = OrderCircular::where('type', 'G')
             ->where('go_type', 'M')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
-            ->limit(5)
+            ->limit(6)
             ->get();
         $gort = OrderCircular::where('type', 'G')
             ->where('go_type', 'R')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
-            ->limit(5)
+            ->limit(6)
+            ->get();
+        $gop = OrderCircular::where('type', 'G')
+            ->where('go_type', 'P')
+            ->where('status', '1') // Fetch records in range
+            ->orderBy('date', 'desc')
+            ->limit(6)
             ->get();
         $oos = OrderCircular::where('type', 'O')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(5)
+            ->limit(6)
             ->get();
         $crcls = OrderCircular::where('type', 'C')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(5)
+            ->limit(6)
             ->get();
         $goCount = OrderCircular::where('type', 'G')
             ->whereMonth('date', Carbon::now()->month)
@@ -63,7 +69,7 @@ class HomeController extends Controller
             ->whereYear('date', Carbon::now()->year)
             ->where('status', '1')
             ->count();
-        return view('home', compact('periodicals', 'newsupdates', 'goms', 'gort', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount'));
+        return view('home', compact('periodicals', 'newsupdates', 'goms', 'gort', 'gop', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount'));
     }
 
     public function indexOther()
