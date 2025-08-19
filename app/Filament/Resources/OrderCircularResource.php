@@ -178,12 +178,13 @@ class OrderCircularResource extends Resource
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('category.name')
-                    ->label('Service/Member')
+                    ->label('Category')
                     ->formatStateUsing(fn($state) => $state ?: '-')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('subcategory.name')
-                    ->label('Category')
+                    ->label('Sub Category')
                     ->formatStateUsing(function ($state) {
                         return match ($state) {
                             'G' => 'General',
@@ -193,7 +194,8 @@ class OrderCircularResource extends Resource
                         };
                     })
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('number')
                     ->sortable()
                     ->searchable(),

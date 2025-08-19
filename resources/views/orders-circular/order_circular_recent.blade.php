@@ -35,6 +35,13 @@
                                 <span class="text-dark">Print</span>
                             </a>
                         </li> --}}
+                        @if ($hasPrintOrders)
+                            <li class="nav-item flex-fill">
+                                <a class="nav-link py-3" data-bs-toggle="tab" href="#print">
+                                    <span class="text-dark">Print</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
 
@@ -66,6 +73,17 @@
                             'type' => 'P',
                         ])
                     </div> --}}
+
+                    @if ($hasPrintOrders)
+                        <!-- Print Tab -->
+                        <div id="print" class="tab-pane fade">
+                            @include('orders-circular.monthly_orders', [
+                                'orders' => $orders,
+                                'months' => $months,
+                                'type' => 'P',
+                            ])
+                        </div>
+                    @endif
                 </div>
             @endif
             @if ($orderTypeKey == 'oo' || $orderTypeKey == 'cr')
@@ -171,11 +189,22 @@
 
         // Initialize DataTables when a tab is shown
         let initializedTables = {};
-
-        $('a[data-bs-toggle="pill"]').on('shown.bs.tab', function(e) {
+        // Handle both tab (Manuscript, Routine, Print) and pill (month tabs) toggles
+        $('a[data-bs-toggle="tab"], a[data-bs-toggle="pill"]').on('shown.bs.tab', function(e) {
             var targetId = $(e.target).attr("href");
-            var monthNo = targetId.replace('#tab-', '');
-            var tableId = `#orderTable-${monthNo}`;
+            var monthNo = targetId.replace('#tab-', '') || null; // Extract month number from tab ID
+            // var tableId = `#orderTable-${monthNo}`;
+            // Determine go_type for Government Order tabs
+            if (targetId === '#manuscript') {
+                goType = 'M';
+            } else if (targetId === '#routine') {
+                goType = 'R';
+            } else if (targetId === '#print') {
+                goType = 'P';
+            }
+
+            // Use a unique table ID based on month and go_type
+            var tableId = monthNo ? `#orderTable-${monthNo}` : `#orderTable-${goType || 'default'}`;
 
             if (!initializedTables[tableId]) {
                 $(tableId).DataTable({
@@ -183,9 +212,13 @@
                     serverSide: true,
                     ajax: {
                         url: '{{ route('home.order-circular', ['type' => $orderTypeKey]) }}',
-                        data: {
-
-                            month: monthNo
+                        data: function(d) {
+                            if (monthNo) {
+                                d.month = monthNo;
+                            }
+                            if (goType) {
+                                d.go_type = goType;
+                            }
                         }
                     },
                     columns: [{

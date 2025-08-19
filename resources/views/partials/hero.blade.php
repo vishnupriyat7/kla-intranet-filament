@@ -4,7 +4,7 @@
     <div class="container py-3" style="position: relative; z-index: 1;">
         <div class="tab-class mb-1">
             <div class="row g-4">
-                <div class="col-xl-7 col-xxl-7">
+                <div class="col-xl-8 col-xxl-8">
                     <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
                         <h3 class="mb-4">What’s New</h3>
                         <ul class="nav nav-pills d-inline-flex text-center">
@@ -17,6 +17,11 @@
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
                                     <span class="text-dark" style="width: 100px;">GO RT</span>
+                                </a>
+                            </li>
+                             <li class="nav-item mb-3">
+                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-6">
+                                    <span class="text-dark" style="width: 100px;">GO P</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
@@ -101,6 +106,45 @@
                                                 </a>
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
+                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
+                                                </small>
+                                            </div>
+                                        @endforeach
+                                        <div class="mt-2 d-flex justify-content-center">
+                                            <div class="col-4">
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                            hover-bg-primary text-hover-white border-primary">View
+                                                    All >></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div id="tab-6" class="tab-pane fade show p-0">
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    <div class="features-content d-flex flex-column mt-3">
+                                        @foreach ($gop as $go)
+                                            <div class="mb-4">
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $go->path) }}"
+                                                    data-title="{{ $go->title }}">
+                                                    @if($go->title_lingo == 'E')
+                                                        G. O. (Rt.) No.
+                                                        {{ $go->number }} dated
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - Kerala Legislative Assembly - {{ $go->title }}
+                                                    @else
+                                                        സ. ഉ. (സാധാ) നം.
+                                                        {{ $go->number }} തീയതി
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
+                                                    @endif
+                                                </a>
+                                                <small class="text-body d-block">
+                                                    <i class="fas fa-calendar-alt me-1"></i>s
                                                     {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
                                                 </small>
                                             </div>
@@ -228,7 +272,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxl-5 col-xl-5">
+                <div class="col-xxl-4 col-xl-4">
                     <div class="row g-4">
                         <div class="col-12">
                             <div class="p-3 rounded border h-100" style="min-height: 600px;">
