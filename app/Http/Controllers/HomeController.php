@@ -29,33 +29,33 @@ class HomeController extends Controller
         $goms = OrderCircular::where('type', 'G')
             ->where('go_type', 'M')
             ->where('status', '1')
-            ->orderBy('date', 'desc') // Fetch records in range
-            ->orderBy('number', 'desc')
+            ->orderBy('date', 'desc')
+            ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
             ->limit(6)
             ->get();
         $gort = OrderCircular::where('type', 'G')
             ->where('go_type', 'R')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
-            ->orderBy('number', 'desc')
+            ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
             ->limit(6)
             ->get();
         $gop = OrderCircular::where('type', 'G')
             ->where('go_type', 'P')
             ->where('status', '1') // Fetch records in range
-            ->orderBy('date', 'desc')
+            ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
             ->limit(6)
             ->get();
         $oos = OrderCircular::where('type', 'O')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->orderBy('number', 'desc')
+            ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
             ->limit(6)
             ->get();
         $crcls = OrderCircular::where('type', 'C')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->orderBy('number', 'desc')
+            ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
             ->limit(6)
             ->get();
         $goCount = OrderCircular::where('type', 'G')
