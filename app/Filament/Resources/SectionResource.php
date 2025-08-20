@@ -13,6 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Actions;
+use Illuminate\Support\Facades\Auth;
 
 class SectionResource extends Resource
 {
@@ -21,6 +22,12 @@ class SectionResource extends Resource
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Sections';
     protected static ?int $navigationSort = 1;
+    protected static bool $shouldRegisterNavigation = false;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return Auth::check() && Auth::user()->isSuperAdmin();
+    }
 
     public static function form(Form $form): Form
     {
@@ -81,4 +88,5 @@ class SectionResource extends Resource
             'edit' => Pages\EditSection::route('/{record}/edit'),
         ];
     }
+
 }

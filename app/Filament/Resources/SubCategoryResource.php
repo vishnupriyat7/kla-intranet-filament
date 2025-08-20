@@ -6,7 +6,6 @@ use App\Filament\Resources\SubCategoryResource\Pages;
 use App\Models\SubCategory;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -14,6 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Grid;
 use Filament\Tables\Actions;
+use Illuminate\Support\Facades\Auth;
 
 class SubCategoryResource extends Resource
 {
@@ -22,6 +22,12 @@ class SubCategoryResource extends Resource
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Sub-Category';
     protected static ?int $navigationSort = 3;
+    protected static bool $shouldRegisterNavigation = false;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return Auth::check() && Auth::user()->isSuperAdmin();
+    }
 
     public static function form(Form $form): Form
     {
