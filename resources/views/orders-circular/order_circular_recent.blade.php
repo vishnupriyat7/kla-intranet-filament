@@ -202,6 +202,9 @@
             } else if (targetId === '#print') {
                 goType = 'P';
             }
+            else {
+                goType = null; // Default for Office Order or Circular
+            }
 
             // Use a unique table ID based on month and go_type
             var tableId = monthNo ? `#orderTable-${monthNo}` : `#orderTable-${goType || 'default'}`;

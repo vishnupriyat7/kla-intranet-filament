@@ -29,7 +29,7 @@ class HomeController extends Controller
         $goms = OrderCircular::where('type', 'G')
             ->where('go_type', 'M')
             ->where('status', '1')
-            ->orderBy('date', 'desc')// Fetch records in range
+            ->orderBy('date', 'desc') // Fetch records in range
             ->orderBy('number', 'desc')
             ->limit(6)
             ->get();
