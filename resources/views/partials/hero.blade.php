@@ -132,12 +132,12 @@
                                                     data-pdf="{{ asset('storage/' . $go->path) }}"
                                                     data-title="{{ $go->title }}">
                                                     @if($go->title_lingo == 'E')
-                                                        G. O. (Rt.) No.
+                                                        G. O. (P.) No.
                                                         {{ $go->number }} dated
                                                         {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
                                                         - Kerala Legislative Assembly - {{ $go->title }}
                                                     @else
-                                                        സ. ഉ. (സാധാ) നം.
+                                                        സ. ഉ. (അച്ചടി) നം.
                                                         {{ $go->number }} തീയതി
                                                         {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
                                                         - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
