@@ -19,7 +19,7 @@
                                     <span class="text-dark" style="width: 100px;">GO RT</span>
                                 </a>
                             </li>
-                             <li class="nav-item mb-3">
+                            <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-6">
                                     <span class="text-dark" style="width: 100px;">GO P</span>
                                 </a>
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                         <div id="tab-6" class="tab-pane fade show p-0">
+                        <div id="tab-6" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
@@ -220,8 +220,11 @@
                                                         നമ്പര്‍.
                                                         {{ $crclr->number }} തീയതി
                                                         {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
-                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $crclr->title }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {!! $crclr->title !!}
                                                     @endif
+                                                    {{-- @if($crclr->link != Null)
+                                                        {!! $crclr->link !!}
+                                                    @endif --}}
                                                 </a>
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>

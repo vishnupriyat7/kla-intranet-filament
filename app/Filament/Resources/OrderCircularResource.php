@@ -89,6 +89,9 @@ class OrderCircularResource extends Resource
                 Textarea::make('title')
                     ->required()
                     ->columnSpanFull(),
+                TextInput::make('link')
+                    ->label('Link (If Any)')
+                    ->columnSpanFull(),
                 Radio::make('title_lingo')
                     ->label('Title Language')
                     ->options([
@@ -203,6 +206,10 @@ class OrderCircularResource extends Resource
                     ->date('d-m-Y')
                     ->sortable(),
                 TextColumn::make('title')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('link')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),

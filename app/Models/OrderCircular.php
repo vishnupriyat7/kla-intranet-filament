@@ -32,7 +32,8 @@ class OrderCircular extends Model
         'error_type',
         'updated_by',
         'section_id',
-        'title_lingo'
+        'title_lingo',
+        'link'
     ];
     /**
      * Get the section that owns the order circular.
