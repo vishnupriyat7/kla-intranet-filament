@@ -43,6 +43,7 @@ class HomeController extends Controller
         $gop = OrderCircular::where('type', 'G')
             ->where('go_type', 'P')
             ->where('status', '1') // Fetch records in range
+            ->orderBy('date', 'desc')
             ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
             ->limit(6)
             ->get();
@@ -367,6 +368,9 @@ class HomeController extends Controller
     {
         $orderResults = collect();
         $newsResults = collect();
+        $error = null;
+
+
         // Validate if month is selected but year is not
         if ($request->filled('month') && !$request->filled('year')) {
             $error = 'Please select an Year while choosing a month.';
@@ -385,6 +389,11 @@ class HomeController extends Controller
             if ($request->filled('order_type')) {
                 $query->where('type', $request->order_type);
             }
+
+            // Filter by GO Subtype (only for order_type = 'G')
+        if ($request->filled('go_type') && $request->order_type == 'G') {
+            $query->where('go_type', $request->go_type);
+        }
 
             // Ensure 'date' column exists and is valid
             if ($request->filled('year') || $request->filled('month') || $request->filled('date')) {
@@ -417,7 +426,7 @@ class HomeController extends Controller
                 });
             }
 
-            $orderResults = $query->where('status', '1')->orderBy('date')->get();
+            $orderResults = $query->where('status', '1')->orderBy('date', 'desc')->get();
         }
         $results = sizeof($orderResults) > 0 ? $orderResults : null;
         $orderType = $request->order_type;
@@ -432,7 +441,7 @@ class HomeController extends Controller
             return view('partials.advanced-search-results', compact('results', 'orderType'));
         }
 
-        return view('partials.advanced-search', compact('results', 'periodicals'));
+        return view('partials.advanced-search', compact('results', 'periodicals', 'orderType'));
     }
 
     public function checkStatus(Request $request)

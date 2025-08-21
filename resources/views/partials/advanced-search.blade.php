@@ -19,7 +19,8 @@
                         <div class="row g-4">
                             <!-- Order Type Selection -->
                             <div class="col-md-4">
-                                <label for="orderType" class="form-label">Select Order Type <span class="text-danger">*</span></label>
+                                <label for="orderType" class="form-label">Select Order Type <span
+                                        class="text-danger">*</span></label>
                                 <select class="form-select" id="orderType" name="order_type" required>
                                     <option value="">Choose...</option>
                                     <option value="G" {{ request('order_type') == 'G' ? 'selected' : '' }}>Govt. Order
@@ -29,6 +30,21 @@
                                     <option value="O" {{ request('order_type') == 'O' ? 'selected' : '' }}>Office Order
                                     </option>
                                     {{-- <option value="news">News</option> --}}
+                                </select>
+                            </div>
+
+                            <!-- GO Subtype Selection (Conditional) -->
+                            <div class="col-md-4" id="goTypeContainer"
+                                style="display: {{ request('order_type') == 'G' ? 'block' : 'none' }};">
+                                <label for="goType" class="form-label">Select GO Type</label>
+                                <select class="form-select" id="goType" name="go_type">
+                                    <option value="">Choose...</option>
+                                    <option value="M" {{ request('go_type') == 'M' ? 'selected' : '' }}>GO.Manuscript
+                                    </option>
+                                    <option value="R" {{ request('go_type') == 'R' ? 'selected' : '' }}>GO.Routine
+                                    </option>
+                                    <option value="P" {{ request('go_type') == 'P' ? 'selected' : '' }}>GO.Print
+                                    </option>
                                 </select>
                             </div>
                             <!-- Year Selection -->
@@ -43,7 +59,7 @@
                                 </select>
                             </div>
 
-                             {{-- Month Selection --}}
+                            {{-- Month Selection --}}
                             <div class="col-md-4">
                                 <label for="month" class="form-label">Select Month</label>
                                 <select class="form-select" id="month" name="month">
@@ -147,9 +163,18 @@
         pdfModal.addEventListener("hidden.bs.modal", function() {
             document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
         });
-    });
 
-    document.addEventListener("DOMContentLoaded", function() {
+        // Show/hide GO Subtype field based on Order Type
+        const orderTypeSelect = document.getElementById("orderType");
+        const goTypeContainer = document.getElementById("goTypeContainer");
+
+        orderTypeSelect.addEventListener("change", function() {
+            goTypeContainer.style.display = this.value === "G" ? "block" : "none";
+            if (this.value !== "G") {
+                document.getElementById("goType").value = "";
+            }
+        });
+
         const form = document.getElementById("advancedSearchForm");
         const fromDateInput = document.getElementById("from_date");
         const toDateInput = document.getElementById("to_date");
@@ -190,7 +215,8 @@
         });
     });
 
-   function disableDate() {
+
+    function disableDate() {
         var year = $('#year').val();
         var month = $('#month').val();
         if (year !== "" || month !== "") {
