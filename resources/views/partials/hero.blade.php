@@ -4,6 +4,13 @@
     <div class="container py-3" style="position: relative; z-index: 1;">
         <div class="tab-class mb-1">
             <div class="row g-4">
+                <div class="row">
+                    <div class="col d-flex justify-content-end">
+                        <a href="http://192.168.11.12/" target="_blank" class="btn btn-outline-success">
+                            Intranet (Prev. Version)
+                        </a>
+                    </div>
+                </div>
                 <div class="col-xl-8 col-xxl-8">
                     <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
                         <h3 class="mb-4">What’s New</h3>
@@ -210,21 +217,17 @@
                                                 <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $crclr->path) }}"
                                                     data-title="{{ $crclr->title }}">
-                                                    {{-- <i class="fas fa-solid fa-paperclip me-1"></i> --}}
                                                     @if($crclr->title_lingo == 'E')
                                                         Number.
                                                         {{ $crclr->number }} dated
                                                         {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
-                                                        - Kerala Legislative Assembly - {{ $crclr->title }}
+                                                        - Kerala Legislative Assembly - {!! $crclr->title !!}
                                                     @else
                                                         നമ്പര്‍.
                                                         {{ $crclr->number }} തീയതി
                                                         {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
                                                         - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {!! $crclr->title !!}
                                                     @endif
-                                                    {{-- @if($crclr->link != Null)
-                                                        {!! $crclr->link !!}
-                                                    @endif --}}
                                                 </a>
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
@@ -254,7 +257,6 @@
                                                     data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $news->path) }}"
                                                     data-title="{{ $news->title }}">
-                                                    {{-- <i class="fas fa-comment-dots me-1"></i> --}}
                                                     {!! $news->title !!}
                                                 </a>
                                                 <small class="text-body d-block">
@@ -286,7 +288,7 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://e-kla.kerala.gov.in/SSOComponent/auth.php" target="_blank">
                                             <i class="fas fa-laptop-code fa-2x mb-2" style="color: #ec4297"></i>
-                                            <span>E office</span>
+                                            <span>e-Office</span>
                                         </a>
                                     </div>
                                     <!-- Attendance -->
@@ -302,7 +304,7 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://eniyamasabha.in/auth/login" target="_blank">
                                             <i class="fas fa-university fa-2x mb-2" style="color:  #6610f2"></i>
-                                            <span>e-Niyamasabha</span>
+                                            <span style="font-size: .95em;">e-Niyamasabha</span>
                                         </a>
                                     </div>
                                     <!-- Official eMail -->
@@ -329,43 +331,46 @@
                                             <span>Contacts</span>
                                         </a>
                                         <div class="dropdown-menu">
-                                            {{-- <span class="dropdown-item">
-                                                <i class="fas fa-angle-right text-white me-2"></i>
-                                                <a class="btn-link"
-                                                    href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
-                                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                    data-pdf="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
-                                                    data-title="Employees"> Employees </a> /
-                                                <a class="btn-link"
-                                                    href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
-                                                    data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                    data-pdf="{{ asset('storage/uploads/guidelines/OfficeOrder_ guide.pdf') }}"
-                                                    data-title="Office Order Guide">Sections </a>
-                                                <a class="btn-link" href="http://192.168.11.12/mailid-sect.html"
-                                                    target="_blank">Sections</a>
-                                            </span> --}}
+                                            <a class="dropdown-item"
+                                                href="https://speakerkerala.niyamasabha.nic.in/speakers-office"
+                                                target="_blank"><i class="fas fa-user-tie me-2"></i>
+                                                Speaker Office
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="http://www.niyamasabha.org/codes/tele_offdyspeaker.htm"
+                                                target="_blank"><i class="fas fa-id-badge me-2"></i>
+                                                Deputy Speaker Office
+                                            </a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
-                                                data-title="Employees"><i class="fas fa-users me-2"></i>Employees</a>
+                                                data-title="Employees">
+                                                <i class="fas fa-users me-2"></i>Employees
+                                            </a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
-                                                data-title="Sections"><i class="fas fa-building me-2"></i>Sections</a>
-
+                                                data-title="Sections">
+                                                <i class="fas fa-building me-2"></i>Sections
+                                            </a>
                                             <a class="dropdown-item" href="http://www.niyamasabha.org/codes/pa_MLAs.htm"
-                                                target="_blank"><i class="fas fa-user-tie me-2"></i>PA to MLAs</a>
+                                                target="_blank">
+                                                <i class="fas fa-phone me-2"></i>PA to MLAs
+                                            </a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/Telephone Directory - 2024.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/contacts/Telephone Directory - 2024.pdf') }}"
-                                                data-title="Telephone Directory"><i
-                                                    class="fas fa-address-book me-2"></i>Telephone Directory </a>
+                                                data-title="Telephone Directory">
+                                                <i class="fas fa-address-book me-2"></i> Telephone Directory
+                                            </a>
                                             <a class="dropdown-item"
                                                 href="http://www.niyamasabha.org/codes/tele_legsec_2021.htm"
-                                                target="_blank"><i class="fas fa-phone-volume me-2"></i>KLA</a>
+                                                target="_blank">
+                                                <i class="fas fa-phone-volume me-2"></i>KLA
+                                            </a>
                                         </div>
                                     </div>
                                     <!-- User Manual Dropdown -->
@@ -376,23 +381,18 @@
                                             <span>User Manual</span>
                                         </a>
                                         <div class="dropdown-menu">
-
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/guidelines/Hallbooking_Manual.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/guidelines/Hallbooking_Manual.pdf') }}"
                                                 data-title="Hall Booking Reference Manual">Hall Booking Reference
                                                 Manual</a>
-
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/guidelines/ResettingPassword_KLS.pdf') }}"
                                                 data-title="Official Mail Management">Official Mail Management</a>
-
-
                                             <span class="dropdown-item">
-                                                {{-- <i class="fas fa-angle-right text-white me-2"></i> --}}
                                                 <a class="btn-link"
                                                     href="{{ asset('storage/uploads/guidelines/GOnumber_guide.pdf') }}"
                                                     data-bs-toggle="modal" data-bs-target="#pdfModal"
@@ -416,8 +416,6 @@
                                                 data-title="e-KLA">e-KLA</a>
                                         </div>
                                     </div>
-
-
                                     <!-- ID Card Proforma -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
@@ -450,7 +448,6 @@
                                             <span>Digital Archives</span>
                                         </a>
                                     </div>
-
                                     <!-- Spark Portal -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
@@ -465,7 +462,7 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://gem.gov.in/" target="_blank">
                                             <i class="fas fa-shopping-cart fa-2x mb-2" style="color: #007bff"></i>
-                                            <span>Gem</span>
+                                            <span>GeM</span>
                                         </a>
                                     </div>
                                     <!-- Income Tax e-filing Portal -->
@@ -473,7 +470,7 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://www.incometax.gov.in/iec/foportal/" target="_blank">
                                             <i class="fas fa-file-invoice-dollar fa-2x mb-2" style="color: #28a745"></i>
-                                            <span>Income Tax e-filing</span>
+                                            <span>Income Tax</br>e-Filing</span>
                                         </a>
                                     </div>
                                     <!-- BIOMETRIC PUNCHING Portal -->
@@ -484,7 +481,6 @@
                                             <span>AEBAS</span>
                                         </a>
                                     </div>
-
                                     <!--Annual Index of Records-  -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark dropdown-toggle"
@@ -493,14 +489,11 @@
                                             <span>AIR</span>
                                         </a>
                                         <div class="dropdown-menu">
-
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/records/Annual Index-2014.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/records/Annual Index-2014.pdf') }}"
                                                 data-title="Annual Index 2014">Annual Index Report 2014</a>
-
-
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/records/Annual Index-2013.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
@@ -513,9 +506,6 @@
                                                 data-title="Annual Index 2012">Annual Index Report 2012</a>
                                         </div>
                                     </div>
-
-
-
                                 </div>
                             </div>
                         </div>
@@ -552,16 +542,12 @@
             var link = event.relatedTarget; // Link that triggered the modal
             var pdfUrl = link.getAttribute("data-pdf");
             var pdfTitle = link.getAttribute("data-title");
-
             // Set modal title and PDF source
             document.getElementById("pdfModalLabel").textContent = pdfTitle;
             document.getElementById("pdfViewer").src = pdfUrl;
         });
-
         pdfModal.addEventListener("hidden.bs.modal", function () {
             document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
         });
     });
-
-
 </script>
