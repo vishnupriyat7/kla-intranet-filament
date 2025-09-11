@@ -33,11 +33,11 @@
                         </td> --}}
                         <td class='text-nowrap'>
                             {{ $result->date ? \Carbon\Carbon::parse($result->date)->format('d-m-Y') : 'N/A' }}
-                             {{-- {{ $result->date ?? 'N/A' }} --}}
+                            {{-- {{ $result->date ?? 'N/A' }} --}}
                         </td>
                         <td>{{ $result->title ?? 'N/A' }}</td>
-                        {{-- Display the section name--}}
-                    <td>{{ $result->section->name ?? 'N/A' }}</td>
+                        {{-- Display the section name --}}
+                        <td>{{ $result->section->name ?? 'N/A' }}</td>
 
                         <td>
                             @if (isset($result->path))
