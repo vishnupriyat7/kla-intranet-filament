@@ -7,6 +7,7 @@
                     <th>Number</th>
                     <th>Date</th>
                     <th>Title</th>
+                    <th>Section</th>
                     <th>View</th>
                 </tr>
             </thead>
@@ -35,6 +36,9 @@
                              {{-- {{ $result->date ?? 'N/A' }} --}}
                         </td>
                         <td>{{ $result->title ?? 'N/A' }}</td>
+                        {{-- Display the section name--}}
+                    <td>{{ $result->section->name ?? 'N/A' }}</td>
+
                         <td>
                             @if (isset($result->path))
                                 <a href="{{ asset('storage/' . $result->path) }}" class="h6" data-bs-toggle="modal"

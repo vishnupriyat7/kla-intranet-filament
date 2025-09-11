@@ -383,7 +383,9 @@ class HomeController extends Controller
         }
 
         if ($request->filled('order_type')) {
-            $query = DB::table('order_circulars');
+            // $query = DB::table('order_circulars');
+             // Use Eloquent with relationship
+        $query = OrderCircular::with('section');
 
             // Filter by Order Type
             if ($request->filled('order_type')) {
@@ -426,7 +428,7 @@ class HomeController extends Controller
                 });
             }
 
-            $orderResults = $query->where('status', '1')->orderBy('date', 'desc')->get();
+            $orderResults = $query->where('status', '1')->orderBy('date')->get();
         }
         $results = sizeof($orderResults) > 0 ? $orderResults : null;
         $orderType = $request->order_type;

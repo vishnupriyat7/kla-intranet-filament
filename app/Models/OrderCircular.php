@@ -81,4 +81,8 @@ class OrderCircular extends Model
     {
         return $this->belongsTo(SubCategory::class, 'sub_sub_type');
     }
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'section_id');
+    }
 }

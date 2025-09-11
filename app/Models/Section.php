@@ -19,4 +19,11 @@ class Section extends Model
         'name',
         'status'
     ];
+    /**
+     * Get the order circulars for the section.
+     */
+    public function orderCirculars()
+    {
+        return $this->hasMany(OrderCircular::class, 'section_id');
+    }
 }
