@@ -389,12 +389,12 @@ class HomeController extends Controller
 
             // Filter by Order Type
             if ($request->filled('order_type')) {
-                $query->where('type', $request->order_type);
+                $query->where('type', $request->order_type)->orderBy('date', 'desc');
             }
 
             // Filter by GO Subtype (only for order_type = 'G')
         if ($request->filled('go_type') && $request->order_type == 'G') {
-            $query->where('go_type', $request->go_type);
+            $query->where('go_type', $request->go_type)->orderBy('date', 'desc');
         }
 
             // Ensure 'date' column exists and is valid
@@ -424,11 +424,14 @@ class HomeController extends Controller
                 $query->where(function ($q) use ($request) {
                     $q->where('title', 'LIKE', "%{$request->keyword}%")
                         ->orWhere('keywords', 'LIKE', "%{$request->keyword}%")
-                        ->orWhere('number', 'LIKE', "%{$request->keyword}%");
+                        ->orWhere('number', 'LIKE', "%{$request->keyword}%")
+                        ->orWhereHas('section', function ($q2) use ($request) {
+                            $q2->where('name', 'LIKE', "%{$request->keyword}%");
+                        });
                 });
             }
 
-            $orderResults = $query->where('status', '1')->orderBy('date')->get();
+            $orderResults = $query->where('status', '1')->orderBy('date', 'desc')->get();
         }
         $results = sizeof($orderResults) > 0 ? $orderResults : null;
         $orderType = $request->order_type;
