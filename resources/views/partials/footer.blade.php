@@ -3,22 +3,15 @@
     <div class="container py-5">
         <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
             <div class="row g-4">
-                <div class="col-lg-6">
+                <div class="col-lg-12 d-flex align-items-center justify-content-between">
                     <a href="{{ route('home.index') }}" class="d-flex flex-column flex-wrap">
                         <p class="text-white mb-0 display-6">INTRANET</p>
                         <small class="text-light" style="letter-spacing: 5px; line-height: 0;">Kerala Legislature
                             Secretariat</small>
                     </a>
+                    <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSempwI7-mTW2fiZgZiv-N6HkDfviPBE9HiRzHPQwAHCGejD8A/viewform?usp=send_form&pli=1"
+                       class="btn btn-primary py-2 px-5 rounded-pill text-white" target="_blank">Feed Back</a>
                 </div>
-                {{-- <div class="col-lg-9">
-                    <div class="d-flex position-relative rounded-pill overflow-hidden">
-                        <input class="form-control border-0 w-100 py-3 rounded-pill" type="email"
-                            placeholder="example@gmail.com">
-                        <button type="submit"
-                            class="btn btn-primary border-0 py-3 px-5 rounded-pill text-white position-absolute"
-                            style="top: 0; right: 0;">Subscribe Now</button>
-                    </div>
-                </div> --}}
             </div>
         </div>
         <div class="row g-5">
