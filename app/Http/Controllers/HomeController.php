@@ -369,8 +369,6 @@ class HomeController extends Controller
         $orderResults = collect();
         $newsResults = collect();
         $error = null;
-
-
         // Validate if month is selected but year is not
         if ($request->filled('month') && !$request->filled('year')) {
             $error = 'Please select an Year while choosing a month.';
@@ -381,44 +379,36 @@ class HomeController extends Controller
             $error = 'Please select a From Date when choosing a To Date.';
             return view('partials.advanced-search-results', compact('error'));
         }
-
         if ($request->filled('order_type')) {
             // $query = DB::table('order_circulars');
-             // Use Eloquent with relationship
-        $query = OrderCircular::with('section');
-
+            // Use Eloquent with relationship
+            $query = OrderCircular::with('section');
             // Filter by Order Type
             if ($request->filled('order_type')) {
                 $query->where('type', $request->order_type);
             }
-
             // Filter by GO Subtype (only for order_type = 'G')
-        if ($request->filled('go_type') && $request->order_type == 'G') {
-            $query->where('go_type', $request->go_type);
-        }
-
+            if ($request->filled('go_type') && $request->order_type == 'G') {
+                $query->where('go_type', $request->go_type);
+            }
             // Ensure 'date' column exists and is valid
             if ($request->filled('year') || $request->filled('month') || $request->filled('date')) {
                 $query->whereNotNull('date');
             }
-
             // Filter by Year
             if ($request->filled('year')) {
                 $query->whereYear('date', '=', $request->year);
             }
-
             // Filter by Month
             if ($request->filled('month')) {
                 $query->whereMonth('date', '=', $request->month);
             }
-
             // Filter by Date Range
             if ($request->filled('from_date') && $request->filled('to_date')) {
                 $query->whereBetween('date', [$request->from_date, $request->to_date]);
             } elseif ($request->filled('from_date')) {
                 $query->whereDate('date', '>=', $request->from_date);
             }
-
             // Filter by Keyword
             if ($request->filled('keyword')) {
                 $query->where(function ($q) use ($request) {
@@ -427,7 +417,6 @@ class HomeController extends Controller
                         ->orWhere('number', 'LIKE', "%{$request->keyword}%");
                 });
             }
-
             $orderResults = $query->where('status', '1')->orderBy('date')->get();
         }
         $results = sizeof($orderResults) > 0 ? $orderResults : null;
@@ -438,12 +427,13 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-
+        $sections = Section::where('status', 1)
+            ->orderBy('name', 'asc')
+            ->get();
         if ($request->ajax()) {
-            return view('partials.advanced-search-results', compact('results', 'orderType'));
+            return view('partials.advanced-search-results', compact('results', 'orderType', 'sections'));
         }
-
-        return view('partials.advanced-search', compact('results', 'periodicals', 'orderType'));
+        return view('partials.advanced-search', compact('results', 'periodicals', 'orderType', 'sections'));
     }
 
     public function checkStatus(Request $request)
