@@ -524,6 +524,10 @@ body {
 /** Common **/
 .bg-prev-btn {
     background-color: violet;
+}
 
+.periodical-text {
+    /* font-style: oblique; */
+    color: #004D4D;
 }
 /** Common End **/
