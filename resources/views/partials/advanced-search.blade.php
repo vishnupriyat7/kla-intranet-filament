@@ -21,7 +21,7 @@
                             <div class="col-md-4">
                                 <label for="orderType" class="form-label">Select Order Type <span
                                         class="text-danger">*</span></label>
-                                <select class="form-select" id="orderType" name="order_type" required>
+                                <select class="form-select" id="orderType" name="order_type">
                                     <option value="">Choose...</option>
                                     <option value="G" {{ request('order_type') == 'G' ? 'selected' : '' }}>Govt. Order
                                     </option>
@@ -32,7 +32,6 @@
                                     {{-- <option value="news">News</option> --}}
                                 </select>
                             </div>
-
                             <!-- GO Subtype Selection (Conditional) -->
                             <div class="col-md-4" id="goTypeContainer"
                                 style="display: {{ request('order_type') == 'G' ? 'block' : 'none' }};">
@@ -47,9 +46,6 @@
                                     </option>
                                 </select>
                             </div>
-
-
-
                             <!-- Year Selection -->
                             <div class="col-md-4">
                                 <label for="year" class="form-label">Select Year</label>
@@ -93,7 +89,16 @@
                                 <input type="date" class="form-control" id="to_date" name="to_date"
                                     value="{{ request('to_date') }}">
                             </div>
-
+                            <div class="col-md-4">
+                                <label for="section" class="form-label">
+                                    Section</label>
+                                <select class="form-select" id="section" name="section">
+                                    <option value="">Select Section</option>
+                                    @foreach ($sections as $section)
+                                        <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             {{-- Input field to Serch Based on Keyword --}}
                             <div class="col-md-4">
                                 <label for="keyword" class="form-label">
@@ -108,7 +113,6 @@
                         </div>
                     </form>
                 </div>
-
             </div><br>
             <div class="card">
                 <div class="card-header">
