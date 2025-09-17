@@ -6,7 +6,7 @@
             <div class="row g-4">
                 <div class="row">
                     <div class="col d-flex justify-content-end">
-                        <a href="http://192.168.11.12/" target="_blank" class="btn btn-outline-success">
+                        <a href="http://172.24.18.10/old/" target="_blank" class="btn btn-outline-success">
                             Intranet (Prev. Version)
                         </a>
                     </div>
