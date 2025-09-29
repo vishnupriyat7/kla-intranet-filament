@@ -19,8 +19,10 @@
                         <div class="row g-4">
                             <!-- Order Type Selection -->
                             <div class="col-md-4">
-                                <label for="orderType" class="form-label">Select Order Type <span
-                                        class="text-danger">*</span></label>
+                                <label for="orderType" class="form-label">Select Order Type
+                                    {{-- <span
+                                        class="text-danger">*</span> --}}
+                                    </label>
                                 <select class="form-select" id="orderType" name="order_type">
                                     <option value="">Choose...</option>
                                     <option value="G" {{ request('order_type') == 'G' ? 'selected' : '' }}>Govt. Order

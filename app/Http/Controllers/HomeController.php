@@ -395,7 +395,7 @@ class HomeController extends Controller
             }
             // Filter by Year
             if ($request->filled('year')) {
-                $query->whereYear('date', '=', $request->year);
+                $query->whereYear('date', '=', $request->year)->orderBy('date', 'desc');
             }
             // Filter by Month
             if ($request->filled('month')) {
@@ -423,7 +423,8 @@ class HomeController extends Controller
                 $query->where('section_id', '=', $request->section);
             }
             $orderResults = $query->where('status', '1')->orderBy('date', 'desc')->get();
-        } elseif ($request->filled('section')) {
+        }
+        if ($request->filled('section')) {
             // dd($request->section);
             $query = OrderCircular::with('section')
                 ->where('section_id', '=', $request->section);
