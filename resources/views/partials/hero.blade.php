@@ -18,35 +18,35 @@
 
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill active me-2" data-bs-toggle="pill"
-                                    href="#tab-4">
+                                    href="#tab-1">
                                     <span class="text-dark" style="width: 100px;">Circular</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
+                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
                                     <span class="text-dark" style="width: 100px;">Office Order</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
+                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
                                     <span class="text-dark" style="width: 100px;">GO RT</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-1">
+                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
                                     <span class="text-dark" style="width: 100px;">GO MS</span>
                                 </a>
                             </li>
 
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-6">
+                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-5">
                                     <span class="text-dark" style="width: 100px;">GO P</span>
                                 </a>
                             </li>
 
 
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-5">
+                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-6">
                                     <span class="text-dark" style="width: 100px;">News</span>
                                 </a>
                             </li>
@@ -55,174 +55,6 @@
                     </div>
                     <div class="tab-content mb-4">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
-                            <div class="row g-4">
-                                <div class="col-lg-12">
-                                    <div class="features-content d-flex flex-column mt-3">
-                                        @foreach ($goms as $go)
-                                            <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
-                                                    data-pdf="{{ asset('storage/' . $go->path) }}"
-                                                    data-title="{{ $go->title }}">
-                                                    @if ($go->title_lingo == 'E')
-                                                        G. O. (Ms.) No.
-                                                        {{ $go->number }} dated
-                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        - Kerala Legislative Assembly - {{ $go->title }}
-                                                    @else
-                                                        സ. ഉ. (കയ്യെഴുത്ത്) നം.
-                                                        {{ $go->number }} തീയതി
-                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
-                                                    @endif
-                                                </a>
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
-                                                </small>
-                                            </div>
-                                        @endforeach
-                                        <div class="mt-2 d-flex justify-content-center">
-                                            <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
-                                            hover-bg-primary text-hover-white border-primary">View
-                                                    All >></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-2" class="tab-pane fade show p-0">
-                            <div class="row g-4">
-                                <div class="col-lg-12">
-                                    <div class="features-content d-flex flex-column mt-3">
-                                        @foreach ($gort as $go)
-                                            <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
-                                                    data-pdf="{{ asset('storage/' . $go->path) }}"
-                                                    data-title="{{ $go->title }}">
-                                                    @if ($go->title_lingo == 'E')
-                                                        G. O. (Rt.) No.
-                                                        {{ $go->number }} dated
-                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        - Kerala Legislative Assembly - {{ $go->title }}
-                                                    @else
-                                                        സ. ഉ. (സാധാ) നം.
-                                                        {{ $go->number }} തീയതി
-                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
-                                                    @endif
-                                                </a>
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
-                                                </small>
-                                            </div>
-                                        @endforeach
-                                        <div class="mt-2 d-flex justify-content-center">
-                                            <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
-                                            hover-bg-primary text-hover-white border-primary">View
-                                                    All >></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-6" class="tab-pane fade show p-0">
-                            <div class="row g-4">
-                                <div class="col-lg-12">
-                                    <div class="features-content d-flex flex-column mt-3">
-                                        @foreach ($gop as $go)
-                                            <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
-                                                    data-pdf="{{ asset('storage/' . $go->path) }}"
-                                                    data-title="{{ $go->title }}">
-                                                    @if ($go->title_lingo == 'E')
-                                                        G. O. (P.) No.
-                                                        {{ $go->number }} dated
-                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        - Kerala Legislative Assembly - {{ $go->title }}
-                                                    @else
-                                                        സ. ഉ. (അച്ചടി) നം.
-                                                        {{ $go->number }} തീയതി
-                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
-                                                    @endif
-                                                </a>
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>s
-                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
-                                                </small>
-                                            </div>
-                                        @endforeach
-                                        <div class="mt-2 d-flex justify-content-center">
-                                            <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
-                                            hover-bg-primary text-hover-white border-primary">View
-                                                    All >></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-3" class="tab-pane fade show p-0">
-                            <div class="row g-4">
-                                <div class="col-lg-12">
-                                    <div class="features-content d-flex flex-column mt-3">
-                                        @foreach ($oos as $oo)
-                                            <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
-                                                    data-pdf="{{ asset('storage/' . $oo->path) }}"
-                                                    data-title="{{ $oo->title }}">
-                                                    @if ($oo->title_lingo == 'E')
-                                                        Office Order No.
-                                                        {{ $oo->number }} dated
-                                                        {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
-                                                        - Kerala Legislative Assembly - {{ $oo->title }}
-                                                    @else
-                                                        ഓഫീസ് ഉത്തരവ് നമ്പർ
-                                                        {{ $oo->number }} തീയതി
-                                                        {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
-                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $oo->title }}
-                                                    @endif
-                                                </a>
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($oo->date)->format('M d Y') }}
-                                                </small>
-                                            </div>
-                                        @endforeach
-                                        <div class="mt-2 d-flex justify-content-center">
-                                            <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'oo') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark hover-bg-primary text-hover-white border-primary">
-                                                    View All >>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-4" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
@@ -264,7 +96,180 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="tab-2" class="tab-pane fade show p-0">
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    <div class="features-content d-flex flex-column mt-3">
+                                        @foreach ($oos as $oo)
+                                            <div class="mb-4">
+                                                <i class="bi bi-eye-fill"
+                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $oo->path) }}"
+                                                    data-title="{{ $oo->title }}">
+                                                    @if ($oo->title_lingo == 'E')
+                                                        Office Order No.
+                                                        {{ $oo->number }} dated
+                                                        {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
+                                                        - Kerala Legislative Assembly - {{ $oo->title }}
+                                                    @else
+                                                        ഓഫീസ് ഉത്തരവ് നമ്പർ
+                                                        {{ $oo->number }} തീയതി
+                                                        {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $oo->title }}
+                                                    @endif
+                                                </a>
+                                                <small class="text-body d-block">
+                                                    <i class="fas fa-calendar-alt me-1"></i>
+                                                    {{ \Carbon\Carbon::parse($oo->date)->format('M d Y') }}
+                                                </small>
+                                            </div>
+                                        @endforeach
+                                        <div class="mt-2 d-flex justify-content-center">
+                                            <div class="col-4">
+                                                <a href="{{ route('home.order-circular', 'oo') }}"
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark hover-bg-primary text-hover-white border-primary">
+                                                    View All >>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-pane fade show p-0">
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    <div class="features-content d-flex flex-column mt-3">
+                                        @foreach ($gort as $go)
+                                            <div class="mb-4">
+                                                <i class="bi bi-eye-fill"
+                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $go->path) }}"
+                                                    data-title="{{ $go->title }}">
+                                                    @if ($go->title_lingo == 'E')
+                                                        G. O. (Rt.) No.
+                                                        {{ $go->number }} dated
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - Kerala Legislative Assembly - {{ $go->title }}
+                                                    @else
+                                                        സ. ഉ. (സാധാ) നം.
+                                                        {{ $go->number }} തീയതി
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
+                                                    @endif
+                                                </a>
+                                                <small class="text-body d-block">
+                                                    <i class="fas fa-calendar-alt me-1"></i>
+                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
+                                                </small>
+                                            </div>
+                                        @endforeach
+                                        <div class="mt-2 d-flex justify-content-center">
+                                            <div class="col-4">
+                                                <a href="{{ route('home.order-circular', 'go') }}"
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                            hover-bg-primary text-hover-white border-primary">View
+                                                    All >></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-4" class="tab-pane fade show p-0">
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    <div class="features-content d-flex flex-column mt-3">
+                                        @foreach ($goms as $go)
+                                            <div class="mb-4">
+                                                <i class="bi bi-eye-fill"
+                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $go->path) }}"
+                                                    data-title="{{ $go->title }}">
+                                                    @if ($go->title_lingo == 'E')
+                                                        G. O. (Ms.) No.
+                                                        {{ $go->number }} dated
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - Kerala Legislative Assembly - {{ $go->title }}
+                                                    @else
+                                                        സ. ഉ. (കയ്യെഴുത്ത്) നം.
+                                                        {{ $go->number }} തീയതി
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
+                                                    @endif
+                                                </a>
+                                                <small class="text-body d-block">
+                                                    <i class="fas fa-calendar-alt me-1"></i>
+                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
+                                                </small>
+                                            </div>
+                                        @endforeach
+                                        <div class="mt-2 d-flex justify-content-center">
+                                            <div class="col-4">
+                                                <a href="{{ route('home.order-circular', 'go') }}"
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                            hover-bg-primary text-hover-white border-primary">View
+                                                    All >></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                         <div id="tab-5" class="tab-pane fade show p-0">
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    <div class="features-content d-flex flex-column mt-3">
+                                        @foreach ($gop as $go)
+                                            <div class="mb-4">
+                                                <i class="bi bi-eye-fill"
+                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $go->path) }}"
+                                                    data-title="{{ $go->title }}">
+                                                    @if ($go->title_lingo == 'E')
+                                                        G. O. (P.) No.
+                                                        {{ $go->number }} dated
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - Kerala Legislative Assembly - {{ $go->title }}
+                                                    @else
+                                                        സ. ഉ. (അച്ചടി) നം.
+                                                        {{ $go->number }} തീയതി
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
+                                                    @endif
+                                                </a>
+                                                <small class="text-body d-block">
+                                                    <i class="fas fa-calendar-alt me-1"></i>s
+                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
+                                                </small>
+                                            </div>
+                                        @endforeach
+                                        <div class="mt-2 d-flex justify-content-center">
+                                            <div class="col-4">
+                                                <a href="{{ route('home.order-circular', 'go') }}"
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                            hover-bg-primary text-hover-white border-primary">View
+                                                    All >></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="tab-6" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
@@ -303,7 +308,7 @@
                             <div class="p-3 rounded border h-100" style="min-height: 600px;">
                                 <h3 class="mb-5">Tools/Application</h3>
                                 <div class="row g-4 text-center tools-application">
-                                      <!-- Niyamasabha org -->
+                                    <!-- Niyamasabha org -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="http://niyamasabha.org/" target="_blank">

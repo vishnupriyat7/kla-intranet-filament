@@ -28,7 +28,7 @@
                     // Build formatted split like (MS : 12, RT : 10, P : 8)
                     $goSplit = $goTypeCounts
                         ->map(function ($count, $key) use ($goTypes) {
-                            return ($goTypes[$key] ?? $key).':'.$count;
+                            return ($goTypes[$key] ?? $key) . ':' . $count;
                         })
                         ->implode(',');
                 @endphp
@@ -115,13 +115,18 @@
                             </td>
                             <td>{{ $result->title ?? 'N/A' }}</td>
                             <td>{{ $result->section->name ?? 'N/A' }}</td>
-                            <td>
+                            <td class='text-nowrap'>
                                 @if (isset($result->path))
                                     <a href="{{ asset('storage/' . $result->path) }}" class="h6"
                                         data-bs-toggle="modal" data-bs-target="#pdfModal"
                                         data-pdf="{{ asset('storage/' . $result->path) }}"
                                         data-title="{{ $result->title ?? 'N/A' }}">
                                         <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                    </a>
+                                    <a href="{{ asset('storage/' . $result->path) }}" class="h6 ms-2" target="_blank"
+                                        title="Open in New Tab">
+                                        <i class="bi bi-box-arrow-up-right"
+                                            style="font-size:18px;color:rgb(60, 93, 240)"></i>
                                     </a>
                                 @else
                                     <span class="text-muted">N/A</span>

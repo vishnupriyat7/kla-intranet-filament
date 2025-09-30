@@ -247,7 +247,8 @@ class HomeController extends Controller
                 })
                 ->addColumn('view', function ($order) {
                     return $order->path
-                        ? '<a href="#" data-bs-toggle="modal" data-bs-target="#pdfModal" data-pdf="' . asset('storage/' . $order->path) . '" data-title="' . e($order->title) . '"><i class="fas fa-eye text-primary"></i></a>'
+                        ? '<a href="#" data-bs-toggle="modal" data-bs-target="#pdfModal" data-pdf="' . asset('storage/' . $order->path) . '" data-title="' . e($order->title) . '" title="View in Modal"><i class="fas fa-eye text-primary"></i></a>' .
+                        '<a href="' . asset('storage/' . $order->path) . '" target="_blank" class="ms-3" title="Open in New Tab"><i class="fas fa-external-link-alt text-success"></i></a>'
                         : '<i class="fas fa-ban text-danger" title="Not uploaded"></i>';
                 })
                 ->rawColumns(['view'])
