@@ -369,7 +369,7 @@ class HomeController extends Controller
         $error = null;
 
         // Log request parameters for debugging
-        \Log::info('Advanced Search Request Parameters:', $request->all());
+        // \Log::info('Advanced Search Request Parameters:', $request->all());
 
         // Validate if month is selected but year is not
         if ($request->filled('month') && !$request->filled('year')) {
