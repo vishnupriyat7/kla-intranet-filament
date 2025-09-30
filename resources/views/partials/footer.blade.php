@@ -55,9 +55,9 @@
                         <i class="fas fa-angle-right text-white me-2"></i>
                         <a class="btn-link text-white"
                             href="https://gad.kerala.gov.in/index.php/en/online-guest-house-booking-0"
-                            target="_blank">Guest House</a> /
+                            target="_blank">Govt. Guest House</a> /
                         <a class ="btn-link text-white" href="https://resthouse.pwd.kerala.gov.in/resthouse"
-                            target="_blank">Rest
+                            target="_blank">PWD Rest
                             House</a>
                     </span>
                 </div>
