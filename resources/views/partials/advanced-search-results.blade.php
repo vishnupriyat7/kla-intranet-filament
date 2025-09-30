@@ -126,7 +126,7 @@
                                     <a href="{{ asset('storage/' . $result->path) }}" class="h6 ms-2" target="_blank"
                                         title="Open in New Tab">
                                         <i class="bi bi-box-arrow-up-right"
-                                            style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                            style="font-size:18px;color:rgb(27, 122, 70)"></i>
                                     </a>
                                 @else
                                     <span class="text-muted">N/A</span>
