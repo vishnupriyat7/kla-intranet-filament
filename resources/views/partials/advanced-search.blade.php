@@ -19,8 +19,7 @@
                         <div class="row g-4">
                             <!-- Order Type Selection -->
                             <div class="col-md-4">
-                                <label for="orderType" class="form-label">Select Order Type <span
-                                        class="text-danger">*</span></label>
+                                <label for="orderType" class="form-label">Select Order Type</label>
                                 <select class="form-select" id="orderType" name="order_type">
                                     <option value="">Choose...</option>
                                     <option value="G" {{ request('order_type') == 'G' ? 'selected' : '' }}>Govt. Order
@@ -29,7 +28,6 @@
                                     </option>
                                     <option value="O" {{ request('order_type') == 'O' ? 'selected' : '' }}>Office Order
                                     </option>
-                                    {{-- <option value="news">News</option> --}}
                                 </select>
                             </div>
                             <!-- GO Subtype Selection (Conditional) -->
@@ -126,7 +124,7 @@
                                 'orderType' => $orderType,
                             ])
                         @else
-                            <div class="alert alert-warning mt-4">Please select an Order Type to proceed with the search.
+                            <div class="alert alert-warning mt-4">Please select at least one of the following to proceed with the search: Order Type, Year, Month, Date, Section, or Keyword.
                             </div>
                         @endif
                     </div>
