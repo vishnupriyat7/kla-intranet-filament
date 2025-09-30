@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\Category;
+use App\Models\SubCategory;
 
 class HomeController extends Controller
 {
@@ -322,8 +324,10 @@ class HomeController extends Controller
         $sections = Section::where('status', 1)
             ->orderBy('name', 'asc')
             ->get();
+        $categories = Category::get();
+        $subcategories = SubCategory::get();
         $save_request = '';
-        return view('orders-circular.upload_request', compact('periodicals', 'save_request', 'sections'));
+        return view('orders-circular.upload_request', compact('periodicals', 'save_request', 'sections', 'categories', 'subcategories'));
     }
 
     public function storeUploadRequest(Request $request)

@@ -68,24 +68,23 @@
                             <div class="row">
                                 <div class="mb-3 col-6" id="service_member_fe">
                                     <select class="form-select" id="serviceMember_fe" name="serviceMember" required>
-                                        <option value="">Select Service/Member Related</option>
-                                        <option value="Service">Service Related</option>
-                                        <option value="Member">Member Related</option>
+                                        <option value="">Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('service_member')
+                                    @error('serviceMember')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-6" id="category-fe-div">
                                     <select class="form-select" id="category_fe" name="category" required>
                                         <option value="">Select Category</option>
-                                        <option value="TP">Transfer & Posting</option>
-                                        <option value="CR">Claim / Reimbursements</option>
-                                        <option value="AR">Accounts Related</option>
-                                        <option value="PA">PA Posting</option>
-                                        <option value="G">General</option>
+                                        @foreach ($subcategories as $subcategory)
+                                            <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('service')
+                                    @error('category')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -107,15 +106,15 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="title_fe" name="title" placeholder="Enter Title"
-                                    required>
+                                <textarea class="form-control" id="title_fe" name="title" placeholder="Enter Title"
+                                    required></textarea>
                                 @error('title')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="keywords_fe" name="keywords"
-                                    placeholder="Enter Keywords">
+                                <textarea type="text" class="form-control" id="keywords_fe" name="keywords"
+                                    placeholder="Enter Keywords"></textarea>
                                 @error('keywords')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
