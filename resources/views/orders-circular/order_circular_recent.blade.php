@@ -263,7 +263,7 @@
                             name: 'view',
                             orderable: false,
                             searchable: false,
-                            className: 'text-center fs-5' // Center-align, medium font
+                            className: 'text-nowrap text-center fs-5' // Center-align, medium font
                         }
                     ],
                     createdRow: function(row, data, dataIndex) {
@@ -271,6 +271,7 @@
                             'nowrap'); // Prevent wrap on index column
                         $('td:eq(2)', row).css('white-space',
                             'nowrap'); // Prevent wrap on index column
+
 
                     }
 
