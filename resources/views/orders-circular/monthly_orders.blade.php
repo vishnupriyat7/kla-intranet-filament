@@ -125,7 +125,10 @@
             $(tableId).DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true, // Ensure responsive plugin is enabled
+                responsive: {
+                    details: false
+                },
+                autoWidth: false,
                 ajax: {
                     url: '{{ route('home.order-circular', ['type' => $orderTypeKey]) }}',
                     method: 'GET',
@@ -170,7 +173,11 @@
                     {
                         data: 'title',
                         name: 'title',
-                        className: 'fw-normal fs-10 text-dark'
+                        className: 'text-nowrap fw-normal fs-8 text-dark',
+                        render: function(data) {
+                            return `<div style="white-space: normal; word-wrap: break-word; max-width: 600px;">${data}</div>`;
+                        },
+                        responsivePriority: 1
                     },
                     {
                         data: 'view',
@@ -180,11 +187,11 @@
                         className: 'text-center fs-5'
                     }
                 ],
-                createdRow: function(row, data, dataIndex) {
-                    $('td:eq(1)', row).css('white-space', 'nowrap');
-                    $('td:eq(2)', row).css('white-space', 'nowrap');
+                // createdRow: function(row, data, dataIndex) {
+                //     $('td:eq(1)', row).css('white-space', 'nowrap');
+                //     $('td:eq(2)', row).css('white-space', 'nowrap');
 
-                }
+                // }
             });
 
             // Adjust table layout after initialization
