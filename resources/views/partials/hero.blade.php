@@ -379,14 +379,14 @@
                                                 href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
-                                                data-title="Employees">
+                                                data-title="Official Mail IDs">
                                                 <i class="fas fa-users me-2"></i>Official Mail IDs
                                             </a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
-                                                data-title="Sections">
+                                                data-title="Section Mail IDs">
                                                 <i class="fas fa-building me-2"></i>Section Mail IDs
                                             </a>
                                             <a class="dropdown-item" href="http://www.niyamasabha.org/codes/pa_MLAs.htm"
