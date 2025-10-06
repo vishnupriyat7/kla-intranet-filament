@@ -60,10 +60,8 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($crcls as $crclr)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $crclr->path) }}"
                                                     data-title="{{ $crclr->title }}">
                                                     @if ($crclr->title_lingo == 'E')
@@ -86,8 +84,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'cr') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'cr') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -102,10 +99,8 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($oos as $oo)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $oo->path) }}"
                                                     data-title="{{ $oo->title }}">
                                                     @if ($oo->title_lingo == 'E')
@@ -144,10 +139,8 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($gort as $go)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $go->path) }}"
                                                     data-title="{{ $go->title }}">
                                                     @if ($go->title_lingo == 'E')
@@ -170,8 +163,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -186,10 +178,8 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($goms as $go)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $go->path) }}"
                                                     data-title="{{ $go->title }}">
                                                     @if ($go->title_lingo == 'E')
@@ -212,8 +202,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -231,10 +220,8 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($gop as $go)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60, 93, 240)"></i>
-                                                <a href="#" class="h6" data-bs-toggle="modal"
-                                                    data-bs-target="#pdfModal"
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60, 93, 240)"></i>
+                                                <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $go->path) }}"
                                                     data-title="{{ $go->title }}">
                                                     @if ($go->title_lingo == 'E')
@@ -257,8 +244,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -275,8 +261,7 @@
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($newsupdates as $news)
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60, 93, 240)"></i>
                                                 <a href="{{ asset('storage/' . $news->path) }}" class="h6"
                                                     data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                     data-pdf="{{ asset('storage/' . $news->path) }}"
@@ -290,8 +275,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('updatesmore') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('updatesmore') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -328,8 +312,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="http://172.24.18.28/attendance-app/" target="_blank">
-                                            <i class="fas fa-user-check fa-2x mb-2"
-                                                style="color: rgb(60, 93, 240)"></i>
+                                            <i class="fas fa-user-check fa-2x mb-2" style="color: rgb(60, 93, 240)"></i>
                                             <span>Attendance</span>
                                         </a>
                                     </div>
@@ -388,21 +371,26 @@
                                                 Deputy Speaker Office
                                             </a>
                                             <a class="dropdown-item"
+                                                href="http://www.niyamasabha.org/codes/tele_legsec_2021.htm"
+                                                target="_blank">
+                                                <i class="fas fa-phone-volume me-2"></i>Officers / Sections
+                                            </a>
+                                            <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
                                                 data-title="Employees">
-                                                <i class="fas fa-users me-2"></i>Employees
+                                                <i class="fas fa-users me-2"></i>Official Mail IDs
                                             </a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
                                                 data-title="Sections">
-                                                <i class="fas fa-building me-2"></i>Sections
+                                                <i class="fas fa-building me-2"></i>Section Mail IDs
                                             </a>
-                                            <a class="dropdown-item"
-                                                href="http://www.niyamasabha.org/codes/pa_MLAs.htm" target="_blank">
+                                            <a class="dropdown-item" href="http://www.niyamasabha.org/codes/pa_MLAs.htm"
+                                                target="_blank">
                                                 <i class="fas fa-phone me-2"></i>PA to MLAs
                                             </a>
                                             <a class="dropdown-item"
@@ -411,11 +399,6 @@
                                                 data-pdf="{{ asset('storage/uploads/contacts/Telephone Directory - 2024.pdf') }}"
                                                 data-title="Telephone Directory">
                                                 <i class="fas fa-address-book me-2"></i> Telephone Directory
-                                            </a>
-                                            <a class="dropdown-item"
-                                                href="http://www.niyamasabha.org/codes/tele_legsec_2021.htm"
-                                                target="_blank">
-                                                <i class="fas fa-phone-volume me-2"></i>KLA
                                             </a>
                                         </div>
                                     </div>
@@ -520,8 +503,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://www.incometax.gov.in/iec/foportal/" target="_blank">
-                                            <i class="fas fa-file-invoice-dollar fa-2x mb-2"
-                                                style="color: #28a745"></i>
+                                            <i class="fas fa-file-invoice-dollar fa-2x mb-2" style="color: #28a745"></i>
                                             <span>Income Tax</br>e-Filing</span>
                                         </a>
                                     </div>
@@ -577,8 +559,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <iframe id="pdfViewer" src="" width="100%" height="700px"
-                        style="border: none;"></iframe>
+                    <iframe id="pdfViewer" src="" width="100%" height="700px" style="border: none;"></iframe>
                 </div>
             </div>
         </div>
@@ -588,10 +569,10 @@
 {{-- Hero Section End --}}
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var pdfModal = document.getElementById("pdfModal");
 
-        pdfModal.addEventListener("show.bs.modal", function(event) {
+        pdfModal.addEventListener("show.bs.modal", function (event) {
             var link = event.relatedTarget; // Link that triggered the modal
             var pdfUrl = link.getAttribute("data-pdf");
             var pdfTitle = link.getAttribute("data-title");
@@ -599,7 +580,7 @@
             document.getElementById("pdfModalLabel").textContent = pdfTitle;
             document.getElementById("pdfViewer").src = pdfUrl;
         });
-        pdfModal.addEventListener("hidden.bs.modal", function() {
+        pdfModal.addEventListener("hidden.bs.modal", function () {
             document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
         });
     });
