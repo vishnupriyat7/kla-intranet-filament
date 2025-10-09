@@ -1,10 +1,33 @@
 <style>
     .glow-datetime {
         font-weight: bold;
-        font-size: 1rem; /* Adjust size as needed */
-        color: #ffffff; /* Bold white */
-        text-shadow: none; /* Remove any glow */
-        transition: none; /* No animation needed */
+        font-size: 1rem;
+        /* Adjust size as needed */
+        color: #ffffff;
+        /* Bold white */
+        text-shadow: none;
+        /* Remove any glow */
+        transition: none;
+        /* No animation needed */
+    }
+
+    /* Blinking animation for date */
+    @keyframes blink {
+
+        0%,
+        50%,
+        100% {
+            opacity: 1;
+        }
+
+        25%,
+        75% {
+            opacity: 0;
+        }
+    }
+
+    .blink-date {
+        animation: blink 7s infinite;
     }
 </style>
 
@@ -48,7 +71,7 @@
                                 {{ date('Y') }}</span></i> --}}
                         <!-- Date -->
                         <i class="fas fa-calendar-alt text-white border-end border-secondary pe-2 me-2">
-                            <span class="glow-datetime" id="current-date">
+                            <span class="glow-datetime blink-date" id="current-date">
                                 {{ date('D') }} {{ date('d') }} {{ date('M') }} {{ date('Y') }}
                             </span>
                         </i>
