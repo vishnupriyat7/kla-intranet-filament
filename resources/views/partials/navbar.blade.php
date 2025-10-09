@@ -1,3 +1,15 @@
+<style>
+    .glow-datetime {
+        font-weight: bold;
+        font-size: 1rem; /* Adjust size as needed */
+        color: #ffffff; /* Bold white */
+        text-shadow: none; /* Remove any glow */
+        transition: none; /* No animation needed */
+    }
+</style>
+
+
+
 <!-- Spinner Start -->
 <div id="spinner"
     class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
@@ -18,7 +30,7 @@
                     </span>
 
                     <div class="pe-2 me-3 border-end border-white d-flex align-items-center">
-                        <p class="mb-0 text-white fs-6 fw-normal">KLA</p>
+                        <p class="mb-0 text-white fs-6 fw-bold">KLA</p>
                     </div>
                     <div class="overflow-hidden" style="width: 900px;">
                         <div id="note" class="ps-2">
@@ -31,12 +43,18 @@
                     </div>
 
                     <div class="top-link flex-lg-wrap">
-                        <i class="fas fa-calendar-alt text-white border-end border-secondary pe-2 me-2"> <span
+                        {{-- <i class="fas fa-calendar-alt text-white border-end border-secondary pe-2 me-2"> <span
                                 class="text-body">{{ date('D') }} {{ date('d') }} {{ date('M') }}
-                                {{ date('Y') }}</span></i>
-                        {{-- <span class="text-body">Thiruvananthapuram</span> --}}
-                        <!-- Replace static location with live time -->
-                        <span class="text-body" id="kolkata-time">Loading IST...</span>
+                                {{ date('Y') }}</span></i> --}}
+                        <!-- Date -->
+                        <i class="fas fa-calendar-alt text-white border-end border-secondary pe-2 me-2">
+                            <span class="glow-datetime" id="current-date">
+                                {{ date('D') }} {{ date('d') }} {{ date('M') }} {{ date('Y') }}
+                            </span>
+                        </i>
+
+                        <!-- Time -->
+                        <span class="glow-datetime" id="kolkata-time">Loading IST...</span>
                         {{-- <div class="d-flex icon">
                                 <p class="mb-0 text-white me-2">Follow Us:</p>
                                 <a href="" class="me-2"><i class="fab fa-facebook-f text-body link-hover"></i></a>
