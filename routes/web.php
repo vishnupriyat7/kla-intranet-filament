@@ -19,6 +19,7 @@ Route::get('/advanced-search', [HomeController::class, 'advancedSearch'])->name(
 Route::get('/employees', [EmployeeController::class, 'index'])->name('home.employees');
 Route::get('/employees/data', [EmployeeController::class, 'getEmployees'])->name('employees.data');
 Route::get('/employees/{attendanceId}', [EmployeeController::class, 'employeeShow'])->name('employees.show');
+Route::get('/retired-staff', [EmployeeController::class, 'retiredStaff'])->name('home.retired-staff');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
