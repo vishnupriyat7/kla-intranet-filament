@@ -143,10 +143,10 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route('home.employees') }}"
+                            {{-- <a href="{{ route('home.employees') }}"
                                 class="nav-item nav-link {{ request()->routeIs('home.employees') ? 'active' : '' }}">
                                 Employee Corner
-                            </a>
+                            </a> --}}
 
                             <a href="http://172.24.18.28/attendance-mgmt-backend/booking_tv" class="nav-item nav-link"
                                 target="_blank">

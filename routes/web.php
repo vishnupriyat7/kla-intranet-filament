@@ -19,7 +19,13 @@ Route::get('/advanced-search', [HomeController::class, 'advancedSearch'])->name(
 Route::get('/employees', [EmployeeController::class, 'index'])->name('home.employees');
 Route::get('/employees/data', [EmployeeController::class, 'getEmployees'])->name('employees.data');
 Route::get('/employees/{attendanceId}', [EmployeeController::class, 'employeeShow'])->name('employees.show');
+// Retired Staff
+
+
+
 Route::get('/retired-staff', [EmployeeController::class, 'retiredStaff'])->name('home.retired-staff');
+Route::get('/retired-staff/data', [EmployeeController::class, 'getRetiredEmployees'])->name('retired-staff.data');
+Route::get('/retired-staff/{id}', [EmployeeController::class, 'retiredStaffShow'])->name('retired-staff.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

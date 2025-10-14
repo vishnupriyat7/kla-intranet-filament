@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Http;
+use App\Models\RetiredStaff;
 
 class EmployeeController extends Controller
 {
@@ -51,7 +52,42 @@ class EmployeeController extends Controller
         }
     }
 
-    public function retiredStaff() {
+     public function retiredStaff()
+    {
+        return view('employees.retired-staff');
+    }
 
+    public function getRetiredEmployees(Request $request)
+    {
+        try {
+            $retiredStaff = RetiredStaff::query();
+
+            return DataTables::of($retiredStaff)
+                ->addIndexColumn()
+                ->editColumn('name_eng', function ($row) {
+                    return $row->name_eng ?? 'N/A';
+                })
+                ->editColumn('district', function ($row) {
+                    return $row->district ?? 'N/A';
+                })
+                ->editColumn('address', function ($row) {
+                    return $row->address ?? 'N/A';
+                })
+                ->make(true);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Exception occurred: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function retiredStaffShow($id)
+    {
+        try {
+            $retiredStaff = RetiredStaff::findOrFail($id);
+            return view('employees.retired-staff-show', compact('retiredStaff'));
+        } catch (\Exception $e) {
+            return view('employees.retired-staff-show', ['error' => 'Retired staff not found: ' . $e->getMessage()]);
+        }
     }
 }
