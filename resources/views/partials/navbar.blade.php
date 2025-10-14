@@ -27,7 +27,7 @@
     }
 
     .blink-date {
-        animation: blink 7s infinite;
+        animation: blink 6s infinite;
     }
 </style>
 
