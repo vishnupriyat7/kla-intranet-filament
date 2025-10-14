@@ -50,4 +50,8 @@ class EmployeeController extends Controller
             return view('employees.show', ['error' => 'An error occurred: ' . $e->getMessage()]);
         }
     }
+
+    public function retiredStaff() {
+
+    }
 }
