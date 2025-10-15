@@ -60,7 +60,7 @@ class EmployeeController extends Controller
     public function getRetiredEmployees(Request $request)
     {
         try {
-            $retiredStaff = RetiredStaff::query();
+            $retiredStaff = RetiredStaff::query()->orderBy('name_eng', 'asc');;
 
             return DataTables::of($retiredStaff)
                 ->addIndexColumn()

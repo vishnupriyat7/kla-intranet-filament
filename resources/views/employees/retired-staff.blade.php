@@ -56,10 +56,14 @@
                 serverSide: false, // Adjusted since we're using Eloquent directly
                 ajax: '{{ route('retired-staff.data') }}',
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
+                        data: null, // Use null since we're generating the number
+                        name: 'serial_number',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        render: function (data, type, row, meta) {
+                            // Calculate continuous serial number
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
                     },
                     {
                         data: 'name_eng',
@@ -73,13 +77,14 @@
                         data: 'address',
                         name: 'address'
                     },
-                     {
+                    {
                         data: null,
                         name: 'action',
                         orderable: false,
                         searchable: false,
-                        render: function (data, type, row) {
-                            return '<i class="fas fa-eye view-retired-employee" data-id="' + row.id + '" style="cursor: pointer; color: #17a2b8;"></i>';
+                        render: function(data, type, row) {
+                            return '<i class="fas fa-eye view-retired-employee" data-id="' + row
+                                .id + '" style="cursor: pointer; color: #17a2b8;"></i>';
                         }
                     }
                 ],
