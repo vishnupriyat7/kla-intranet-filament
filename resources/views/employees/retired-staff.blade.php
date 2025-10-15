@@ -60,7 +60,7 @@
                         name: 'serial_number',
                         orderable: false,
                         searchable: false,
-                        render: function (data, type, row, meta) {
+                        render: function(data, type, row, meta) {
                             // Calculate continuous serial number
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
