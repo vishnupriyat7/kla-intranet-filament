@@ -14,9 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->string('name_eng');
             $table->string('name_mal')->nullable();
+            $table->string('gender')->nullable();
             $table->string('retired_as')->nullable();
             $table->date('retired_on')->nullable();
-            $table->string('address')->nullable();
+            $table->text('address')->nullable();
             $table->string('district')->nullable();
             $table->string('pin')->nullable();
             $table->string('contact_no')->nullable();

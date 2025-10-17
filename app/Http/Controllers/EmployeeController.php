@@ -52,7 +52,7 @@ class EmployeeController extends Controller
         }
     }
 
-     public function retiredStaff()
+    public function retiredStaff()
     {
         return view('employees.retired-staff');
     }
@@ -60,19 +60,13 @@ class EmployeeController extends Controller
     public function getRetiredEmployees(Request $request)
     {
         try {
-            $retiredStaff = RetiredStaff::query()->orderBy('name_eng', 'asc');;
-
+            $retiredStaff = RetiredStaff::query()->orderByDesc('retired_on')->get();
             return DataTables::of($retiredStaff)
                 ->addIndexColumn()
-                ->editColumn('name_eng', function ($row) {
-                    return $row->name_eng ?? 'N/A';
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-md view-retired-employee" data-id="' . $row['id'] . '"><i class="fas fa-eye text-primary"></i></button>';
                 })
-                ->editColumn('district', function ($row) {
-                    return $row->district ?? 'N/A';
-                })
-                ->editColumn('address', function ($row) {
-                    return $row->address ?? 'N/A';
-                })
+                ->rawColumns(['action', 'avatar'])
                 ->make(true);
         } catch (\Exception $e) {
             return response()->json([

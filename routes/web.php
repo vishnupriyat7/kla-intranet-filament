@@ -20,9 +20,6 @@ Route::get('/employees', [EmployeeController::class, 'index'])->name('home.emplo
 Route::get('/employees/data', [EmployeeController::class, 'getEmployees'])->name('employees.data');
 Route::get('/employees/{attendanceId}', [EmployeeController::class, 'employeeShow'])->name('employees.show');
 // Retired Staff
-
-
-
 Route::get('/retired-staff', [EmployeeController::class, 'retiredStaff'])->name('home.retired-staff');
 Route::get('/retired-staff/data', [EmployeeController::class, 'getRetiredEmployees'])->name('retired-staff.data');
 Route::get('/retired-staff/{id}', [EmployeeController::class, 'retiredStaffShow'])->name('retired-staff.show');

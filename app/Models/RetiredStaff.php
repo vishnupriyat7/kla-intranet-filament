@@ -15,6 +15,7 @@ class RetiredStaff extends Model implements HasMedia
     protected $fillable = [
         'name_eng',
         'name_mal',
+        'gender',
         'retired_as',
         'retired_on',
         'address',

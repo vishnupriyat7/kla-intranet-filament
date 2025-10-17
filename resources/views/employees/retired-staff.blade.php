@@ -50,47 +50,24 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#retiredEmployeeTable').DataTable({
                 processing: true,
                 serverSide: false, // Adjusted since we're using Eloquent directly
                 ajax: '{{ route('retired-staff.data') }}',
-                columns: [{
-                        data: null, // Use null since we're generating the number
-                        name: 'serial_number',
-                        orderable: false,
-                        searchable: false,
-                        render: function(data, type, row, meta) {
-                            // Calculate continuous serial number
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
-                    },
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                    { data: 'name_eng', name: 'name_eng' },
+                    { data: 'retired_as', name: 'retired_as' },
+                    { data: 'retired_on', name: 'retired_on' },
                     {
-                        data: 'name_eng',
-                        name: 'name_eng'
-                    },
-                    {
-                        data: 'district',
-                        name: 'district'
-                    },
-                    {
-                        data: 'address',
-                        name: 'address'
-                    },
-                    {
-                        data: null,
+                        data: 'action',
                         name: 'action',
                         orderable: false,
                         searchable: false,
-                        render: function(data, type, row) {
-                            return '<i class="fas fa-eye view-retired-employee" data-id="' + row
-                                .id + '" style="cursor: pointer; color: #17a2b8;"></i>';
-                        }
                     }
                 ],
-                order: [
-                    [1, 'asc']
-                ],
+                order: [0, 'asc'],
                 pageLength: 25,
                 responsive: true,
                 lengthChange: true,
@@ -101,7 +78,7 @@
                 }
             });
 
-            $('#retiredEmployeeTable').on('click', '.view-retired-employee', function() {
+            $('#retiredEmployeeTable').on('click', '.view-retired-employee', function () {
                 let employeeId = $(this).data('id');
                 $('#retiredEmployeeModalBody').html('Loading...');
                 $('#retiredEmployeeModal').modal('show');
@@ -110,10 +87,10 @@
                     url: '{{ route('retired-staff.show', ['id' => ':id']) }}'.replace(':id',
                         employeeId),
                     type: 'GET',
-                    success: function(response) {
+                    success: function (response) {
                         $('#retiredEmployeeModalBody').html(response);
                     },
-                    error: function() {
+                    error: function () {
                         $('#retiredEmployeeModalBody').html(
                             '<div class="alert alert-danger">Failed to load retired employee details.</div>'
                         );

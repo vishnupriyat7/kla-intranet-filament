@@ -17,7 +17,7 @@
                             <table id="employeeTable" class="table table-bordered display">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Sl No.</th>
                                         <th>Name</th>
                                         <th>Designation</th>
                                         <th>Actions</th>

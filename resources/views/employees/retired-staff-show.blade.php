@@ -8,9 +8,8 @@
         @else
             <div class="row">
                 <div class="col-md-4">
-                    <img src="{{ $retiredStaff->getFirstMediaUrl('images', 'thumb') }}"
-                        alt="{{ $retiredStaff->name_eng }}" class="img-fluid rounded"
-                        onerror="this.src='https://via.placeholder.com/100'">
+                    <img src="{{ $retiredStaff->getFirstMediaUrl('images') }}" alt="{{ $retiredStaff->name_eng }}"
+                        class="img-fluid rounded" onerror="this.src='https://via.placeholder.com/100'">
                 </div>
                 <div class="col-md-8">
                     <p><strong>Name (English):</strong> {{ $retiredStaff->name_eng ?? 'N/A' }}</p>
