@@ -69,6 +69,7 @@
                                                         {{ $crclr->number }} dated
                                                         {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
                                                         - Kerala Legislative Assembly - {!! $crclr->title !!}
+                                                        {{-- @if($crclr->link 'N/A' }}} --}}
                                                     @else
                                                         നമ്പര്‍.
                                                         {{ $crclr->number }} തീയതി

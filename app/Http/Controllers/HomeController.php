@@ -253,7 +253,7 @@ class HomeController extends Controller
                         '<a href="' . asset('storage/' . $order->path) . '" target="_blank" class="ms-3" title="Open in New Tab"><i class="fas fa-external-link-alt text-success"></i></a>'
                         : '<i class="fas fa-ban text-danger" title="Not uploaded"></i>';
                 })
-                ->rawColumns(['view'])
+                ->rawColumns(['title', 'view'])
                 ->make(true);
         }
         $periodicals = Periodical::with('periodicalMaster')

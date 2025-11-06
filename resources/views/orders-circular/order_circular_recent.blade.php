@@ -255,8 +255,11 @@
                         },
                         {
                             data: 'title',
-                            name: 'title',
-                            className: 'fw-normal fs-10 text-dark' // Italic, normal weight, medium font, dark text
+        name: 'title',
+        className: 'fw-normal fs-10 text-dark',
+        render: function (data, type, row) {
+            return data; // allow anchor tags and other HTML
+        }
                         },
                         {
                             data: 'view',
