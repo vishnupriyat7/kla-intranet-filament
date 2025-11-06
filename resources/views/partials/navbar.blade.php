@@ -138,8 +138,8 @@
                                 <div class="dropdown-menu m-0 drop-bg rounded-0">
                                     <a class="dropdown-item" href="{{ route('home.employees') }}">Current
                                         Employees</a>
-                                    <a class="dropdown-item" href="{{ route('home.retired-staff') }}">Retired
-                                        Employees</a>
+                                    {{-- <a class="dropdown-item" href="{{ route('home.retired-staff') }}">Retired
+                                        Employees</a> --}}
                                 </div>
                             </div>
 
