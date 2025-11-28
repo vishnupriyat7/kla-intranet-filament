@@ -77,6 +77,13 @@
                                                         - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {!! $crclr->title !!}
                                                     @endif
                                                 </a>
+                                                   {{-- SHOW GOOGLE FORM LINK IF PRESENT --}}
+        @if ($crclr->link)
+            <div>
+                Google form Link:
+                <a href="{{ $crclr->link }}" target="_blank">Click here</a>
+            </div>
+        @endif
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
                                                     {{ \Carbon\Carbon::parse($crclr->date)->format('M d Y') }}
@@ -116,6 +123,12 @@
                                                         - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $oo->title }}
                                                     @endif
                                                 </a>
+                                                @if ($oo->link)
+            <div>
+                Google form Link:
+                <a href="{{ $oo->link }}" target="_blank">Click here</a>
+            </div>
+        @endif
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
                                                     {{ \Carbon\Carbon::parse($oo->date)->format('M d Y') }}
@@ -156,6 +169,12 @@
                                                         - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
                                                     @endif
                                                 </a>
+                                                @if ($go->link)
+                                                    <div>
+                                                        Google form Link:
+                                                        <a href="{{ $go->link }}" target="_blank">Click here</a>
+                                                    </div>
+                                                @endif
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
                                                     {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
@@ -195,6 +214,12 @@
                                                         - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
                                                     @endif
                                                 </a>
+                                                @if ($go->link)
+                                                    <div>
+                                                        Google form Link:
+                                                        <a href="{{ $go->link }}" target="_blank">Click here</a>
+                                                    </div>
+                                                @endif
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
                                                     {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
@@ -237,6 +262,12 @@
                                                         - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {{ $go->title }}
                                                     @endif
                                                 </a>
+                                                @if ($go->link)
+                                                    <div>
+                                                        Google form Link:
+                                                        <a href="{{ $go->link }}" target="_blank">Click here</a>
+                                                    </div>
+                                                @endif
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>s
                                                     {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}

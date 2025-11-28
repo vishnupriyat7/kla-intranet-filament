@@ -174,8 +174,22 @@
                         data: 'title',
                         name: 'title',
                         className: 'text-nowrap fw-normal fs-10 text-dark',
-                        render: function(data) {
-                            return `<div style="white-space: normal; word-wrap: break-word; max-width: 600px;">${data}</div>`;
+                        render: function(data, type, row) {
+
+                            let title =
+                                `<div style="white-space: normal; word-wrap: break-word; max-width: 600px;">${data}</div>`;
+
+                            // If a Google Form link exists, append it
+                            if (row.link && row.link.trim() !== "") {
+                                title += `
+                <div style="white-space: normal; word-wrap: break-word; max-width: 600px; margin-top: 4px;">
+                    Google form Link:
+                    <a href="${row.link}" target="_blank">Click here</a>
+                </div>
+            `;
+                            }
+
+                            return title;
                         },
                         responsivePriority: 1
                     },

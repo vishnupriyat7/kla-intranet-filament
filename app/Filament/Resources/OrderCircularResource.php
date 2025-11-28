@@ -112,8 +112,7 @@ class OrderCircularResource extends Resource
                         $set('keywords', implode(', ', $names));
                     }),
                 Textarea::make('keywords')
-                    ->label('Keywords (If any)')
-                    ->maxLength(255),
+                    ->label('Keywords (If any)'),
                 Components\FileUpload::make('path')
                     ->required()
                     ->acceptedFileTypes(['application/pdf'])
@@ -332,8 +331,8 @@ class OrderCircularResource extends Resource
                         $url = Storage::url($record->path);
                         return new \Illuminate\Support\HtmlString(
                             '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
-                            view('filament.pdf-modal', ['url' => $url])->render() .
-                            '</div>'
+                                view('filament.pdf-modal', ['url' => $url])->render() .
+                                '</div>'
                         );
                     })
                     ->modalSubmitAction(false) // Remove the default "Submit" button
