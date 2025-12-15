@@ -449,6 +449,16 @@
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/guidelines/HandbookMA A 23.07.2025-1.pdf') }}"
                                                 data-title="e-KLA">Member's Handbook</a>
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/guidelines/RTI -Quick reference Guide_KLS.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/guidelines/RTI -Quick reference Guide_KLS.pdf') }}"
+                                                data-title="e-KLA">RTI Quick Reference Guide</a>
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/guidelines/RTI-portal-user-manual.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/guidelines/RTI-portal-user-manual.pdf') }}"
+                                                data-title="e-KLA">RTI Portal User Manual</a>
                                         </div>
                                     </div>
                                     <!-- ID Card Proforma -->

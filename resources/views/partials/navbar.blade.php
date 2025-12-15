@@ -133,7 +133,7 @@
                                 <a href="{{ route('home.index') }}"
                                     class="nav-link dropdown-toggle {{ request()->routeIs('home.employees') || request()->routeIs('home.employees.*') ? 'active' : '' }}"
                                     data-bs-toggle="dropdown">
-                                    Empoyee Corner
+                                    Employee Corner
                                 </a>
                                 <div class="dropdown-menu m-0 drop-bg rounded-0">
                                     <a class="dropdown-item" href="{{ route('home.employees') }}">Current
