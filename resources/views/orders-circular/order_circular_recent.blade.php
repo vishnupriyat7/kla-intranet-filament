@@ -201,8 +201,7 @@
                 goType = 'R';
             } else if (targetId === '#print') {
                 goType = 'P';
-            }
-            else {
+            } else {
                 goType = null; // Default for Office Order or Circular
             }
 
@@ -255,11 +254,19 @@
                         },
                         {
                             data: 'title',
-        name: 'title',
-        className: 'fw-normal fs-10 text-dark',
-        render: function (data, type, row) {
-            return data; // allow anchor tags and other HTML
-        }
+                            name: 'title',
+                            className: 'fw-normal fs-10 text-dark',
+                            render: function(data, type, row) {
+
+                                let output = data; // title (HTML allowed)
+
+                                if (row.link && row.link.trim() !== "") {
+                                    output +=
+                                        `<br>Google form Link: <a href="${row.link}" target="_blank">Click here</a>`;
+                                }
+
+                                return output;
+                            }
                         },
                         {
                             data: 'view',

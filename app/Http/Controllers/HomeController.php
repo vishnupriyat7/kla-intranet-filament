@@ -247,6 +247,9 @@ class HomeController extends Controller
                 ->addColumn('title', function ($order) {
                     return $order->title;
                 })
+                ->addColumn('link', function ($order) {
+                    return $order->link;  // send raw link
+                })
                 ->addColumn('view', function ($order) {
                     return $order->path
                         ? '<a href="#" data-bs-toggle="modal" data-bs-target="#pdfModal" data-pdf="' . asset('storage/' . $order->path) . '" data-title="' . e($order->title) . '" title="View in Modal"><i class="fas fa-eye text-primary"></i></a>' .
