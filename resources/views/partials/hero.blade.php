@@ -5,9 +5,16 @@
         <div class="tab-class mb-1">
             <div class="row g-4">
                 <div class="row">
-                    <div class="col d-flex justify-content-end">
+                    <div class="col d-flex justify-content-end gap-2 flex-wrap">
                         <a href="http://172.24.18.10/old/" target="_blank" class="btn btn-outline-success">
                             Intranet (Prev. Version)
+                        </a>
+
+                        <a href="http://103.251.43.36/" target="_blank"
+                            class="btn btn-danger d-flex align-items-center">
+                            <span class="badge bg-warning text-dark me-2">LIVE</span>
+                            <i class="bi bi-broadcast me-1"></i>
+                            Webcasting
                         </a>
                     </div>
                 </div>
@@ -77,13 +84,13 @@
                                                         - കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് - {!! $crclr->title !!}
                                                     @endif
                                                 </a>
-                                                   {{-- SHOW GOOGLE FORM LINK IF PRESENT --}}
-        @if ($crclr->link)
-            <div>
-                Google form Link:
-                <a href="{{ $crclr->link }}" target="_blank">Click here</a>
-            </div>
-        @endif
+                                                {{-- SHOW GOOGLE FORM LINK IF PRESENT --}}
+                                                @if ($crclr->link)
+                                                    <div>
+                                                        Google form Link:
+                                                        <a href="{{ $crclr->link }}" target="_blank">Click here</a>
+                                                    </div>
+                                                @endif
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
                                                     {{ \Carbon\Carbon::parse($crclr->date)->format('M d Y') }}
@@ -124,11 +131,11 @@
                                                     @endif
                                                 </a>
                                                 @if ($oo->link)
-            <div>
-                Google form Link:
-                <a href="{{ $oo->link }}" target="_blank">Click here</a>
-            </div>
-        @endif
+                                                    <div>
+                                                        Google form Link:
+                                                        <a href="{{ $oo->link }}" target="_blank">Click here</a>
+                                                    </div>
+                                                @endif
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
                                                     {{ \Carbon\Carbon::parse($oo->date)->format('M d Y') }}
