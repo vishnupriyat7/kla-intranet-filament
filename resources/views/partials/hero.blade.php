@@ -12,9 +12,16 @@
         <div class="tab-class mb-1">
             <div class="row g-4">
                 <div class="row">
-                    <div class="col d-flex justify-content-end">
+                    <div class="col d-flex justify-content-end gap-2 flex-wrap">
                         <a href="http://172.24.18.10/old/" target="_blank" class="btn btn-outline-success">
                             Intranet (Prev. Version)
+                        </a>
+
+                        <a href="http://103.251.43.36/" target="_blank"
+                            class="btn btn-danger d-flex align-items-center">
+                            <span class="badge bg-warning text-dark me-2">LIVE</span>
+                            <i class="bi bi-broadcast me-1"></i>
+                            Webcasting
                         </a>
                     </div>
                 </div>
