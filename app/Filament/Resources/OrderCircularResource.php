@@ -113,10 +113,34 @@ class OrderCircularResource extends Resource
                     }),
                 Textarea::make('keywords')
                     ->label('Keywords (If any)'),
+                // Components\FileUpload::make('path')
+                //     ->required()
+                //     ->acceptedFileTypes(['application/pdf'])
+                //     ->maxSize(1024000) // 1GB max size (matching controller validation)
+                //     ->disk('public')
+                //     ->directory(function (callable $get) {
+                //         $year = $get('date') ? date('Y', strtotime($get('date'))) : date('Y');
+                //         $categoryFolder = match ($get('type')) {
+                //             'G' => 'GovtOrders',
+                //             'O' => 'OfficeOrders',
+                //             'C' => 'Circulars',
+                //             default => 'Others',
+                //         };
+                //         return "uploads/orders-circular/{$year}/{$categoryFolder}";
+                //     })
+                //     ->openable()
+                //     ->afterStateUpdated(function ($state, $record, callable $set) {
+                //         // Delete old file when a new one is uploaded
+                //         if ($record && $record->path && $state && Storage::disk('public')->exists($record->path)) {
+                //             Storage::disk('public')->delete($record->path);
+                //         }
+                //     }),
                 Components\FileUpload::make('path')
+                    ->label('Upload Files (PDF)')
+                    ->multiple()
                     ->required()
                     ->acceptedFileTypes(['application/pdf'])
-                    ->maxSize(1024000) // 1GB max size (matching controller validation)
+                    ->maxSize(1024000) // 1GB per file
                     ->disk('public')
                     ->directory(function (callable $get) {
                         $year = $get('date') ? date('Y', strtotime($get('date'))) : date('Y');
@@ -129,12 +153,20 @@ class OrderCircularResource extends Resource
                         return "uploads/orders-circular/{$year}/{$categoryFolder}";
                     })
                     ->openable()
-                    ->afterStateUpdated(function ($state, $record, callable $set) {
-                        // Delete old file when a new one is uploaded
-                        if ($record && $record->path && $state && Storage::disk('public')->exists($record->path)) {
-                            Storage::disk('public')->delete($record->path);
+                    ->downloadable()
+                    ->reorderable()
+                    ->afterStateUpdated(function ($state, $record) {
+                        // Delete removed old files
+                        if ($record && is_array($record->path)) {
+                            $deleted = array_diff($record->path, $state ?? []);
+                            foreach ($deleted as $file) {
+                                if (Storage::disk('public')->exists($file)) {
+                                    Storage::disk('public')->delete($file);
+                                }
+                            }
                         }
                     }),
+
                 Select::make('status')
                     ->options([
                         '1' => 'Published',
@@ -216,9 +248,22 @@ class OrderCircularResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                // TextColumn::make('path')
+                //     ->searchable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('path')
-                    ->searchable()
+                    ->label('Files')
+                    ->formatStateUsing(function ($state) {
+                        if (!$state || !is_array($state)) return '-';
+
+                        return collect($state)->map(function ($file) {
+                            $url = Storage::url($file);
+                            return "<a href='{$url}' target='_blank' class='text-primary'>View PDF</a>";
+                        })->implode('<br>');
+                    })
+                    ->html()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('created_at')
                     ->date('d-m-Y')
                     ->sortable()
@@ -324,42 +369,64 @@ class OrderCircularResource extends Resource
             ])
             ->actions([
                 Actions\Action::make('view_pdf')
-                    ->label('')
+                    // ->label('')
+                    // ->icon('heroicon-s-eye')
+                    // ->modalHeading(fn($record) => 'View PDF: ' . $record->title)
+                    // ->modalContent(function ($record) {
+                    //     $url = Storage::url($record->path);
+                    //     return new \Illuminate\Support\HtmlString(
+                    //         '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
+                    //             view('filament.pdf-modal', ['url' => $url])->render() .
+                    //             '</div>'
+                    //     );
+                    // })
+                    // ->modalSubmitAction(false) // Remove the default "Submit" button
+                    // ->modalCancelActionLabel('Close') // Label for the close button
+                    // ->modalWidth('5xl'), // Set the modal width (adjust as needed)
                     ->icon('heroicon-s-eye')
-                    ->modalHeading(fn($record) => 'View PDF: ' . $record->title)
+                    ->modalHeading(fn($record) => 'View PDFs: ' . $record->title)
                     ->modalContent(function ($record) {
-                        $url = Storage::url($record->path);
+                        if (!$record->path) return 'No files available';
+
                         return new \Illuminate\Support\HtmlString(
-                            '<div style="height: 90vh; padding: 1rem; overflow: auto;">' .
-                                view('filament.pdf-modal', ['url' => $url])->render() .
-                                '</div>'
+                            collect($record->path)->map(function ($file) {
+                                $url = Storage::url($file);
+                                return view('filament.pdf-modal', ['url' => $url])->render();
+                            })->implode('<hr>')
                         );
                     })
-                    ->modalSubmitAction(false) // Remove the default "Submit" button
-                    ->modalCancelActionLabel('Close') // Label for the close button
-                    ->modalWidth('5xl'), // Set the modal width (adjust as needed)
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Close')
+                    ->modalWidth('5xl'),
                 Actions\EditAction::make()
                     ->label('') // Remove the label
                     ->color('warning'), // Sets button to yellow (Tailwind text-yellow-500)
                 Actions\DeleteAction::make()
                     ->label('') // Remove the label
                     ->before(function ($record) {
-                        // Delete associated file before deleting record
-                        if ($record->path && Storage::disk('public')->exists($record->path)) {
-                            Storage::disk('public')->delete($record->path);
+                        if (is_array($record->path)) {
+                            foreach ($record->path as $file) {
+                                if (Storage::disk('public')->exists($file)) {
+                                    Storage::disk('public')->delete($file);
+                                }
+                            }
                         }
                     }),
             ])
             ->bulkActions([
                 Actions\DeleteBulkAction::make()
                     ->before(function ($records) {
-                        // Delete associated files before deleting records
                         foreach ($records as $record) {
-                            if ($record->path && Storage::disk('public')->exists($record->path)) {
-                                Storage::disk('public')->delete($record->path);
+                            if (is_array($record->path)) {
+                                foreach ($record->path as $file) {
+                                    if (Storage::disk('public')->exists($file)) {
+                                        Storage::disk('public')->delete($file);
+                                    }
+                                }
                             }
                         }
-                    }),
+                    })
+
             ])
             ->defaultSort('date', 'desc')
             ->persistFiltersInSession()

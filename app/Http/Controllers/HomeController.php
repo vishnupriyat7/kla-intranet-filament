@@ -250,13 +250,62 @@ class HomeController extends Controller
                 ->addColumn('link', function ($order) {
                     return $order->link;  // send raw link
                 })
+                // ->addColumn('view', function ($order) {
+                //     return $order->path
+                //         ? '<a href="#" data-bs-toggle="modal" data-bs-target="#pdfModal" data-pdf="' . asset('storage/' . $order->path) . '" data-title="' . e($order->title) . '" title="View in Modal"><i class="fas fa-eye text-primary"></i></a>' .
+                //         '<a href="' . asset('storage/' . $order->path) . '" target="_blank" class="ms-3" title="Open in New Tab"><i class="fas fa-external-link-alt text-success"></i></a>'
+                //         : '<i class="fas fa-ban text-danger" title="Not uploaded"></i>';
+                // })
+                // ->rawColumns(['title', 'view'])
                 ->addColumn('view', function ($order) {
-                    return $order->path
-                        ? '<a href="#" data-bs-toggle="modal" data-bs-target="#pdfModal" data-pdf="' . asset('storage/' . $order->path) . '" data-title="' . e($order->title) . '" title="View in Modal"><i class="fas fa-eye text-primary"></i></a>' .
-                        '<a href="' . asset('storage/' . $order->path) . '" target="_blank" class="ms-3" title="Open in New Tab"><i class="fas fa-external-link-alt text-success"></i></a>'
-                        : '<i class="fas fa-ban text-danger" title="Not uploaded"></i>';
+
+                    $files = is_array($order->path) ? $order->path : [];
+
+                    // No file
+                    if (count($files) === 0) {
+                        return '<i class="fas fa-ban text-danger" title="Not uploaded"></i>';
+                    }
+
+                    // Single PDF
+                    if (count($files) === 1) {
+                        $url = asset('storage/' . $files[0]);
+
+                        return '
+            <a href="#"
+               data-bs-toggle="modal"
+               data-bs-target="#pdfModal"
+               data-pdf="' . $url . '"
+               data-title="' . e($order->title) . '"
+               title="View">
+                <i class="fas fa-eye text-primary"></i>
+            </a>
+
+            <a href="' . $url . '" target="_blank" class="ms-3" title="Open in New Tab">
+                <i class="fas fa-external-link-alt text-success"></i>
+            </a>
+        ';
+                    }
+
+                    // Multiple PDFs
+                    $html = '';
+                    foreach ($files as $i => $file) {
+                        $url = asset('storage/' . $file);
+                        $html .= '
+            <a href="#"
+               class="badge bg-primary me-1"
+               data-bs-toggle="modal"
+               data-bs-target="#pdfModal"
+               data-pdf="' . $url . '"
+               data-title="' . e($order->title) . ' (Attachment ' . ($i + 1) . ')">
+               📎 ' . ($i + 1) . '
+            </a>
+        ';
+                    }
+
+                    return $html;
                 })
                 ->rawColumns(['title', 'view'])
+
                 ->make(true);
         }
         $periodicals = Periodical::with('periodicalMaster')

@@ -35,6 +35,10 @@ class OrderCircular extends Model
         'title_lingo',
         'link'
     ];
+
+    protected $casts = [
+        'path' => 'array',
+    ];
     /**
      * Get the section that owns the order circular.
      */
