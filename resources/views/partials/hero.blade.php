@@ -17,7 +17,7 @@
                             Intranet (Prev. Version)
                         </a>
 
-                        <a href="http://103.251.43.36/" target="_blank"
+                        <a href="http://10.1.14.36/" target="_blank"
                             class="btn btn-danger d-flex align-items-center">
                             <span class="badge bg-warning text-dark me-2">LIVE</span>
                             <i class="bi bi-broadcast me-1"></i>
