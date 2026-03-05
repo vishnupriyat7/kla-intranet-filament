@@ -12,13 +12,16 @@
         <div class="tab-class mb-1">
             <div class="row g-4">
                 <div class="row">
+                   
                     <div class="col d-flex justify-content-end gap-2 flex-wrap">
+                         <a href="{{ route('home.advanced-search') }}" class="btn btn-info">
+                            <i class="bi bi-search me-1"></i><span class="ms-2">Advanced Search</span>
+                    </a>
                         <a href="http://172.24.18.10/old/" target="_blank" class="btn btn-outline-success">
                             Intranet (Prev. Version)
                         </a>
 
-                        <a href="http://10.1.14.36/" target="_blank"
-                            class="btn btn-danger d-flex align-items-center">
+                        <a href="http://10.1.14.36/" target="_blank" class="btn btn-danger d-flex align-items-center">
                             <span class="badge bg-warning text-dark me-2">LIVE</span>
                             <i class="bi bi-broadcast me-1"></i>
                             Webcasting
@@ -77,32 +80,30 @@
                                         @foreach ($crcls as $crclr)
                                             @php $attachments = files($crclr); @endphp
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60,93,240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60,93,240)"></i>
 
                                                 {{-- TITLE --}}
                                                 @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
+                                                    <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                         data-pdf="{{ asset('storage/' . $attachments[0]) }}"
                                                         data-title="{{ $crclr->title }}">
-                                                    @else
+                                                @else
                                                         <span class="h6">
-                                                @endif
+                                                    @endif
 
-                                                @if ($crclr->title_lingo == 'E')
-                                                    Number {{ $crclr->number }} dated
-                                                    {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
-                                                    – Kerala Legislative Assembly – {!! $crclr->title !!}
-                                                @else
-                                                    നമ്പര്‍ {{ $crclr->number }} തീയതി
-                                                    {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
-                                                    – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {!! $crclr->title !!}
-                                                @endif
+                                                        @if ($crclr->title_lingo == 'E')
+                                                            Number {{ $crclr->number }} dated
+                                                            {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
+                                                            – Kerala Legislative Assembly – {!! $crclr->title !!}
+                                                        @else
+                                                            നമ്പര്‍ {{ $crclr->number }} തീയതി
+                                                            {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
+                                                            – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {!! $crclr->title !!}
+                                                        @endif
 
-                                                @if (count($attachments) === 1)
-                                                    </a>
-                                                @else
+                                                        @if (count($attachments) === 1)
+                                                            </a>
+                                                        @else
                                                     </span>
                                                 @endif
 
@@ -110,8 +111,8 @@
                                                 @if (count($attachments) > 1)
                                                     <div class="mt-1">
                                                         @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                            <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                                data-bs-target="#pdfModal"
                                                                 data-pdf="{{ asset('storage/' . $file) }}"
                                                                 data-title="{{ $crclr->title }} (Attachment {{ $i + 1 }})">
                                                                 Attachment {{ $i + 1 }}
@@ -121,8 +122,8 @@
                                                 @endif
 
                                                 @if ($crclr->link)
-                                                    <div>Google form Link: <a href="{{ $crclr->link }}"
-                                                            target="_blank">Click here</a></div>
+                                                    <div>Google form Link: <a href="{{ $crclr->link }}" target="_blank">Click
+                                                            here</a></div>
                                                 @endif
 
                                                 <small class="text-body d-block">
@@ -133,8 +134,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'cr') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'cr') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -151,39 +151,37 @@
                                             @php $attachments = files($oo); @endphp
 
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60,93,240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60,93,240)"></i>
 
                                                 @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
+                                                    <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                         data-pdf="{{ asset('storage/' . $attachments[0]) }}"
                                                         data-title="{{ $oo->title }}">
-                                                    @else
+                                                @else
                                                         <span class="h6">
-                                                @endif
+                                                    @endif
 
-                                                @if ($oo->title_lingo == 'E')
-                                                    Office Order No. {{ $oo->number }} dated
-                                                    {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
-                                                    – Kerala Legislative Assembly – {{ $oo->title }}
-                                                @else
-                                                    ഓഫീസ് ഉത്തരവ് നമ്പർ {{ $oo->number }} തീയതി
-                                                    {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
-                                                    – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $oo->title }}
-                                                @endif
+                                                        @if ($oo->title_lingo == 'E')
+                                                            Office Order No. {{ $oo->number }} dated
+                                                            {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
+                                                            – Kerala Legislative Assembly – {{ $oo->title }}
+                                                        @else
+                                                            ഓഫീസ് ഉത്തരവ് നമ്പർ {{ $oo->number }} തീയതി
+                                                            {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
+                                                            – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $oo->title }}
+                                                        @endif
 
-                                                @if (count($attachments) === 1)
-                                                    </a>
-                                                @else
+                                                        @if (count($attachments) === 1)
+                                                            </a>
+                                                        @else
                                                     </span>
                                                 @endif
 
                                                 @if (count($attachments) > 1)
                                                     <div class="mt-1">
                                                         @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                            <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                                data-bs-target="#pdfModal"
                                                                 data-pdf="{{ asset('storage/' . $file) }}"
                                                                 data-title="{{ $oo->title }} (Attachment {{ $i + 1 }})">
                                                                 Attachment {{ $i + 1 }}
@@ -218,33 +216,31 @@
                                             @php $attachments = files($go); @endphp
 
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60,93,240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60,93,240)"></i>
 
                                                 @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
+                                                    <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                         data-pdf="{{ asset('storage/' . $attachments[0]) }}"
                                                         data-title="{{ $go->title }}">
-                                                    @else
-                                                        <span class="h6">
-                                                @endif
-
-                                                {{ $go->number }} dated
-                                                {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                – Kerala Legislative Assembly – {{ $go->title }}
-
-                                                @if (count($attachments) === 1)
-                                                    </a>
                                                 @else
+                                                        <span class="h6">
+                                                    @endif
+
+                                                        {{ $go->number }} dated
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        – Kerala Legislative Assembly – {{ $go->title }}
+
+                                                        @if (count($attachments) === 1)
+                                                            </a>
+                                                        @else
                                                     </span>
                                                 @endif
 
                                                 @if (count($attachments) > 1)
                                                     <div class="mt-1">
                                                         @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                            <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                                data-bs-target="#pdfModal"
                                                                 data-pdf="{{ asset('storage/' . $file) }}"
                                                                 data-title="{{ $go->title }} (Attachment {{ $i + 1 }})">
                                                                 Attachment {{ $i + 1 }}
@@ -261,8 +257,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -279,33 +274,31 @@
                                             @php $attachments = files($go); @endphp
 
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60,93,240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60,93,240)"></i>
 
                                                 @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
+                                                    <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                         data-pdf="{{ asset('storage/' . $attachments[0]) }}"
                                                         data-title="{{ $go->title }}">
-                                                    @else
-                                                        <span class="h6">
-                                                @endif
-
-                                                {{ $go->number }} dated
-                                                {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                – Kerala Legislative Assembly – {{ $go->title }}
-
-                                                @if (count($attachments) === 1)
-                                                    </a>
                                                 @else
+                                                        <span class="h6">
+                                                    @endif
+
+                                                        {{ $go->number }} dated
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        – Kerala Legislative Assembly – {{ $go->title }}
+
+                                                        @if (count($attachments) === 1)
+                                                            </a>
+                                                        @else
                                                     </span>
                                                 @endif
 
                                                 @if (count($attachments) > 1)
                                                     <div class="mt-1">
                                                         @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                            <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                                data-bs-target="#pdfModal"
                                                                 data-pdf="{{ asset('storage/' . $file) }}"
                                                                 data-title="{{ $go->title }} (Attachment {{ $i + 1 }})">
                                                                 Attachment {{ $i + 1 }}
@@ -322,8 +315,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -343,33 +335,31 @@
                                             @php $attachments = files($go); @endphp
 
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60,93,240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60,93,240)"></i>
 
                                                 @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
+                                                    <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                         data-pdf="{{ asset('storage/' . $attachments[0]) }}"
                                                         data-title="{{ $go->title }}">
-                                                    @else
-                                                        <span class="h6">
-                                                @endif
-
-                                                {{ $go->number }} dated
-                                                {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                – Kerala Legislative Assembly – {{ $go->title }}
-
-                                                @if (count($attachments) === 1)
-                                                    </a>
                                                 @else
+                                                        <span class="h6">
+                                                    @endif
+
+                                                        {{ $go->number }} dated
+                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                        – Kerala Legislative Assembly – {{ $go->title }}
+
+                                                        @if (count($attachments) === 1)
+                                                            </a>
+                                                        @else
                                                     </span>
                                                 @endif
 
                                                 @if (count($attachments) > 1)
                                                     <div class="mt-1">
                                                         @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                            <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                                data-bs-target="#pdfModal"
                                                                 data-pdf="{{ asset('storage/' . $file) }}"
                                                                 data-title="{{ $go->title }} (Attachment {{ $i + 1 }})">
                                                                 Attachment {{ $i + 1 }}
@@ -386,8 +376,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -406,12 +395,10 @@
                                             @php $attachments = files($news); @endphp
 
                                             <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60,93,240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60,93,240)"></i>
 
                                                 @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
+                                                    <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                         data-pdf="{{ asset('storage/' . $attachments[0]) }}"
                                                         data-title="{{ $news->title }}">
                                                         {!! $news->title !!}
@@ -423,8 +410,8 @@
                                                 @if (count($attachments) > 1)
                                                     <div class="mt-1">
                                                         @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                            <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                                data-bs-target="#pdfModal"
                                                                 data-pdf="{{ asset('storage/' . $file) }}"
                                                                 data-title="{{ $news->title }} (Attachment {{ $i + 1 }})">
                                                                 Attachment {{ $i + 1 }}
@@ -441,8 +428,7 @@
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('updatesmore') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('updatesmore') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -456,7 +442,7 @@
                 <div class="col-xxl-4 col-xl-4">
                     <div class="row g-4">
                         <div class="col-12">
-                            <div class="p-3 rounded border h-100" style="min-height: 600px;">
+                            <div class="p-3 rounded border h-100 features" style="min-height: 600px;">
                                 <h3 class="mb-5">Tools/Application</h3>
                                 <div class="row g-4 text-center tools-application">
                                     <!-- Niyamasabha org -->
@@ -471,7 +457,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://e-kla.kerala.gov.in/SSOComponent/auth.php" target="_blank">
-                                            <i class="fas fa-laptop-code fa-2x mb-2" style="color: #ec4297"></i>
+                                            <img src="{{ asset('assets/img/e-office.png') }}" alt="e-Office" class="img-fluid mb-2" style="height: 40px;">
                                             <span>e-Office</span>
                                         </a>
                                     </div>
@@ -479,8 +465,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="http://172.24.18.28/attendance-app/" target="_blank">
-                                            <i class="fas fa-user-check fa-2x mb-2"
-                                                style="color: rgb(60, 93, 240)"></i>
+                                            <i class="fas fa-user-check fa-2x mb-2" style="color: rgb(60, 93, 240)"></i>
                                             <span>Attendance</span>
                                         </a>
                                     </div>
@@ -488,19 +473,20 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://eniyamasabha.in/auth/login" target="_blank">
-                                            <i class="fas fa-landmark fa-2x mb-2" style="color:  #28a745"></i>
+                                             <img src="{{ asset('assets/img/e-niyamasabha.png') }}" alt="e-niyamsabha" class="img-fluid mb-2" style="height: 40px;">
+                                            <!-- <i class="fas fa-landmark fa-2x mb-2" style="color:  #28a745"></i> -->
                                             <span style="font-size: .95em;">e-Niyamasabha</span>
                                         </a>
                                     </div>
                                     <!-- Official eMail -->
                                     <div class="col-4 mb-4">
-                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark dropdown-toggle"
-                                            href="#" role="button" data-bs-toggle="dropdown">
+                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                            href="https://mail.gov.in/" target="_blank" role="button">
                                             <i class="fas fa-envelope fa-2x mb-2" style="color:  #6610f2"></i>
                                             <span>Official eMail</span>
                                         </a>
 
-                                        <div class="dropdown-menu">
+                                        <!-- <div class="dropdown-menu">
                                             <a class="dropdown-item" href="https://mail.gov.in/" target="_blank">
                                                 <i class="fas fa-envelope me-2" style="color: #28a745"></i>
                                                 New
@@ -509,7 +495,7 @@
                                                 <i class="fas fa-envelope-open me-2" style="color: #6c757d"></i>
                                                 Old
                                             </a>
-                                        </div>
+                                        </div> -->
                                     </div>
 
                                     <!-- Overtime Allowance Portal -->
@@ -557,8 +543,8 @@
                                                 data-title="Section Mail IDs">
                                                 <i class="fas fa-building me-2"></i>Section Mail IDs
                                             </a>
-                                            <a class="dropdown-item"
-                                                href="http://www.niyamasabha.org/codes/pa_MLAs.htm" target="_blank">
+                                            <a class="dropdown-item" href="http://www.niyamasabha.org/codes/pa_MLAs.htm"
+                                                target="_blank">
                                                 <i class="fas fa-phone me-2"></i>PA to MLAs
                                             </a>
                                             <a class="dropdown-item"
@@ -575,7 +561,7 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark dropdown-toggle"
                                             href="#" role="button" data-bs-toggle="dropdown">
                                             <i class="fas fa-book-open fa-2x mb-2" style="color: #187743"></i>
-                                            <span>User Manual</span>
+                                            <span>Reference Manuals</span>
                                         </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
@@ -605,27 +591,27 @@
                                                 href="{{ asset('storage/uploads/guidelines/e-officeguidelines.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/guidelines/e-officeguidelines.pdf') }}"
-                                                data-title="e-Office (e-KLA)">e-Office (e-KLA)</a>
+                                                data-title="e-Office Guidelines">e-Office Guidelines</a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/guidelines/e-KLA_User Manual 7.0.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/guidelines/e-KLA_User Manual 7.0.pdf') }}"
-                                                data-title="e-KLA">e-KLA</a>
+                                                data-title="e-Office User Manual">e-Office User Manual</a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/guidelines/HandbookMA A 23.07.2025-1.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/guidelines/HandbookMA A 23.07.2025-1.pdf') }}"
-                                                data-title="e-KLA">Member's Handbook</a>
+                                                data-title="Members' Handbook">Members' Handbook</a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/guidelines/RTI -Quick reference Guide_KLS.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/guidelines/RTI -Quick reference Guide_KLS.pdf') }}"
-                                                data-title="e-KLA">RTI Quick Reference Guide</a>
+                                                data-title="RTI Quick Reference Guide">RTI Quick Reference Guide</a>
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/guidelines/RTI-portal-user-manual.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/guidelines/RTI-portal-user-manual.pdf') }}"
-                                                data-title="e-KLA">RTI Portal User Manual</a>
+                                                data-title="RTI Portal User Manual">RTI Portal User Manual</a>
                                         </div>
                                     </div>
                                     <!-- ID Card Proforma -->
@@ -640,7 +626,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="http://172.24.18.21:8080/share/page" target="_blank">
-                                            <i class="fas fa-database fa-2x mb-2" style="color: #b4d131"></i>
+                                           <img src="{{ asset('assets/img/alfresco.png') }}" alt="Centralised Storage" class="img-fluid mb-2" style="height: 40px;">
                                             <span>Centralised Storage</span>
                                         </a>
                                     </div>
@@ -649,7 +635,7 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="http://172.24.18.18/" target="_blank">
                                             <i class="fas fa-book fa-2x mb-2" style="color: #fd7e14"></i>
-                                            <span>LIS</span>
+                                            <span>Library & Information Services</span>
                                         </a>
                                     </div>
                                     <!-- Digital Archives -->
@@ -665,7 +651,7 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://www.spark.gov.in/webspark/(S(xkipr1xy1kgrtv0xkzt3p12c))/sparklogin.aspx"
                                             target="_blank">
-                                            <i class="fas fa-wallet fa-2x mb-2" style="color: #e6214c"></i>
+                                             <img src="{{ asset('assets/img/spark.png') }}" alt="Spark" class="img-fluid mb-2" style="height: 40px;">
                                             <span>Spark</span>
                                         </a>
                                     </div>
@@ -673,7 +659,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://gem.gov.in/" target="_blank">
-                                            <i class="fas fa-shopping-cart fa-2x mb-2" style="color: #007bff"></i>
+                                            <img src="{{ asset('assets/img/gem.png') }}" alt="GeM" class="img-fluid mb-2" style="height: 40px;">
                                             <span>GeM</span>
                                         </a>
                                     </div>
@@ -681,8 +667,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://www.incometax.gov.in/iec/foportal/" target="_blank">
-                                            <i class="fas fa-file-invoice-dollar fa-2x mb-2"
-                                                style="color: #28a745"></i>
+                                           <img src="{{ asset('assets/img/tax.png') }}" alt="Income Tax e-Filing" class="img-fluid mb-2" style="height: 40px;">
                                             <span>Income Tax</br>e-Filing</span>
                                         </a>
                                     </div>
@@ -738,8 +723,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <iframe id="pdfViewer" src="" width="100%" height="700px"
-                        style="border: none;"></iframe>
+                    <iframe id="pdfViewer" src="" width="100%" height="700px" style="border: none;"></iframe>
                 </div>
             </div>
         </div>
@@ -749,10 +733,10 @@
 {{-- Hero Section End --}}
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var pdfModal = document.getElementById("pdfModal");
 
-        pdfModal.addEventListener("show.bs.modal", function(event) {
+        pdfModal.addEventListener("show.bs.modal", function (event) {
             var link = event.relatedTarget; // Link that triggered the modal
             var pdfUrl = link.getAttribute("data-pdf");
             var pdfTitle = link.getAttribute("data-title");
@@ -760,7 +744,7 @@
             document.getElementById("pdfModalLabel").textContent = pdfTitle;
             document.getElementById("pdfViewer").src = pdfUrl;
         });
-        pdfModal.addEventListener("hidden.bs.modal", function() {
+        pdfModal.addEventListener("hidden.bs.modal", function () {
             document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
         });
     });

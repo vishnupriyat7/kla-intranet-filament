@@ -15,7 +15,7 @@
             <div class="col-md-3 col-sm-6 mb-5">
                 <a class="d-flex flex-column align-items-center text-decoration-none text-dark" href="https://email.gov.in/" target="_blank">
                     <i class="fas fa-envelope fa-3x mb-2" style="color: rgb(60, 93, 240)"></i>
-                    <span>Official eMail</span>
+                    <span>Official eMail vhjcg</span>
                 </a>
             </div>
 
