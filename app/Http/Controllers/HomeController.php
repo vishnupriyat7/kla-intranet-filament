@@ -79,58 +79,13 @@ class HomeController extends Controller
         return view('home', compact('periodicals', 'newsupdates', 'goms', 'gort', 'gop', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount'));
     }
 
-    public function indexOther()
-    {
-        //want to show all distinct periodicals with latest periodical by status published(1) on home page in alphabetical order of periodical name
-        $periodicals = Periodical::with('periodicalMaster')
-            ->where('status', 1)
-            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
-            ->select('periodicals.*')
-            ->orderBy('periodical_masters.name', 'asc')
-            ->get();
-        $newsupdates = NewsUpdate::where('status', '1')
-            ->orderBy('date', 'desc')
-            ->limit(5)
-            ->get();
-        $gos = OrderCircular::where('type', 'G')
-            ->where('status', '1') // Fetch records in range
-            ->orderBy('date', 'desc')
-            ->limit(5)
-            ->get();
-        $oos = OrderCircular::where('type', 'O')
-            ->where('status', '1')
-            ->orderBy('date', 'desc')
-            ->limit(5)
-            ->get();
-        $crcls = OrderCircular::where('type', 'C')
-            ->where('status', '1')
-            ->orderBy('date', 'desc')
-            ->limit(5)
-            ->get();
-        $goCount = OrderCircular::where('type', 'G')
-            ->whereMonth('date', Carbon::now()->month)
-            ->whereYear('date', Carbon::now()->year)
-            ->where('status', '1')
-            ->count();
-        $ooCount = OrderCircular::where('type', 'O')
-            ->whereMonth('date', Carbon::now()->month)
-            ->whereYear('date', Carbon::now()->year)
-            ->where('status', '1')
-            ->count();
-        $clrCount = OrderCircular::where('type', 'C')
-            ->whereMonth('date', Carbon::now()->month)
-            ->whereYear('date', Carbon::now()->year)
-            ->where('status', '1')
-            ->count();
-        return view('home-other', compact('periodicals', 'newsupdates', 'gos', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount'));
-    }
 
     public function updatesMore()
     {
         $newsupdates = NewsUpdate::where('status', '1')
             ->orderBy('date', 'desc')
-            ->skip(3)
-            ->take(PHP_INT_MAX)
+
+
             ->get();
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
@@ -414,7 +369,7 @@ class HomeController extends Controller
             'date' => $request->date,
             'title' => $request->title,
             'keywords' => $request->keywords,
-            'path' => $filePath,
+            'path' => [$filePath],
             'status' => 0,
             'section_id' => $request->section
         ]);

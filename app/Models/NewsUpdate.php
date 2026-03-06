@@ -21,4 +21,5 @@ class NewsUpdate extends Model
         'path',
         'status'
     ];
+
 }

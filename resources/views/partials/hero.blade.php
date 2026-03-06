@@ -3,9 +3,21 @@
     <!-- <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div> -->
 
     @php
+        // function files($record)
+        // {
+        //     return is_array($record->path) ? $record->path : [];
+        // }
         function files($record)
         {
-            return is_array($record->path) ? $record->path : [];
+            if (is_array($record->path)) {
+                return $record->path;
+            }
+
+            if (!empty($record->path)) {
+                return [$record->path];
+            }
+
+            return [];
         }
     @endphp
     <div class="container py-3" style="position: relative; z-index: 1;">
@@ -17,8 +29,7 @@
                             Intranet (Prev. Version)
                         </a>
 
-                        <a href="http://10.1.14.36/" target="_blank"
-                            class="btn btn-danger d-flex align-items-center">
+                        <a href="http://10.1.14.36/" target="_blank" class="btn btn-danger d-flex align-items-center">
                             <span class="badge bg-warning text-dark me-2">LIVE</span>
                             <i class="bi bi-broadcast me-1"></i>
                             Webcasting
@@ -403,40 +414,30 @@
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($newsupdates as $news)
-                                            @php $attachments = files($news); @endphp
-
                                             <div class="mb-4">
+
                                                 <i class="bi bi-eye-fill"
                                                     style="font-size:18px;color:rgb(60,93,240)"></i>
 
-                                                @if (count($attachments) === 1)
+                                                @if ($news->path)
                                                     <a href="#" class="h6" data-bs-toggle="modal"
                                                         data-bs-target="#pdfModal"
-                                                        data-pdf="{{ asset('storage/' . $attachments[0]) }}"
+                                                        data-pdf="{{ asset('storage/' . $news->path) }}"
                                                         data-title="{{ $news->title }}">
+
                                                         {!! $news->title !!}
+
                                                     </a>
                                                 @else
                                                     <span class="h6">{!! $news->title !!}</span>
                                                 @endif
 
-                                                @if (count($attachments) > 1)
-                                                    <div class="mt-1">
-                                                        @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                                data-pdf="{{ asset('storage/' . $file) }}"
-                                                                data-title="{{ $news->title }} (Attachment {{ $i + 1 }})">
-                                                                Attachment {{ $i + 1 }}
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
 
                                                 <small class="text-body d-block">
                                                     <i class="fas fa-calendar-alt me-1"></i>
                                                     {{ \Carbon\Carbon::parse($news->date)->format('M d Y') }}
                                                 </small>
+
                                             </div>
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
