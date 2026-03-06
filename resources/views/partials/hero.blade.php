@@ -12,11 +12,11 @@
         <div class="tab-class mb-1">
             <div class="row g-4">
                 <div class="row">
-                   
+
                     <div class="col d-flex justify-content-end gap-2 flex-wrap">
-                         <a href="{{ route('home.advanced-search') }}" class="btn btn-info">
+                        <a href="{{ route('home.advanced-search') }}" class="btn btn-info">
                             <i class="bi bi-search me-1"></i><span class="ms-2">Advanced Search</span>
-                    </a>
+                        </a>
                         <a href="http://172.24.18.10/old/" target="_blank" class="btn btn-outline-success">
                             Intranet (Prev. Version)
                         </a>
@@ -455,11 +455,21 @@
                                     </div>
                                     <!-- E office -->
                                     <div class="col-4 mb-4">
-                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
-                                            href="https://e-kla.kerala.gov.in/SSOComponent/auth.php" target="_blank">
-                                            <img src="{{ asset('assets/img/e-office.png') }}" alt="e-Office" class="img-fluid mb-2" style="height: 40px;">
-                                            <span>e-Office</span>
+                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark
+                                            dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                            <img src="{{ asset('assets/img/e-office.png') }}" alt="e-Office"
+                                                class="img-fluid mb-2" style="height: 40px;">
+                                                 <span>e-Office</span>
                                         </a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item"
+                                                href="https://e-kla.kerala.gov.in/SSOComponent/auth.php"
+                                                target="_blank">e-Office</a>
+                                            <a class="dropdown-item" href="https://forms.gle/7boYGXdTitmSyPXY7"
+                                                target="_blank">EMD Creation</a>
+                                            <a class="dropdown-item" href="https://forms.gle/26qZX9rGqsK8i7cd6"
+                                                target="_blank">e-Mail ID Creation</a>
+                                        </div>
                                     </div>
                                     <!-- Attendance -->
                                     <div class="col-4 mb-4">
@@ -473,7 +483,8 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://eniyamasabha.in/auth/login" target="_blank">
-                                             <img src="{{ asset('assets/img/e-niyamasabha.png') }}" alt="e-niyamsabha" class="img-fluid mb-2" style="height: 40px;">
+                                            <img src="{{ asset('assets/img/e-niyamasabha.png') }}" alt="e-niyamsabha"
+                                                class="img-fluid mb-2" style="height: 40px;">
                                             <!-- <i class="fas fa-landmark fa-2x mb-2" style="color:  #28a745"></i> -->
                                             <span style="font-size: .95em;">e-Niyamasabha</span>
                                         </a>
@@ -626,7 +637,8 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="http://172.24.18.21:8080/share/page" target="_blank">
-                                           <img src="{{ asset('assets/img/alfresco.png') }}" alt="Centralised Storage" class="img-fluid mb-2" style="height: 40px;">
+                                            <img src="{{ asset('assets/img/alfresco.png') }}" alt="Centralised Storage"
+                                                class="img-fluid mb-2" style="height: 40px;">
                                             <span>Centralised Storage</span>
                                         </a>
                                     </div>
@@ -651,7 +663,8 @@
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://www.spark.gov.in/webspark/(S(xkipr1xy1kgrtv0xkzt3p12c))/sparklogin.aspx"
                                             target="_blank">
-                                             <img src="{{ asset('assets/img/spark.png') }}" alt="Spark" class="img-fluid mb-2" style="height: 40px;">
+                                            <img src="{{ asset('assets/img/spark.png') }}" alt="Spark"
+                                                class="img-fluid mb-2" style="height: 40px;">
                                             <span>Spark</span>
                                         </a>
                                     </div>
@@ -659,7 +672,8 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://gem.gov.in/" target="_blank">
-                                            <img src="{{ asset('assets/img/gem.png') }}" alt="GeM" class="img-fluid mb-2" style="height: 40px;">
+                                            <img src="{{ asset('assets/img/gem.png') }}" alt="GeM"
+                                                class="img-fluid mb-2" style="height: 40px;">
                                             <span>GeM</span>
                                         </a>
                                     </div>
@@ -667,7 +681,8 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="https://www.incometax.gov.in/iec/foportal/" target="_blank">
-                                           <img src="{{ asset('assets/img/tax.png') }}" alt="Income Tax e-Filing" class="img-fluid mb-2" style="height: 40px;">
+                                            <img src="{{ asset('assets/img/tax.png') }}" alt="Income Tax e-Filing"
+                                                class="img-fluid mb-2" style="height: 40px;">
                                             <span>Income Tax</br>e-Filing</span>
                                         </a>
                                     </div>
@@ -683,7 +698,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark dropdown-toggle"
                                             href="#" role="button" data-bs-toggle="dropdown">
-                                            <i class="fas fa-clipboard fa-2x mb-2" style="color: #d638bc"></i>
+                                            <i class="fas fa-book-open fa-2x mb-2" style="color: #d638bc"></i>
                                             <span>AIR</span>
                                         </a>
                                         <div class="dropdown-menu">
@@ -702,6 +717,26 @@
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/records/Annual Index-2012.pdf') }}"
                                                 data-title="Annual Index 2012">Annual Index Report 2012</a>
+                                        </div>
+                                    </div>
+                                    <!--Vehicla Pass--->
+                                    <div class="col-4 mb-4">
+                                        <a class="d-flex flex-column align-items-center text-decoration-none text-dark
+                                            dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                            <i class="fas fa-clipboard fa-2x mb-2" style="color: #20579e"></i>
+                                            <span>Application Forms</span>
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/application-forms/Vehicle_Pass.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/application-forms/Vehicle_Pass.pdf') }}"
+                                                data-title="Vehicle Pass">Vehicle Pass</a>
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/application-forms/Library_Membership_form.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/application-forms/Library_Membership_form.pdf') }}"
+                                                data-title="Vehicle Pass">Librabry Membership</a>
                                         </div>
                                     </div>
                                 </div>
