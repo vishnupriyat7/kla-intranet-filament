@@ -24,8 +24,16 @@
         <div class="tab-class mb-1">
             <div class="row g-4">
                 <div class="row">
-
                     <div class="col d-flex justify-content-end gap-2 flex-wrap">
+                        {{-- <a href="{{ route('helpdesk.create') }}" class="btn btn-warning d-flex align-items-center"> --}}
+                        <a href="#" class="btn btn-warning d-flex align-items-center" data-bs-toggle="modal"
+                            data-bs-target="#helpdeskModal">
+
+                            <i class="bi bi-tools me-1"></i>
+                            IT Helpdesk
+                            <span class="badge bg-danger ms-2">3</span>
+                        </a>
+                        </a>
                         <a href="{{ route('home.advanced-search') }}" class="btn btn-info">
                             <i class="bi bi-search me-1"></i><span class="ms-2">Advanced Search</span>
                         </a>
@@ -832,6 +840,87 @@
         </div>
     </div>
 </div>
+<!-- IT Helpdesk Modal -->
+<div class="modal fade" id="helpdeskModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-tools"></i> IT Helpdesk
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            {{-- <form action="{{ route('helpdesk.store') }}" method="POST"> --}}
+
+            <form action="" method="POST">
+                @csrf
+
+                <div class="modal-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Employee</label>
+                            <select class="form-select" name="employee_id" id="employeeSelect">
+                                <option value="">Select Employee</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Section</label>
+                            <input type="text" class="form-control" name="section" id="employeeSection" readonly>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Building</label>
+                            <input type="text" class="form-control" name="building">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Floor</label>
+                            <input type="text" class="form-control" name="floor">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Room No</label>
+                            <input type="text" class="form-control" name="room_no">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Complaint Type</label>
+                            <select class="form-select" name="complaint_type">
+                                <option>Hardware</option>
+                                <option>Software</option>
+                                <option>Network</option>
+                                <option>Printer</option>
+                                <option>Email</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Issue Description</label>
+                            <textarea class="form-control" name="description" rows="3"></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-success">
+                        Submit Ticket
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
 
 {{-- Hero Section End --}}
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -851,4 +940,45 @@
             document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
         });
     });
+
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+        fetch("/employees/list")
+            .then(response => response.json())
+            .then(data => {
+
+                let select = document.getElementById("employeeSelect");
+
+                select.innerHTML = '<option value="">Select Employee</option>';
+
+                data.forEach(emp => {
+
+                    let option = document.createElement("option");
+
+                    option.value = emp.pen;
+                    option.text = emp.name + " - " + emp.pen;
+
+                    option.dataset.section = emp.section;
+                    option.dataset.name = emp.name;
+
+                    select.appendChild(option);
+
+                });
+
+            })
+            .catch(error => console.error("Employee API error:", error));
+
+    });
+
+    document.getElementById("employeeSelect")
+        .addEventListener("change", function() {
+
+            let section =
+                this.options[this.selectedIndex].dataset.section;
+
+            document.getElementById("employeeSection").value = section;
+
+        });
 </script>

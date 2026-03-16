@@ -52,6 +52,25 @@ class EmployeeController extends Controller
         }
     }
 
+    // for IT Helpdesk employee list
+    public function list()
+    {
+        try {
+
+            $response = Http::get(env('EMPLOYEE_API_URL'));
+            // dd($response->json());
+
+            if ($response->successful()) {
+                return response()->json($response->json());
+            }
+
+            return response()->json([]);
+        } catch (\Exception $e) {
+
+            return response()->json([]);
+        }
+    }
+
     public function retiredStaff()
     {
         return view('employees.retired-staff');

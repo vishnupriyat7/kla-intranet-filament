@@ -16,6 +16,10 @@ Route::post('/upload-request/save', [HomeController::class, 'storeUploadRequest'
 Route::get('/upload-request/check-status', action: [HomeController::class, 'checkStatus'])->name('home.check-upload-request');
 Route::get('/advanced-search', [HomeController::class, 'advancedSearch'])->name('home.advanced-search');
 
+//Helpdesk
+Route::get('/employees/list', [EmployeeController::class, 'list']);
+
+
 Route::get('/employees', [EmployeeController::class, 'index'])->name('home.employees');
 Route::get('/employees/data', [EmployeeController::class, 'getEmployees'])->name('employees.data');
 Route::get('/employees/{attendanceId}', [EmployeeController::class, 'employeeShow'])->name('employees.show');
@@ -23,6 +27,7 @@ Route::get('/employees/{attendanceId}', [EmployeeController::class, 'employeeSho
 Route::get('/retired-staff', [EmployeeController::class, 'retiredStaff'])->name('home.retired-staff');
 Route::get('/retired-staff/data', [EmployeeController::class, 'getRetiredEmployees'])->name('retired-staff.data');
 Route::get('/retired-staff/{id}', [EmployeeController::class, 'retiredStaffShow'])->name('retired-staff.show');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
