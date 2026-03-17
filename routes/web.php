@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HelpdeskController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/index-other', [HomeController::class, 'indexOther'])->name('home.index-other');
@@ -27,6 +28,11 @@ Route::get('/employees/{attendanceId}', [EmployeeController::class, 'employeeSho
 Route::get('/retired-staff', [EmployeeController::class, 'retiredStaff'])->name('home.retired-staff');
 Route::get('/retired-staff/data', [EmployeeController::class, 'getRetiredEmployees'])->name('retired-staff.data');
 Route::get('/retired-staff/{id}', [EmployeeController::class, 'retiredStaffShow'])->name('retired-staff.show');
+
+// IT Helpdesk routes for dynamic dropdowns
+
+Route::get('/get-floors/{location}', [HelpdeskController::class, 'getFloors']);
+Route::get('/get-rooms/{location}/{floor}', [HelpdeskController::class, 'getRooms']);
 
 
 Route::get('/dashboard', function () {

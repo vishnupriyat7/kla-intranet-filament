@@ -863,9 +863,10 @@
 
                         <div class="col-md-6">
                             <label class="form-label">Employee</label>
-                            <select class="form-select" name="employee_id" id="employeeSelect">
-                                <option value="">Select Employee</option>
+                            <select class="form-select" name="employee_id" id="employeeSelect" style="width: 100%">
+                                <option value="">Select Employee..</option>
                             </select>
+
                         </div>
 
                         <div class="col-md-6">
@@ -875,17 +876,26 @@
 
                         <div class="col-md-4">
                             <label class="form-label">Building</label>
-                            <input type="text" class="form-control" name="building">
+                            <select class="form-select" id="buildingSelect" name="office_location_id">
+                                <option value="">Select Building</option>
+                                @foreach ($locations as $loc)
+                                    <option value="{{ $loc->id }}">{{ $loc->location }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-4">
                             <label class="form-label">Floor</label>
-                            <input type="text" class="form-control" name="floor">
+                            <select class="form-select" id="floorSelect" name="floor">
+                                <option value="">Select Floor</option>
+                            </select>
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label">Room No</label>
-                            <input type="text" class="form-control" name="room_no">
+                            <label class="form-label">Room</label>
+                            <select class="form-select" id="roomSelect" name="room_id">
+                                <option value="">Select Room</option>
+                            </select>
                         </div>
 
                         <div class="col-md-6">
@@ -924,61 +934,127 @@
 
 {{-- Hero Section End --}}
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var pdfModal = document.getElementById("pdfModal");
+@section('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var pdfModal = document.getElementById("pdfModal");
 
-        pdfModal.addEventListener("show.bs.modal", function(event) {
-            var link = event.relatedTarget; // Link that triggered the modal
-            var pdfUrl = link.getAttribute("data-pdf");
-            var pdfTitle = link.getAttribute("data-title");
-            // Set modal title and PDF source
-            document.getElementById("pdfModalLabel").textContent = pdfTitle;
-            document.getElementById("pdfViewer").src = pdfUrl;
+            pdfModal.addEventListener("show.bs.modal", function(event) {
+                var link = event.relatedTarget; // Link that triggered the modal
+                var pdfUrl = link.getAttribute("data-pdf");
+                var pdfTitle = link.getAttribute("data-title");
+                // Set modal title and PDF source
+                document.getElementById("pdfModalLabel").textContent = pdfTitle;
+                document.getElementById("pdfViewer").src = pdfUrl;
+            });
+            pdfModal.addEventListener("hidden.bs.modal", function() {
+                document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
+            });
         });
-        pdfModal.addEventListener("hidden.bs.modal", function() {
-            document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
-        });
-    });
 
 
 
-    document.addEventListener("DOMContentLoaded", function() {
+        $(function() {
 
-        fetch("/employees/list")
-            .then(response => response.json())
-            .then(data => {
+            console.log("jQuery Loaded:", typeof $);
 
-                let select = document.getElementById("employeeSelect");
+            $('#employeeSelect').select2({
+                placeholder: "🔍 Search Employee...",
+                allowClear: true,
+                dropdownParent: $('#helpdeskModal'),
+                theme: 'bootstrap-5',
+                width: '100%',
+            });
 
-                select.innerHTML = '<option value="">Select Employee</option>';
+            // ✅ Room Select2
+            $('#roomSelect').select2({
+                placeholder: "🔍 Search Room...",
+                allowClear: true,
+                dropdownParent: $('#helpdeskModal'),
+                theme: 'bootstrap-5',
+                width: '100%',
+            });
 
-                data.forEach(emp => {
+            // OPTIONAL: Floor also searchable
+            $('#floorSelect').select2({
+                placeholder: "Select Floor",
+                dropdownParent: $('#helpdeskModal'),
+                theme: 'bootstrap-5',
+                width: '100%',
+            });
 
-                    let option = document.createElement("option");
+            fetch("/employees/list")
+                .then(res => res.json())
+                .then(data => {
 
-                    option.value = emp.pen;
-                    option.text = emp.name + " - " + emp.pen;
+                    let select = $('#employeeSelect');
 
-                    option.dataset.section = emp.section;
-                    option.dataset.name = emp.name;
+                    data.forEach(emp => {
+                        let option = new Option(
+                            emp.name + " (" + emp.pen + ")",
+                            emp.pen,
+                            false,
+                            false
+                        );
 
-                    select.appendChild(option);
+                        $(option).attr('data-section', emp.section);
 
+                        select.append(option);
+                    });
+
+                    select.trigger('change');
                 });
 
-            })
-            .catch(error => console.error("Employee API error:", error));
+            $('#employeeSelect').on('change', function() {
+                let section = $(this).find(':selected').data('section') || '';
+                $('#employeeSection').val(section);
+            });
 
-    });
+            // Building → Floors
+            $('#buildingSelect').on('change', function() {
 
-    document.getElementById("employeeSelect")
-        .addEventListener("change", function() {
+                let locationId = $(this).val();
 
-            let section =
-                this.options[this.selectedIndex].dataset.section;
+                $('#floorSelect').html('<option>Loading...</option>').trigger('change');
+                $('#roomSelect').html('<option>Select Room</option>').trigger('change');
 
-            document.getElementById("employeeSection").value = section;
+                if (locationId) {
+                    $.get('/get-floors/' + locationId, function(floors) {
+
+                        let options = '<option value=""></option>';
+
+                        floors.forEach(floor => {
+                            options += `<option value="${floor}">${floor}</option>`;
+                        });
+
+                        $('#floorSelect').html(options).trigger('change');
+                    });
+                }
+            });
+
+
+            // Floor → Rooms
+            $('#floorSelect').on('change', function() {
+
+                let locationId = $('#buildingSelect').val();
+                let floor = $(this).val();
+
+                $('#roomSelect').html('<option>Loading...</option>').trigger('change');
+
+                if (locationId && floor) {
+                    $.get(`/get-rooms/${locationId}/${floor}`, function(rooms) {
+
+                        let options = '<option value=""></option>';
+
+                        Object.entries(rooms).forEach(([id, name]) => {
+                            options += `<option value="${id}">${name}</option>`;
+                        });
+
+                        $('#roomSelect').html(options).trigger('change');
+                    });
+                }
+            });
 
         });
-</script>
+    </script>
+@endsection

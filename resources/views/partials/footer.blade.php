@@ -10,7 +10,7 @@
                             Secretariat</small>
                     </a>
                     <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSempwI7-mTW2fiZgZiv-N6HkDfviPBE9HiRzHPQwAHCGejD8A/viewform?usp=send_form&pli=1"
-                       class="btn btn-primary py-2 px-5 rounded-pill text-white" target="_blank">Feed Back</a>
+                        class="btn btn-primary py-2 px-5 rounded-pill text-white" target="_blank">Feed Back</a>
                 </div>
             </div>
         </div>
@@ -215,8 +215,14 @@
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js'></script>
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
-<!-- jQuery (required for DataTables) -->
+
+<!-- ✅ jQuery FIRST -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- ✅ Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -230,3 +236,9 @@
 
 <!-- Template Javascript -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
+
+
+<!-- ✅ Bootstrap -->
+{{-- <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
+

@@ -12,11 +12,15 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\OfficeLocation;
 
 class HomeController extends Controller
 {
     public function index()
     {
+
+        $locations = OfficeLocation::with('office')->get();
+
         //want to show all distinct periodicals with latest periodical by status published(1) on home page in alphabetical order of periodical name
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
@@ -76,7 +80,7 @@ class HomeController extends Controller
             ->whereYear('date', Carbon::now()->year)
             ->where('status', '1')
             ->count();
-        return view('home', compact('periodicals', 'newsupdates', 'goms', 'gort', 'gop', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount'));
+        return view('home', compact('periodicals', 'newsupdates', 'goms', 'gort', 'gop', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount', 'locations'));
     }
 
 
