@@ -26,40 +26,40 @@ class HomeController extends Controller
             ->get();
         $newsupdates = NewsUpdate::where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(6)
+            ->limit(7)
             ->get();
         $goms = OrderCircular::where('type', 'G')
             ->where('go_type', 'M')
             ->where('status', '1')
             ->orderBy('date', 'desc')
             ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
-            ->limit(6)
+            ->limit(7)
             ->get();
         $gort = OrderCircular::where('type', 'G')
             ->where('go_type', 'R')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
             ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
-            ->limit(6)
+            ->limit(7)
             ->get();
         $gop = OrderCircular::where('type', 'G')
             ->where('go_type', 'P')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
             ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
-            ->limit(6)
+            ->limit(7)
             ->get();
         $oos = OrderCircular::where('type', 'O')
             ->where('status', '1')
             ->orderBy('date', 'desc')
             ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
-            ->limit(6)
+            ->limit(7)
             ->get();
         $crcls = OrderCircular::where('type', 'C')
             ->where('status', '1')
             ->orderBy('date', 'desc')
             ->orderByRaw("CAST(SUBSTRING_INDEX(number, '/', 1) AS UNSIGNED) DESC")
-            ->limit(6)
+            ->limit(8)
             ->get();
         $goCount = OrderCircular::where('type', 'G')
             ->whereMonth('date', Carbon::now()->month)

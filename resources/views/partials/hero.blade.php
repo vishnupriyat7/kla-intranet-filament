@@ -65,14 +65,11 @@
                                     <span class="text-dark" style="width: 100px;">GO MS</span>
                                 </a>
                             </li>
-
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-5">
                                     <span class="text-dark" style="width: 100px;">GO P</span>
                                 </a>
                             </li>
-
-
                             <li class="nav-item mb-3">
                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-6">
                                     <span class="text-dark" style="width: 100px;">News</span>
@@ -86,8 +83,6 @@
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
-
-
                                         @foreach ($crcls as $crclr)
                                             @php $attachments = files($crclr); @endphp
                                             <div class="mb-4">
@@ -405,12 +400,10 @@
                                         @foreach ($newsupdates as $news)
                                             <div class="mb-4">
 
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60,93,240)"></i>
+                                                <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60,93,240)"></i>
 
                                                 @if ($news->path)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
+                                                    <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                         data-pdf="{{ asset('storage/' . $news->path) }}"
                                                         data-title="{{ $news->title }}">
 
@@ -474,7 +467,7 @@
                                             dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                             <img src="{{ asset('assets/img/e-office.png') }}" alt="e-Office"
                                                 class="img-fluid mb-2" style="height: 40px;">
-                                                 <span>e-Office</span>
+                                            <span>e-Office</span>
                                         </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
@@ -751,7 +744,12 @@
                                                 href="{{ asset('storage/uploads/application-forms/Library_Membership_form.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/application-forms/Library_Membership_form.pdf') }}"
-                                                data-title="Vehicle Pass">Librabry Membership</a>
+                                                data-title="Library Membership">Library Membership</a>
+                                            <a class="dropdown-item"
+                                                href="{{ asset('storage/uploads/application-forms/Nomination_form_GPF.pdf') }}"
+                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/uploads/application-forms/Nomination_form_GPF.pdf') }}"
+                                                data-title="GPF Nomination">GPF Nomination</a>
                                         </div>
                                     </div>
                                 </div>
