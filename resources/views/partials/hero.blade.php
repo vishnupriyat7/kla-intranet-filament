@@ -3,36 +3,37 @@
     <!-- <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div> -->
 
     @php
-        // function files($record)
-        // {
-        //     return is_array($record->path) ? $record->path : [];
-        // }
-        function files($record)
-        {
-            if (is_array($record->path)) {
-                return $record->path;
-            }
+    // function files($record)
+    // {
+    // return is_array($record->path) ? $record->path : [];
+    // }
+    function files($record)
+    {
+    if (is_array($record->path)) {
+    return $record->path;
+    }
 
-            if (!empty($record->path)) {
-                return [$record->path];
-            }
+    if (!empty($record->path)) {
+    return [$record->path];
+    }
 
-            return [];
-        }
+    return [];
+    }
     @endphp
     <div class="container py-3" style="position: relative; z-index: 1;">
         <div class="tab-class mb-1">
             <div class="row g-4">
                 <div class="row">
                     <div class="col d-flex justify-content-end gap-2 flex-wrap">
-                        {{-- <a href="{{ route('helpdesk.create') }}" class="btn btn-warning d-flex align-items-center"> --}}
-                        <a href="#" class="btn btn-warning d-flex align-items-center" data-bs-toggle="modal"
-                            data-bs-target="#helpdeskModal">
+                        {{-- <a href="{{ route('helpdesk.create') }}" class="btn btn-warning d-flex align-items-center">
+                            --}}
+                            <a href="#" class="btn btn-warning d-flex align-items-center" data-bs-toggle="modal"
+                                data-bs-target="#helpdeskModal">
 
-                            <i class="bi bi-tools me-1"></i>
-                            IT Helpdesk
-                            <span class="badge bg-danger ms-2">3</span>
-                        </a>
+                                <i class="bi bi-tools me-1"></i>
+                                IT Helpdesk
+                                <span class="badge bg-danger ms-2">3</span>
+                            </a>
                         </a>
                         <a href="{{ route('home.advanced-search') }}" class="btn btn-info">
                             <i class="bi bi-search me-1"></i><span class="ms-2">Advanced Search</span>
@@ -97,67 +98,63 @@
 
 
                                         @foreach ($crcls as $crclr)
-                                            @php $attachments = files($crclr); @endphp
-                                            <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60,93,240)"></i>
+                                        @php $attachments = files($crclr); @endphp
+                                        <div class="mb-4">
+                                            <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60,93,240)"></i>
 
-                                                {{-- TITLE --}}
-                                                @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
-                                                        data-pdf="{{ asset('storage/' . $attachments[0]) }}"
-                                                        data-title="{{ $crclr->title }}">
-                                                    @else
-                                                        <span class="h6">
-                                                @endif
+                                            {{-- TITLE --}}
+                                            @if (count($attachments) === 1)
+                                            <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/' . $attachments[0]) }}"
+                                                data-title="{{ $crclr->title }}">
+                                                @else
+                                                <span class="h6">
+                                                    @endif
 
-                                                @if ($crclr->title_lingo == 'E')
+                                                    @if ($crclr->title_lingo == 'E')
                                                     Number {{ $crclr->number }} dated
                                                     {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
                                                     – Kerala Legislative Assembly – {!! $crclr->title !!}
-                                                @else
+                                                    @else
                                                     നമ്പര്‍ {{ $crclr->number }} തീയതി
                                                     {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
                                                     – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {!! $crclr->title !!}
-                                                @endif
+                                                    @endif
 
-                                                @if (count($attachments) === 1)
-                                                    </a>
-                                                @else
-                                                    </span>
-                                                @endif
+                                                    @if (count($attachments) === 1)
+                                            </a>
+                                            @else
+                                            </span>
+                                            @endif
 
-                                                {{-- ATTACHMENTS --}}
-                                                @if (count($attachments) > 1)
-                                                    <div class="mt-1">
-                                                        @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                                data-pdf="{{ asset('storage/' . $file) }}"
-                                                                data-title="{{ $crclr->title }} (Attachment {{ $i + 1 }})">
-                                                                Attachment {{ $i + 1 }}
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
-                                                @if ($crclr->link)
-                                                    <div>Google form Link: <a href="{{ $crclr->link }}"
-                                                            target="_blank">Click
-                                                            here</a></div>
-                                                @endif
-
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($crclr->date)->format('M d Y') }}
-                                                </small>
+                                            {{-- ATTACHMENTS --}}
+                                            @if (count($attachments) > 1)
+                                            <div class="mt-1">
+                                                @foreach ($attachments as $i => $file)
+                                                <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $file) }}"
+                                                    data-title="{{ $crclr->title }} (Attachment {{ $i + 1 }})">
+                                                    Attachment {{ $i + 1 }}
+                                                </a>
+                                                @endforeach
                                             </div>
+                                            @endif
+
+                                            @if ($crclr->link)
+                                            <div>Google form Link: <a href="{{ $crclr->link }}" target="_blank">Click
+                                                    here</a></div>
+                                            @endif
+
+                                            <small class="text-body d-block">
+                                                <i class="fas fa-calendar-alt me-1"></i>
+                                                {{ \Carbon\Carbon::parse($crclr->date)->format('M d Y') }}
+                                            </small>
+                                        </div>
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'cr') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'cr') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -171,55 +168,53 @@
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($oos as $oo)
-                                            @php $attachments = files($oo); @endphp
+                                        @php $attachments = files($oo); @endphp
 
-                                            <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60,93,240)"></i>
+                                        <div class="mb-4">
+                                            <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60,93,240)"></i>
 
-                                                @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
-                                                        data-pdf="{{ asset('storage/' . $attachments[0]) }}"
-                                                        data-title="{{ $oo->title }}">
-                                                    @else
-                                                        <span class="h6">
-                                                @endif
+                                            @if (count($attachments) === 1)
+                                            <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/' . $attachments[0]) }}"
+                                                data-title="{{ $oo->title }}">
+                                                @else
+                                                <span class="h6">
+                                                    @endif
 
-                                                @if ($oo->title_lingo == 'E')
+                                                    @if ($oo->title_lingo == 'E')
                                                     Office Order No. {{ $oo->number }} dated
                                                     {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
                                                     – Kerala Legislative Assembly – {{ $oo->title }}
-                                                @else
+                                                    @else
                                                     ഓഫീസ് ഉത്തരവ് നമ്പർ {{ $oo->number }} തീയതി
                                                     {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
                                                     – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $oo->title }}
-                                                @endif
+                                                    @endif
 
-                                                @if (count($attachments) === 1)
-                                                    </a>
-                                                @else
-                                                    </span>
-                                                @endif
+                                                    @if (count($attachments) === 1)
+                                            </a>
+                                            @else
+                                            </span>
+                                            @endif
 
-                                                @if (count($attachments) > 1)
-                                                    <div class="mt-1">
-                                                        @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                                data-pdf="{{ asset('storage/' . $file) }}"
-                                                                data-title="{{ $oo->title }} (Attachment {{ $i + 1 }})">
-                                                                Attachment {{ $i + 1 }}
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($oo->date)->format('M d Y') }}
-                                                </small>
+                                            @if (count($attachments) > 1)
+                                            <div class="mt-1">
+                                                @foreach ($attachments as $i => $file)
+                                                <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $file) }}"
+                                                    data-title="{{ $oo->title }} (Attachment {{ $i + 1 }})">
+                                                    Attachment {{ $i + 1 }}
+                                                </a>
+                                                @endforeach
                                             </div>
+                                            @endif
+
+                                            <small class="text-body d-block">
+                                                <i class="fas fa-calendar-alt me-1"></i>
+                                                {{ \Carbon\Carbon::parse($oo->date)->format('M d Y') }}
+                                            </small>
+                                        </div>
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
@@ -238,65 +233,62 @@
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($gort as $go)
-                                            @php $attachments = files($go); @endphp
+                                        @php $attachments = files($go); @endphp
 
-                                            <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60,93,240)"></i>
+                                        <div class="mb-4">
+                                            <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60,93,240)"></i>
 
-                                                @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
-                                                        data-pdf="{{ asset('storage/' . $attachments[0]) }}"
-                                                        data-title="{{ $go->title }}">
-                                                    @else
-                                                        <span class="h6">
-                                                @endif
+                                            @if (count($attachments) === 1)
+                                            <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/' . $attachments[0]) }}"
+                                                data-title="{{ $go->title }}">
+                                                @else
+                                                <span class="h6">
+                                                    @endif
 
 
 
-                                                {{-- {{ $go->number }} dated
-                                                        {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        – Kerala Legislative Assembly – {{ $go->title }} --}}
-                                                @if ($go->title_lingo == 'E')
+                                                    {{-- {{ $go->number }} dated
+                                                    {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                    – Kerala Legislative Assembly – {{ $go->title }} --}}
+                                                    @if ($go->title_lingo == 'E')
                                                     G.O.(Rt) No. {{ $go->number }} dated
                                                     {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
                                                     – Kerala Legislative Assembly – {{ $go->title }}
-                                                @else
+                                                    @else
                                                     ജി.ഒ.(ആർ.ടി) നമ്പർ {{ $go->number }} തീയതി
                                                     {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
                                                     – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $go->title }}
-                                                @endif
+                                                    @endif
 
-                                                @if (count($attachments) === 1)
-                                                    </a>
-                                                @else
-                                                    </span>
-                                                @endif
+                                                    @if (count($attachments) === 1)
+                                            </a>
+                                            @else
+                                            </span>
+                                            @endif
 
-                                                @if (count($attachments) > 1)
-                                                    <div class="mt-1">
-                                                        @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                                data-pdf="{{ asset('storage/' . $file) }}"
-                                                                data-title="{{ $go->title }} (Attachment {{ $i + 1 }})">
-                                                                Attachment {{ $i + 1 }}
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
-                                                </small>
+                                            @if (count($attachments) > 1)
+                                            <div class="mt-1">
+                                                @foreach ($attachments as $i => $file)
+                                                <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $file) }}"
+                                                    data-title="{{ $go->title }} (Attachment {{ $i + 1 }})">
+                                                    Attachment {{ $i + 1 }}
+                                                </a>
+                                                @endforeach
                                             </div>
+                                            @endif
+
+                                            <small class="text-body d-block">
+                                                <i class="fas fa-calendar-alt me-1"></i>
+                                                {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
+                                            </small>
+                                        </div>
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -310,65 +302,62 @@
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($goms as $go)
-                                            @php $attachments = files($go); @endphp
+                                        @php $attachments = files($go); @endphp
 
-                                            <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60,93,240)"></i>
+                                        <div class="mb-4">
+                                            <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60,93,240)"></i>
 
-                                                @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
-                                                        data-pdf="{{ asset('storage/' . $attachments[0]) }}"
-                                                        data-title="{{ $go->title }}">
-                                                    @else
-                                                        <span class="h6">
-                                                @endif
+                                            @if (count($attachments) === 1)
+                                            <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/' . $attachments[0]) }}"
+                                                data-title="{{ $go->title }}">
+                                                @else
+                                                <span class="h6">
+                                                    @endif
 
-                                                {{-- {{ $go->number }} dated
-                                                {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                – Kerala Legislative Assembly – {{ $go->title }} --}}
+                                                    {{-- {{ $go->number }} dated
+                                                    {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                    – Kerala Legislative Assembly – {{ $go->title }} --}}
 
 
-                                                @if ($go->title_lingo == 'E')
+                                                    @if ($go->title_lingo == 'E')
                                                     G.O.(Ms) No. {{ $go->number }} dated
                                                     {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
                                                     – Kerala Legislative Assembly – {{ $go->title }}
-                                                @else
+                                                    @else
                                                     ജി.ഒ.(എം.എസ്) നമ്പർ {{ $go->number }} തീയതി
                                                     {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
                                                     – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $go->title }}
-                                                @endif
+                                                    @endif
 
-                                                @if (count($attachments) === 1)
-                                                    </a>
-                                                @else
-                                                    </span>
-                                                @endif
+                                                    @if (count($attachments) === 1)
+                                            </a>
+                                            @else
+                                            </span>
+                                            @endif
 
-                                                @if (count($attachments) > 1)
-                                                    <div class="mt-1">
-                                                        @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                                data-pdf="{{ asset('storage/' . $file) }}"
-                                                                data-title="{{ $go->title }} (Attachment {{ $i + 1 }})">
-                                                                Attachment {{ $i + 1 }}
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
-                                                </small>
+                                            @if (count($attachments) > 1)
+                                            <div class="mt-1">
+                                                @foreach ($attachments as $i => $file)
+                                                <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $file) }}"
+                                                    data-title="{{ $go->title }} (Attachment {{ $i + 1 }})">
+                                                    Attachment {{ $i + 1 }}
+                                                </a>
+                                                @endforeach
                                             </div>
+                                            @endif
+
+                                            <small class="text-body d-block">
+                                                <i class="fas fa-calendar-alt me-1"></i>
+                                                {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
+                                            </small>
+                                        </div>
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -385,64 +374,61 @@
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($gop as $go)
-                                            @php $attachments = files($go); @endphp
+                                        @php $attachments = files($go); @endphp
 
-                                            <div class="mb-4">
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:20px;color:rgb(60,93,240)"></i>
+                                        <div class="mb-4">
+                                            <i class="bi bi-eye-fill" style="font-size:20px;color:rgb(60,93,240)"></i>
 
-                                                @if (count($attachments) === 1)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
-                                                        data-pdf="{{ asset('storage/' . $attachments[0]) }}"
-                                                        data-title="{{ $go->title }}">
-                                                    @else
-                                                        <span class="h6">
-                                                @endif
+                                            @if (count($attachments) === 1)
+                                            <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/' . $attachments[0]) }}"
+                                                data-title="{{ $go->title }}">
+                                                @else
+                                                <span class="h6">
+                                                    @endif
 
-                                                {{-- {{ $go->number }} dated
-                                                {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                – Kerala Legislative Assembly – {{ $go->title }} --}}
+                                                    {{-- {{ $go->number }} dated
+                                                    {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
+                                                    – Kerala Legislative Assembly – {{ $go->title }} --}}
 
-                                                @if ($go->title_lingo == 'E')
+                                                    @if ($go->title_lingo == 'E')
                                                     G.O.(P) No. {{ $go->number }} dated
                                                     {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
                                                     – Kerala Legislative Assembly – {{ $go->title }}
-                                                @else
+                                                    @else
                                                     ജി.ഒ.(പി) നമ്പർ {{ $go->number }} തീയതി
                                                     {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
                                                     – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $go->title }}
-                                                @endif
+                                                    @endif
 
-                                                @if (count($attachments) === 1)
-                                                    </a>
-                                                @else
-                                                    </span>
-                                                @endif
+                                                    @if (count($attachments) === 1)
+                                            </a>
+                                            @else
+                                            </span>
+                                            @endif
 
-                                                @if (count($attachments) > 1)
-                                                    <div class="mt-1">
-                                                        @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                                data-pdf="{{ asset('storage/' . $file) }}"
-                                                                data-title="{{ $go->title }} (Attachment {{ $i + 1 }})">
-                                                                Attachment {{ $i + 1 }}
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
-                                                </small>
+                                            @if (count($attachments) > 1)
+                                            <div class="mt-1">
+                                                @foreach ($attachments as $i => $file)
+                                                <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $file) }}"
+                                                    data-title="{{ $go->title }} (Attachment {{ $i + 1 }})">
+                                                    Attachment {{ $i + 1 }}
+                                                </a>
+                                                @endforeach
                                             </div>
+                                            @endif
+
+                                            <small class="text-body d-block">
+                                                <i class="fas fa-calendar-alt me-1"></i>
+                                                {{ \Carbon\Carbon::parse($go->date)->format('M d Y') }}
+                                            </small>
+                                        </div>
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('home.order-circular', 'go') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('home.order-circular', 'go') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -458,48 +444,45 @@
                                 <div class="col-lg-12">
                                     <div class="features-content d-flex flex-column mt-3">
                                         @foreach ($newsupdates as $news)
-                                            <div class="mb-4">
+                                        <div class="mb-4">
 
-                                                <i class="bi bi-eye-fill"
-                                                    style="font-size:18px;color:rgb(60,93,240)"></i>
+                                            <i class="bi bi-eye-fill" style="font-size:18px;color:rgb(60,93,240)"></i>
 
-                                                @if ($news->path)
-                                                    <a href="#" class="h6" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal"
-                                                        data-pdf="{{ asset('storage/' . $news->path) }}"
-                                                        data-title="{{ $news->title }}">
+                                            @if ($news->path)
+                                            <a href="#" class="h6" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                data-pdf="{{ asset('storage/' . $news->path) }}"
+                                                data-title="{{ $news->title }}">
 
-                                                        {!! $news->title !!}
+                                                {!! $news->title !!}
 
-                                                    </a>
-                                                @else
-                                                    <span class="h6">{!! $news->title !!}</span>
-                                                @endif
+                                            </a>
+                                            @else
+                                            <span class="h6">{!! $news->title !!}</span>
+                                            @endif
 
-                                                @if (count($attachments) > 1)
-                                                    <div class="mt-1">
-                                                        @foreach ($attachments as $i => $file)
-                                                            <a href="#" class="badge bg-primary me-1"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                                data-pdf="{{ asset('storage/' . $file) }}"
-                                                                data-title="{{ $news->title }} (Attachment {{ $i + 1 }})">
-                                                                Attachment {{ $i + 1 }}
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
-                                                <small class="text-body d-block">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($news->date)->format('M d Y') }}
-                                                </small>
-
+                                            @if (count($attachments) > 1)
+                                            <div class="mt-1">
+                                                @foreach ($attachments as $i => $file)
+                                                <a href="#" class="badge bg-primary me-1" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-pdf="{{ asset('storage/' . $file) }}"
+                                                    data-title="{{ $news->title }} (Attachment {{ $i + 1 }})">
+                                                    Attachment {{ $i + 1 }}
+                                                </a>
+                                                @endforeach
                                             </div>
+                                            @endif
+
+                                            <small class="text-body d-block">
+                                                <i class="fas fa-calendar-alt me-1"></i>
+                                                {{ \Carbon\Carbon::parse($news->date)->format('M d Y') }}
+                                            </small>
+
+                                        </div>
                                         @endforeach
                                         <div class="mt-2 d-flex justify-content-center">
                                             <div class="col-4">
-                                                <a href="{{ route('updatesmore') }}"
-                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                <a href="{{ route('updatesmore') }}" class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                             hover-bg-primary text-hover-white border-primary">View
                                                     All >></a>
                                             </div>
@@ -527,8 +510,7 @@
                                     <!-- E office -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark
-                                            dropdown-toggle"
-                                            href="#" role="button" data-bs-toggle="dropdown">
+                                            dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                             <img src="{{ asset('assets/img/e-office.png') }}" alt="e-Office"
                                                 class="img-fluid mb-2" style="height: 40px;">
                                             <span>e-Office</span>
@@ -547,8 +529,7 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="http://172.24.18.28/attendance-app/" target="_blank">
-                                            <i class="fas fa-user-check fa-2x mb-2"
-                                                style="color: rgb(60, 93, 240)"></i>
+                                            <i class="fas fa-user-check fa-2x mb-2" style="color: rgb(60, 93, 240)"></i>
                                             <span>Attendance</span>
                                         </a>
                                     </div>
@@ -627,8 +608,8 @@
                                                 data-title="Section Mail IDs">
                                                 <i class="fas fa-building me-2"></i>Section Mail IDs
                                             </a>
-                                            <a class="dropdown-item"
-                                                href="http://www.niyamasabha.org/codes/pa_MLAs.htm" target="_blank">
+                                            <a class="dropdown-item" href="http://www.niyamasabha.org/codes/pa_MLAs.htm"
+                                                target="_blank">
                                                 <i class="fas fa-phone me-2"></i>PA to MLAs
                                             </a>
                                             <a class="dropdown-item"
@@ -710,9 +691,8 @@
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
                                             href="http://172.24.18.21:8080/share/page" target="_blank">
-                                            <img src="{{ asset('assets/img/alfresco.png') }}"
-                                                alt="Centralised Storage" class="img-fluid mb-2"
-                                                style="height: 40px;">
+                                            <img src="{{ asset('assets/img/alfresco.png') }}" alt="Centralised Storage"
+                                                class="img-fluid mb-2" style="height: 40px;">
                                             <span>Centralised Storage</span>
                                         </a>
                                     </div>
@@ -796,8 +776,7 @@
                                     <!--Vehicla Pass--->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark
-                                            dropdown-toggle"
-                                            href="#" role="button" data-bs-toggle="dropdown">
+                                            dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                             <i class="fas fa-clipboard fa-2x mb-2" style="color: #20579e"></i>
                                             <span>Application Forms</span>
                                         </a>
@@ -833,14 +812,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <iframe id="pdfViewer" src="" width="100%" height="700px"
-                        style="border: none;"></iframe>
+                    <iframe id="pdfViewer" src="" width="100%" height="700px" style="border: none;"></iframe>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- IT Helpdesk Modal -->
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
 <div class="modal fade" id="helpdeskModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -852,9 +835,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            {{-- <form action="{{ route('helpdesk.store') }}" method="POST"> --}}
+            <form action="{{ route('helpdesk.store') }}" method="POST">
 
-            <form action="" method="POST">
                 @csrf
 
                 <div class="modal-body">
@@ -879,7 +861,7 @@
                             <select class="form-select" id="buildingSelect" name="office_location_id">
                                 <option value="">Select Building</option>
                                 @foreach ($locations as $loc)
-                                    <option value="{{ $loc->id }}">{{ $loc->location }}</option>
+                                <option value="{{ $loc->id }}">{{ $loc->location }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -935,126 +917,126 @@
 {{-- Hero Section End --}}
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 @section('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var pdfModal = document.getElementById("pdfModal");
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var pdfModal = document.getElementById("pdfModal");
 
-            pdfModal.addEventListener("show.bs.modal", function(event) {
-                var link = event.relatedTarget; // Link that triggered the modal
-                var pdfUrl = link.getAttribute("data-pdf");
-                var pdfTitle = link.getAttribute("data-title");
-                // Set modal title and PDF source
-                document.getElementById("pdfModalLabel").textContent = pdfTitle;
-                document.getElementById("pdfViewer").src = pdfUrl;
-            });
-            pdfModal.addEventListener("hidden.bs.modal", function() {
-                document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
-            });
+        pdfModal.addEventListener("show.bs.modal", function (event) {
+            var link = event.relatedTarget; // Link that triggered the modal
+            var pdfUrl = link.getAttribute("data-pdf");
+            var pdfTitle = link.getAttribute("data-title");
+            // Set modal title and PDF source
+            document.getElementById("pdfModalLabel").textContent = pdfTitle;
+            document.getElementById("pdfViewer").src = pdfUrl;
+        });
+        pdfModal.addEventListener("hidden.bs.modal", function () {
+            document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
+        });
+    });
+
+
+
+    $(function () {
+
+        console.log("jQuery Loaded:", typeof $);
+
+        $('#employeeSelect').select2({
+            placeholder: "🔍 Search Employee...",
+            allowClear: true,
+            dropdownParent: $('#helpdeskModal'),
+            theme: 'bootstrap-5',
+            width: '100%',
         });
 
+        // ✅ Room Select2
+        $('#roomSelect').select2({
+            placeholder: "🔍 Search Room...",
+            allowClear: true,
+            dropdownParent: $('#helpdeskModal'),
+            theme: 'bootstrap-5',
+            width: '100%',
+        });
 
+        // OPTIONAL: Floor also searchable
+        $('#floorSelect').select2({
+            placeholder: "Select Floor",
+            dropdownParent: $('#helpdeskModal'),
+            theme: 'bootstrap-5',
+            width: '100%',
+        });
 
-        $(function() {
+        fetch("/employees/list")
+            .then(res => res.json())
+            .then(data => {
 
-            console.log("jQuery Loaded:", typeof $);
+                let select = $('#employeeSelect');
 
-            $('#employeeSelect').select2({
-                placeholder: "🔍 Search Employee...",
-                allowClear: true,
-                dropdownParent: $('#helpdeskModal'),
-                theme: 'bootstrap-5',
-                width: '100%',
-            });
+                data.forEach(emp => {
+                    let option = new Option(
+                        emp.name + " (" + emp.pen + ")",
+                        emp.pen,
+                        false,
+                        false
+                    );
 
-            // ✅ Room Select2
-            $('#roomSelect').select2({
-                placeholder: "🔍 Search Room...",
-                allowClear: true,
-                dropdownParent: $('#helpdeskModal'),
-                theme: 'bootstrap-5',
-                width: '100%',
-            });
+                    $(option).attr('data-section', emp.section);
 
-            // OPTIONAL: Floor also searchable
-            $('#floorSelect').select2({
-                placeholder: "Select Floor",
-                dropdownParent: $('#helpdeskModal'),
-                theme: 'bootstrap-5',
-                width: '100%',
-            });
-
-            fetch("/employees/list")
-                .then(res => res.json())
-                .then(data => {
-
-                    let select = $('#employeeSelect');
-
-                    data.forEach(emp => {
-                        let option = new Option(
-                            emp.name + " (" + emp.pen + ")",
-                            emp.pen,
-                            false,
-                            false
-                        );
-
-                        $(option).attr('data-section', emp.section);
-
-                        select.append(option);
-                    });
-
-                    select.trigger('change');
+                    select.append(option);
                 });
 
-            $('#employeeSelect').on('change', function() {
-                let section = $(this).find(':selected').data('section') || '';
-                $('#employeeSection').val(section);
+                select.trigger('change');
             });
 
-            // Building → Floors
-            $('#buildingSelect').on('change', function() {
-
-                let locationId = $(this).val();
-
-                $('#floorSelect').html('<option>Loading...</option>').trigger('change');
-                $('#roomSelect').html('<option>Select Room</option>').trigger('change');
-
-                if (locationId) {
-                    $.get('/get-floors/' + locationId, function(floors) {
-
-                        let options = '<option value=""></option>';
-
-                        floors.forEach(floor => {
-                            options += `<option value="${floor}">${floor}</option>`;
-                        });
-
-                        $('#floorSelect').html(options).trigger('change');
-                    });
-                }
-            });
-
-
-            // Floor → Rooms
-            $('#floorSelect').on('change', function() {
-
-                let locationId = $('#buildingSelect').val();
-                let floor = $(this).val();
-
-                $('#roomSelect').html('<option>Loading...</option>').trigger('change');
-
-                if (locationId && floor) {
-                    $.get(`/get-rooms/${locationId}/${floor}`, function(rooms) {
-
-                        let options = '<option value=""></option>';
-
-                        Object.entries(rooms).forEach(([id, name]) => {
-                            options += `<option value="${id}">${name}</option>`;
-                        });
-
-                        $('#roomSelect').html(options).trigger('change');
-                    });
-                }
-            });
-
+        $('#employeeSelect').on('change', function () {
+            let section = $(this).find(':selected').data('section') || '';
+            $('#employeeSection').val(section);
         });
-    </script>
+
+        // Building → Floors
+        $('#buildingSelect').on('change', function () {
+
+            let locationId = $(this).val();
+
+            $('#floorSelect').html('<option>Loading...</option>').trigger('change');
+            $('#roomSelect').html('<option>Select Room</option>').trigger('change');
+
+            if (locationId) {
+                $.get('/get-floors/' + locationId, function (floors) {
+
+                    let options = '<option value=""></option>';
+
+                    floors.forEach(floor => {
+                        options += `<option value="${floor}">${floor}</option>`;
+                    });
+
+                    $('#floorSelect').html(options).trigger('change');
+                });
+            }
+        });
+
+
+        // Floor → Rooms
+        $('#floorSelect').on('change', function () {
+
+            let locationId = $('#buildingSelect').val();
+            let floor = $(this).val();
+
+            $('#roomSelect').html('<option>Loading...</option>').trigger('change');
+
+            if (locationId && floor) {
+                $.get(`/get-rooms/${locationId}/${floor}`, function (rooms) {
+
+                    let options = '<option value=""></option>';
+
+                    Object.entries(rooms).forEach(([id, name]) => {
+                        options += `<option value="${id}">${name}</option>`;
+                    });
+
+                    $('#roomSelect').html(options).trigger('change');
+                });
+            }
+        });
+
+    });
+</script>
 @endsection

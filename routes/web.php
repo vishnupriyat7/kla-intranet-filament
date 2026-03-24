@@ -33,6 +33,8 @@ Route::get('/retired-staff/{id}', [EmployeeController::class, 'retiredStaffShow'
 
 Route::get('/get-floors/{location}', [HelpdeskController::class, 'getFloors']);
 Route::get('/get-rooms/{location}/{floor}', [HelpdeskController::class, 'getRooms']);
+//IT Helpdesk store
+Route::post('/helpdesk/store', [HelpdeskController::class, 'store'])->name('helpdesk.store');
 
 
 Route::get('/dashboard', function () {

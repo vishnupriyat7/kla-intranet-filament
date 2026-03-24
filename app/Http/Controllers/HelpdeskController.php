@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Room;
+use App\Models\HelpdeskTicket;
 
 
 class HelpdeskController extends Controller
@@ -30,5 +31,30 @@ class HelpdeskController extends Controller
             ->pluck('name', 'id'); // id => name
 
         return response()->json($rooms);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'employee_id' => 'required',
+            'section' => 'required',
+            'office_location_id' => 'required',
+            'floor' => 'required',
+            'room_id' => 'required',
+            'complaint_type' => 'required',
+            'description' => 'required',
+        ]);
+
+        HelpdeskTicket::create([
+            'employee_id' => $request->employee_id,
+            'section' => $request->section,
+            'office_location_id' => $request->office_location_id,
+            'floor' => $request->floor,
+            'room_id' => $request->room_id,
+            'complaint_type' => $request->complaint_type,
+            'description' => $request->description,
+        ]);
+
+        return back()->with('success', 'Ticket submitted successfully!');
     }
 }
