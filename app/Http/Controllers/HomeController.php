@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Periodical;
+use App\Models\Category;
 use App\Models\NewsUpdate;
 use App\Models\OrderCircular;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Models\Periodical;
 use App\Models\Section;
+use App\Models\SubCategory;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\Category;
-use App\Models\SubCategory;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        //want to show all distinct periodicals with latest periodical by status published(1) on home page in alphabetical order of periodical name
+        // want to show all distinct periodicals with latest periodical by status published(1) on home page in alphabetical order of periodical name
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
@@ -76,15 +76,14 @@ class HomeController extends Controller
             ->whereYear('date', Carbon::now()->year)
             ->where('status', '1')
             ->count();
+
         return view('home', compact('periodicals', 'newsupdates', 'goms', 'gort', 'gop', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount'));
     }
-
 
     public function updatesMore()
     {
         $newsupdates = NewsUpdate::where('status', '1')
             ->orderBy('date', 'desc')
-
 
             ->get();
         $periodicals = Periodical::with('periodicalMaster')
@@ -93,6 +92,7 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
+
         return view('newsupdates.viewmore', compact('newsupdates', 'periodicals'));
     }
 
@@ -136,6 +136,7 @@ class HomeController extends Controller
         $base = now()->startOfMonth();
         $months = collect(range(5, 0))->map(function ($i) use ($base) {
             $date = $base->copy()->subMonths($i);
+
             return [
                 'no' => $date->format('m'),
                 'year' => $date->format('Y'),
@@ -166,6 +167,7 @@ class HomeController extends Controller
             $orders = $orders->filter(function ($order) use ($month) {
                 return \Carbon\Carbon::parse($order->date)->format('m') == str_pad($month, 2, '0', STR_PAD_LEFT);
             });
+
             return DataTables::of($orders)
                 ->addIndexColumn()
                 ->addColumn('number', function ($order) {
@@ -183,17 +185,18 @@ class HomeController extends Controller
                     // return '-';
                     if ($order->type == 'G') {
                         if ($order->go_type == 'M') {
-                            return 'G.O.(Ms).No.' . $order->number ?: '-';
+                            return 'G.O.(Ms).No.'.$order->number ?: '-';
                         } elseif ($order->go_type == 'R') {
-                            return 'G.O.(Rt).No.' . $order->number ?: '-';
+                            return 'G.O.(Rt).No.'.$order->number ?: '-';
                         } elseif ($order->go_type == 'P') {
-                            return 'G.O.(P).No.' . $order->number ?: '-';
+                            return 'G.O.(P).No.'.$order->number ?: '-';
                         }
                     } elseif ($order->type == 'O') {
-                        return 'O.O.No.' . $order->number ?: '-';
+                        return 'O.O.No.'.$order->number ?: '-';
                     } elseif ($order->type == 'C') {
-                        return 'Cir.No.' . $order->number ?: '-';
+                        return 'Cir.No.'.$order->number ?: '-';
                     }
+
                     return '-';
                 })
                 ->addColumn('date', function ($order) {
@@ -223,19 +226,19 @@ class HomeController extends Controller
 
                     // Single PDF
                     if (count($files) === 1) {
-                        $url = asset('storage/' . $files[0]);
+                        $url = asset('storage/'.$files[0]);
 
                         return '
             <a href="#"
                data-bs-toggle="modal"
                data-bs-target="#pdfModal"
-               data-pdf="' . $url . '"
-               data-title="' . e($order->title) . '"
+               data-pdf="'.$url.'"
+               data-title="'.e($order->title).'"
                title="View">
                 <i class="fas fa-eye text-primary"></i>
             </a>
 
-            <a href="' . $url . '" target="_blank" class="ms-3" title="Open in New Tab">
+            <a href="'.$url.'" target="_blank" class="ms-3" title="Open in New Tab">
                 <i class="fas fa-external-link-alt text-success"></i>
             </a>
         ';
@@ -244,15 +247,15 @@ class HomeController extends Controller
                     // Multiple PDFs
                     $html = '';
                     foreach ($files as $i => $file) {
-                        $url = asset('storage/' . $file);
+                        $url = asset('storage/'.$file);
                         $html .= '
             <a href="#"
                class="badge bg-primary me-1"
                data-bs-toggle="modal"
                data-bs-target="#pdfModal"
-               data-pdf="' . $url . '"
-               data-title="' . e($order->title) . ' (Attachment ' . ($i + 1) . ')">
-               📎 ' . ($i + 1) . '
+               data-pdf="'.$url.'"
+               data-title="'.e($order->title).' (Attachment '.($i + 1).')">
+               📎 '.($i + 1).'
             </a>
         ';
                     }
@@ -269,6 +272,7 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
+
         return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals', 'hasPrintOrders'))
             ->with('orderTypeKey', $request->type);
     }
@@ -279,7 +283,7 @@ class HomeController extends Controller
         if ($request->has('anysearch')) {
             $search = $request->anysearch;
             // Get all table names from the database, excluding system tables
-            $tables = DB::select("SHOW TABLES");
+            $tables = DB::select('SHOW TABLES');
             $excludedTables = [
                 'cache',
                 'cache_locks',
@@ -291,7 +295,7 @@ class HomeController extends Controller
                 'sessions',
                 'users',
                 'periodical_masters',
-                'periodicals'
+                'periodicals',
             ];
 
             foreach ($tables as $table) {
@@ -318,6 +322,7 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
+
         return view('partials.search', compact('results', 'periodicals'));
     }
 
@@ -335,6 +340,7 @@ class HomeController extends Controller
         $categories = Category::get();
         $subcategories = SubCategory::get();
         $save_request = '';
+
         return view('orders-circular.upload_request', compact('periodicals', 'save_request', 'sections', 'categories', 'subcategories'));
     }
 
@@ -371,10 +377,12 @@ class HomeController extends Controller
             'keywords' => $request->keywords,
             'path' => [$filePath],
             'status' => 0,
-            'section_id' => $request->section
+            'section_id' => $request->section,
         ]);
+
         return redirect()->route('home.upload-request')->with('success', 'Your request has been saved successfully.');
     }
+
     public function advancedSearch(Request $request)
     {
         $orderResults = collect();
@@ -384,14 +392,16 @@ class HomeController extends Controller
         // \Log::info('Advanced Search Request Parameters:', $request->all());
 
         // Validate if month is selected but year is not
-        if ($request->filled('month') && !$request->filled('year')) {
+        if ($request->filled('month') && ! $request->filled('year')) {
             $error = 'Please select a Year while choosing a month.';
+
             return view('partials.advanced-search-results', compact('error'));
         }
 
         // Validate if to_date is provided without from_date
-        if ($request->filled('to_date') && !$request->filled('from_date')) {
+        if ($request->filled('to_date') && ! $request->filled('from_date')) {
             $error = 'Please select a From Date when choosing a To Date.';
+
             return view('partials.advanced-search-results', compact('error'));
         }
 
@@ -415,12 +425,18 @@ class HomeController extends Controller
 
             // Filter by Order Type
             if ($request->filled('order_type')) {
-                $query->where('type', $request->order_type);
+                if ($request->order_type == 'N') {
+                    $query = NewsUpdate::where('status', '1');
+                } else {
+
+                    $query->where('type', $request->order_type);
+                }
 
                 // Filter by GO Subtype (only for order_type = 'G')
                 if ($request->filled('go_type') && $request->order_type == 'G') {
                     $query->where('go_type', $request->go_type);
                 }
+
             }
 
             // Filter by Year
@@ -499,6 +515,7 @@ class HomeController extends Controller
             ->where('status', 0)
             ->orderBy('date', 'desc')
             ->get();
+
         return view('orders-circular.upload_request_pending', compact('order_pendings'));
     }
 }

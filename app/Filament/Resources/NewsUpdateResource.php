@@ -26,6 +26,10 @@ class NewsUpdateResource extends Resource
                     ->required()
                     ->rows(3)
                     ->columnSpanFull(),
+                Forms\Components\Textarea::make('keywords')
+                    ->nullable()
+                    ->label('Keywords (If Any)')
+                    ->rows(3),
                 Forms\Components\FileUpload::make('path')
                     // ->required()
                     ->acceptedFileTypes(['application/pdf'])
@@ -33,6 +37,7 @@ class NewsUpdateResource extends Resource
                     ->disk('public')
                     ->directory(function (callable $get) {
                         $year = $get('date') ? date('Y', strtotime($get('date'))) : date('Y');
+
                         return "uploads/news/{$year}";
                     })
                     ->openable()
@@ -93,12 +98,13 @@ class NewsUpdateResource extends Resource
                 Tables\Actions\Action::make('view')
                     ->label('')
                     ->icon('heroicon-s-eye')
-                    ->modalHeading(fn($record) => 'View News Update: ' . $record->title)
+                    ->modalHeading(fn ($record) => 'View News Update: '.$record->title)
                     ->modalContent(function ($record) {
                         $url = Storage::disk('public')->url($record->path);
+
                         return new \Illuminate\Support\HtmlString(
-                            '<div style="height: 80vh; padding: 1rem; overflow: auto;">' .
-                            view('filament.pdf-modal', ['url' => $url])->render() .
+                            '<div style="height: 80vh; padding: 1rem; overflow: auto;">'.
+                            view('filament.pdf-modal', ['url' => $url])->render().
                             '</div>'
                         );
                     })

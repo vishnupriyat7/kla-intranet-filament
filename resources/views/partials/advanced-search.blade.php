@@ -28,6 +28,8 @@
                                     </option>
                                     <option value="O" {{ request('order_type') == 'O' ? 'selected' : '' }}>Office Order
                                     </option>
+                                    <option value="N" {{ request('order_type') == 'N' ? 'selected' : '' }}>News
+                                    </option>
                                 </select>
                             </div>
                             <!-- GO Subtype Selection (Conditional) -->

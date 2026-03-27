@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 class NewsUpdate extends Model
@@ -18,8 +18,8 @@ class NewsUpdate extends Model
     protected $fillable = [
         'date',
         'title',
+        'keywords',
         'path',
-        'status'
+        'status',
     ];
-
 }

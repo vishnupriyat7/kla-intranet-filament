@@ -26,14 +26,13 @@
                 <div class="row">
                     <div class="col d-flex justify-content-end gap-2 flex-wrap">
                         {{-- <a href="{{ route('helpdesk.create') }}" class="btn btn-warning d-flex align-items-center"> --}}
-                        <a href="#" class="btn btn-warning d-flex align-items-center" data-bs-toggle="modal"
+                        <!-- <a href="#" class="btn btn-warning d-flex align-items-center" data-bs-toggle="modal"
                             data-bs-target="#helpdeskModal">
 
                             <i class="bi bi-tools me-1"></i>
                             IT Helpdesk
                             <span class="badge bg-danger ms-2">3</span>
-                        </a>
-                        </a>
+                        </a> -->
                         <a href="{{ route('home.advanced-search') }}" class="btn btn-info">
                             <i class="bi bi-search me-1"></i><span class="ms-2">Advanced Search</span>
                         </a>
@@ -539,7 +538,7 @@
                                     <!-- Attendance -->
                                     <div class="col-4 mb-4">
                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
-                                            href="http://172.24.18.28/attendance-app/" target="_blank">
+                                            href="http://172.24.18.28/" target="_blank">
                                             <i class="fas fa-user-check fa-2x mb-2"
                                                 style="color: rgb(60, 93, 240)"></i>
                                             <span>Attendance</span>
