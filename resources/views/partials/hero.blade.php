@@ -624,9 +624,9 @@
                                                 <i class="fas fa-phone me-2"></i>PA to MLAs
                                             </a>
                                             <a class="dropdown-item"
-                                                href="{{ asset('storage/uploads/contacts/Telephone Directory - 2024.pdf') }}"
+                                                href="{{ asset('storage/uploads/contacts/Telephone Directory.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                data-pdf="{{ asset('storage/uploads/contacts/Telephone Directory - 2024.pdf') }}"
+                                                data-pdf="{{ asset('storage/uploads/contacts/Telephone Directory.pdf') }}"
                                                 data-title="Telephone Directory">
                                                 <i class="fas fa-address-book me-2"></i> Telephone Directory
                                             </a>
