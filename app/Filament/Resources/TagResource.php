@@ -15,6 +15,11 @@ class TagResource extends Resource
 {
     protected static ?string $model = Tag::class;
     protected static ?string $navigationIcon = 'heroicon-o-tag';
+
+    public static function canViewAny(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Tags';
     protected static ?int $navigationSort = 4;

@@ -50,10 +50,11 @@ class UserResource extends Resource
                     ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
                     ->visible(fn(string $context): bool => $context === 'create')
                     ->maxLength(255),
-                Forms\Components\Select::make('roles')
+                Forms\Components\Select::make('role')
                     ->options([
                         'superadmin' => 'SuperAdmin',
                         'admin' => 'Admin',
+                        'chm' => 'CHM Technician',
                     ])
                     ->required(),
 
@@ -89,6 +90,7 @@ class UserResource extends Resource
                     ->options([
                         'superadmin' => 'SuperAdmin',
                         'admin' => 'Admin',
+                        'chm' => 'CHM Technician',
                     ])
                     ->multiple(),
             ])

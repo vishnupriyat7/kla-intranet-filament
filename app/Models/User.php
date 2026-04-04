@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -61,7 +61,7 @@ class User extends Authenticatable
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasAnyRole(['SuperAdmin', 'Admin']);
+        return in_array(strtolower($this->role ?? ''), ['superadmin', 'admin', 'chm']);
     }
     public function isSuperAdmin(): bool
     {

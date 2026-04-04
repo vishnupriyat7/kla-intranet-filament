@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Filament\Widgets;
+
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+use App\Models\HelpdeskTicket;
+use Illuminate\Support\HtmlString;
+
+class AssignedTicketsWidget extends BaseWidget
+{
+    public static function canView(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') === 'chm';
+    }
+
+    protected function getStats(): array
+    {
+        $userId = auth()->id();
+        
+        $myTickets = HelpdeskTicket::where('technician_id', $userId)
+            ->where('status', 'Assigned')
+            ->count();
+            
+        $openTickets = HelpdeskTicket::where('status', 'Open')->count();
+        
+        $doneTickets = HelpdeskTicket::where('status', 'Resolved')
+            ->where('technician_id', $userId)
+            ->count();
+
+        return [
+            Stat::make('My Assigned Tickets', $myTickets)
+                ->description(new HtmlString('<a href="' . url('/helpdesk/live-screen') . '" style="color: blue; text-decoration: underline;">Click here to process tickets</a>'))
+                ->color('success'),
+                
+            Stat::make('Total Open Tickets', $openTickets) // New tickets that need taking
+                ->description(new HtmlString('<a href="' . url('/helpdesk/live-screen') . '" style="color: blue; text-decoration: underline;">Go to Live Board</a>'))
+                ->color('warning'),
+                
+            Stat::make('My Done Tickets', $doneTickets) 
+                ->description(new HtmlString('<a href="' . url('/helpdesk/live-screen') . '" style="color: blue; text-decoration: underline;">View Done Tickets</a>'))
+                ->color('gray'),
+        ];
+    }
+}

@@ -60,6 +60,7 @@ class AdminPanelProvider extends PanelProvider
                 // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
                 \App\Filament\Resources\OrderCircularResource\Widgets\OrderStats::class, // Added OrderStats
+                \App\Filament\Widgets\AssignedTicketsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

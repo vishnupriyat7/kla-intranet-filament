@@ -57,4 +57,54 @@ class HelpdeskController extends Controller
 
         return back()->with('success', 'Ticket submitted successfully!');
     }
+    public function liveScreen()
+    {
+        return view('helpdesk.live');
+    }
+    public function liveData()
+    {
+        $tickets = HelpdeskTicket::with('technician')->latest()->get();
+
+        return response()->json($tickets);
+    }
+
+    public function takeTicket(Request $request, HelpdeskTicket $ticket)
+    {
+        if (!auth()->check()) {
+            return response()->json(['success' => false, 'message' => 'Unauthenticated.'], 401);
+        }
+
+        if (strtolower(auth()->user()->role ?? '') !== 'chm') {
+            return response()->json(['success' => false, 'message' => 'Unauthorized. Only CHM technicians can process tickets.']);
+        }
+
+        $ticket->update([
+            'technician_id' => auth()->id(),
+            'status' => 'Assigned',
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Ticket Assigned']);
+    }
+
+    public function resolveTicket(Request $request, HelpdeskTicket $ticket)
+    {
+        if (!auth()->check()) {
+            return response()->json(['success' => false, 'message' => 'Unauthenticated.'], 401);
+        }
+
+        if (strtolower(auth()->user()->role ?? '') !== 'chm') {
+            return response()->json(['success' => false, 'message' => 'Unauthorized. Only CHM technicians can process tickets.']);
+        }
+
+        if ($ticket->technician_id !== auth()->id()) {
+            return response()->json(['success' => false, 'message' => 'You are not assigned to this ticket.']);
+        }
+
+        $ticket->update([
+            'status' => 'Resolved',
+            'remarks' => $request->input('remarks'),
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Ticket Resolved successfully']);
+    }
 }

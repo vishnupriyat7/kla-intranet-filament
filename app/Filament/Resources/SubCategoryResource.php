@@ -19,6 +19,11 @@ class SubCategoryResource extends Resource
 {
     protected static ?string $model = SubCategory::class;
     protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
+
+    public static function canViewAny(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Sub-Category';
     protected static ?int $navigationSort = 3;

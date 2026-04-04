@@ -19,6 +19,11 @@ class SectionResource extends Resource
 {
     protected static ?string $model = Section::class;
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+
+    public static function canViewAny(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Sections';
     protected static ?int $navigationSort = 1;

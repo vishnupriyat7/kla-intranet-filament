@@ -17,6 +17,11 @@ class RetiredStaffResource extends Resource
     protected static ?string $model = RetiredStaff::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    public static function canViewAny(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
     protected static ?string $navigationLabel = 'Retired Staff';
 
     public static function form(Form $form): Form

@@ -16,7 +16,14 @@ class HelpdeskTicket extends Model
         'complaint_type',
         'description',
         'status',
+        'technician_id',
+        'remarks',
     ];
+
+    public function technician()
+    {
+        return $this->belongsTo(User::class, 'technician_id');
+    }
 
     protected static function boot()
     {

@@ -17,6 +17,11 @@ class NewsUpdateResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-bell';
 
+    public static function canViewAny(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

@@ -20,6 +20,11 @@ class PeriodicalResource extends Resource
     protected static ?string $model = Periodical::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+
+    public static function canViewAny(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
     protected static ?string $navigationGroup = 'Periodical Management';
 
 

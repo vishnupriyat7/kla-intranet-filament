@@ -12,6 +12,10 @@ use Illuminate\Support\HtmlString;
 
 class OrderStats extends BaseWidget
 {
+    public static function canView(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
     protected function getStats(): array
     {
         $currentYear = now()->year;

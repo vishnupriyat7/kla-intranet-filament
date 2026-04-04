@@ -16,6 +16,11 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
+
+    public static function canViewAny(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Category';
     protected static ?int $navigationSort = 2;

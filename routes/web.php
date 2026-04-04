@@ -35,6 +35,11 @@ Route::get('/get-floors/{location}', [HelpdeskController::class, 'getFloors']);
 Route::get('/get-rooms/{location}/{floor}', [HelpdeskController::class, 'getRooms']);
 //IT Helpdesk store
 Route::post('/helpdesk/store', [HelpdeskController::class, 'store'])->name('helpdesk.store');
+//Live screen
+Route::get('/helpdesk/live-screen', [HelpdeskController::class, 'liveScreen']);
+Route::get('/helpdesk/live-data', [HelpdeskController::class, 'liveData']);
+Route::post('/helpdesk/take-ticket/{ticket}', [HelpdeskController::class, 'takeTicket']);
+Route::post('/helpdesk/resolve-ticket/{ticket}', [HelpdeskController::class, 'resolveTicket']);
 
 
 Route::get('/dashboard', function () {
