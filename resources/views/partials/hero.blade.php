@@ -1,5 +1,13 @@
 <!-- Hero Section Start -->
 <div class="container-fluid hero py-5 position-relative">
+    @if(session('success'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        });
+    </script>
+    @endif
     <!-- <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div> -->
 
     @php
@@ -834,21 +842,31 @@
         </div>
     </div>
 </div>
-<!-- IT Helpdesk Modal -->
-@if(session('success'))
-<div class="container mt-3">
-    <div class="alert alert-success alert-dismissible fade show shadow-sm border-start border-success border-5" role="alert">
-        <div class="d-flex align-items-center">
-            <i class="bi bi-check-circle-fill fs-4 me-3 text-success"></i>
-            <div>
-                <h6 class="mb-0 fw-bold">Ticket Submitted Successfully!</h6>
-                <span>{{ session('success') }}</span>
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-body text-center p-5">
+                <div class="mb-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+                </div>
+                <h3 class="fw-bold mb-3">Complaint Submission Successful!</h3>
+                <p class="text-muted fs-5 mb-3">
+                    {{ session('success') }}
+                </p>
+                <p class="mb-4 text-secondary">
+                    You can monitor the progress of your complaint in real-time by selecting <strong>Complaint
+                        Status</strong> from the IT Helpdesk menu.
+                </p>
+                <button type="button" class="btn btn-success px-5 py-2 fw-bold" data-bs-dismiss="modal">
+                    Great, Got it!
+                </button>
             </div>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </div>
-@endif
+
+<!-- IT Helpdesk Modal -->
 <div class="modal fade" id="helpdeskModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -927,8 +945,10 @@
 
                             <div class="col-md-12">
                                 <label class="form-label">Issue Description <span class="text-danger">*</span></label>
-                                <textarea class="form-control" name="description" id="helpdeskDescription" rows="3"></textarea>
-                                <div class="invalid-feedback d-none" id="err-description">Please describe the issue.</div>
+                                <textarea class="form-control" name="description" id="helpdeskDescription"
+                                    rows="3"></textarea>
+                                <div class="invalid-feedback d-none" id="err-description">Please describe the issue.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -936,7 +956,8 @@
                     <!-- Preview Content (Hidden by default) -->
                     <div id="helpdeskPreviewContent" class="d-none">
                         <div class="alert alert-info py-2">
-                            <i class="bi bi-info-circle me-2"></i> Please review your ticket details before final submission.
+                            <i class="bi bi-info-circle me-2"></i> Please review your ticket details before final
+                            submission.
                         </div>
                         <table class="table table-bordered bg-light">
                             <tr>
@@ -1016,8 +1037,9 @@
         });
 
         $('#employeeSelect').select2({
-            placeholder: "🔍 Search Employee...",
+            placeholder: "🔍 Search or Type Name...",
             allowClear: true,
+            tags: true,
             dropdownParent: $('#helpdeskModal'),
             theme: 'bootstrap-5',
             width: '100%',
@@ -1145,12 +1167,12 @@
         function populatePreview() {
             $('#p-section').text($('#sectionSelect').val());
             $('#p-employee').text($('#employeeSelect').find(':selected').text() || 'Not Specified');
-            
+
             let building = $('#buildingSelect').find(':selected').text();
             let floor = $('#floorSelect').val();
             let room = $('#roomSelect').find(':selected').text();
             $('#p-location').text(`${building}, Floor: ${floor}, Room: ${room}`);
-            
+
             $('#p-type').text($('select[name="complaint_type"]').val());
             $('#p-description').text($('#helpdeskDescription').val());
         }

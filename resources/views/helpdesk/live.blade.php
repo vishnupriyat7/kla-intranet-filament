@@ -5,12 +5,14 @@
     /* WhatsApp UI Styles */
     .whatsapp-container {
         display: flex;
-        height: calc(100vh - 100px); /* Adjust based on navbar height */
+        height: calc(100vh - 100px);
+        /* Adjust based on navbar height */
         background-color: #f0f2f5;
         border: 1px solid #d1d7db;
         border-radius: 8px;
         overflow: hidden;
     }
+
     .chat-sidebar {
         width: 35%;
         background-color: #ffffff;
@@ -18,6 +20,7 @@
         display: flex;
         flex-direction: column;
     }
+
     .chat-header {
         background-color: #f0f2f5;
         padding: 10px 16px;
@@ -25,12 +28,15 @@
         align-items: center;
         border-bottom: 1px solid #d1d7db;
     }
+
     .chat-search {
         padding: 8px 12px;
         background-color: #ffffff;
         border-bottom: 1px solid #d1d7db;
     }
-    .chat-search input, .chat-search select {
+
+    .chat-search input,
+    .chat-search select {
         width: 100%;
         border-radius: 8px;
         border: none;
@@ -39,11 +45,13 @@
         outline: none;
         margin-bottom: 8px;
     }
+
     .chat-tabs {
         display: flex;
         background-color: #ffffff;
         border-bottom: 1px solid #d1d7db;
     }
+
     .chat-tab {
         flex: 1;
         text-align: center;
@@ -54,15 +62,18 @@
         border-bottom: 3px solid transparent;
         transition: all 0.2s;
     }
+
     .chat-tab.active {
         color: #00a884;
         border-bottom: 3px solid #00a884;
     }
+
     .chat-list {
         flex: 1;
         overflow-y: auto;
         background-color: #ffffff;
     }
+
     .chat-item {
         display: flex;
         padding: 12px 16px;
@@ -70,12 +81,15 @@
         cursor: pointer;
         transition: background-color 0.2s;
     }
+
     .chat-item:hover {
         background-color: #f5f6f6;
     }
+
     .chat-item.active {
         background-color: #f0f2f5;
     }
+
     .chat-avatar {
         width: 48px;
         height: 48px;
@@ -88,15 +102,18 @@
         font-weight: bold;
         color: #fff;
     }
+
     .chat-info {
         flex: 1;
         overflow: hidden;
     }
+
     .chat-title {
         display: flex;
         justify-content: space-between;
         margin-bottom: 4px;
     }
+
     .chat-name {
         font-weight: 500;
         color: #111b21;
@@ -104,10 +121,12 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
     .chat-time {
         font-size: 12px;
         color: #667781;
     }
+
     .chat-message {
         font-size: 13px;
         color: #667781;
@@ -115,7 +134,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    
+
     .chat-main {
         width: 65%;
         display: flex;
@@ -123,6 +142,7 @@
         background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
         background-color: #efeae2;
     }
+
     .chat-main-header {
         background-color: #f0f2f5;
         padding: 10px 16px;
@@ -130,6 +150,7 @@
         align-items: center;
         border-bottom: 1px solid #d1d7db;
     }
+
     .chat-main-body {
         flex: 1;
         overflow-y: auto;
@@ -137,37 +158,44 @@
         display: flex;
         flex-direction: column;
     }
+
     .message-bubble {
         background-color: #ffffff;
         padding: 12px 16px;
         border-radius: 8px;
         margin-bottom: 12px;
         max-width: 80%;
-        box-shadow: 0 1px 0.5px rgba(11,20,26,.13);
+        box-shadow: 0 1px 0.5px rgba(11, 20, 26, .13);
         align-self: flex-start;
     }
+
     .message-info {
         font-size: 11px;
         color: #667781;
         text-align: right;
         margin-top: 4px;
     }
+
     .ticket-details table {
         width: 100%;
         font-size: 14px;
     }
+
     .ticket-details td {
         padding: 4px 0;
     }
+
     .ticket-details .lbl {
         color: #667781;
         width: 120px;
     }
+
     .action-footer {
         background-color: #f0f2f5;
         padding: 12px 16px;
         text-align: center;
     }
+
     .empty-state {
         display: flex;
         flex-direction: column;
@@ -181,24 +209,28 @@
 
 <div class="container-fluid px-3 mt-3 mb-4">
     <div class="whatsapp-container">
-        
+
         <!-- Left Sidebar: Ticket List -->
         <div class="chat-sidebar">
             <div class="chat-header">
                 <strong>🛠️ IT Helpdesk Live</strong>
             </div>
-            
+
             <div class="chat-tabs">
                 <div class="chat-tab active" data-tab="Open" onclick="setTab('Open')">Open</div>
                 <div class="chat-tab" data-tab="Assigned" onclick="setTab('Assigned')">Assigned</div>
-                <div class="chat-tab" data-tab="Resolved" onclick="setTab('Resolved')">Done</div>
+                <div class="chat-tab" data-tab="Resolved" onclick="setTab('Resolved')">Resolved</div>
             </div>
 
             <div class="chat-search">
-                <input type="text" id="filterSearch" placeholder="Search ticket no..." oninput="renderTickets()">
                 <div class="row g-2">
                     <div class="col-6">
-                        <input type="text" id="filterSection" placeholder="Filter Section..." oninput="renderTickets()">
+                        <input type="text" id="filterSearch" placeholder="Search ticket no..." oninput="renderTickets()"
+                            class="mb-0">
+                    </div>
+                    <div class="col-6">
+                        <input type="text" id="filterSection" placeholder="Filter Section..." oninput="renderTickets()"
+                            class="mb-0">
                     </div>
                 </div>
             </div>
@@ -212,7 +244,7 @@
         <div class="chat-main" id="ticketDetailPane">
             <div class="empty-state">
                 <i class="bi bi-tools" style="font-size: 4rem; color: #aebac1; margin-bottom: 20px;"></i>
-                <h4>WhatsApp Web for Helpdesk</h4>
+                <h4>IT Helpdesk</h4>
                 <p>Select a ticket from the left to view details.</p>
             </div>
         </div>
@@ -224,6 +256,21 @@
     let allTickets = [];
     let currentTab = 'Open';
     let selectedTicketId = null;
+    const currentUserId = {{ auth() -> id() ?? 'null' }};
+    const canTakeTicket = {{ auth() -> check() && in_array(strtolower(auth() -> user() -> role ?? ''), ['chm', 'programmer', 'admin', 'superadmin']) ? 'true' : 'false' }};
+
+    let employeeMap = {};
+
+    function loadEmployees() {
+        return fetch('/employees/list')
+            .then(res => res.json())
+            .then(data => {
+                data.forEach(emp => {
+                    employeeMap[emp.attendanceId] = emp.name;
+                });
+            })
+            .catch(err => console.error('Error loading employees:', err));
+    }
 
     function loadTickets() {
         fetch('/helpdesk/live-data')
@@ -231,11 +278,11 @@
             .then(data => {
                 allTickets = data;
                 renderTickets();
-                
-                // If a ticket is currently selected, re-render its details (to reflect status/assignee changes)
-                if(selectedTicketId) {
+
+                // If a ticket is currently selected, re-render its details
+                if (selectedTicketId) {
                     const updatedTicket = allTickets.find(t => t.id === selectedTicketId);
-                    if(updatedTicket) {
+                    if (updatedTicket) {
                         renderTicketDetails(updatedTicket);
                     } else {
                         selectedTicketId = null;
@@ -246,11 +293,16 @@
             .catch(err => console.error('Error fetching tickets:', err));
     }
 
+    function getEmployeeName(id) {
+        if (!id) return 'Unknown';
+        return employeeMap[id] || id; // Return name if in map, otherwise return the ID itself (covers manually typed names)
+    }
+
     function setTab(tabName) {
         currentTab = tabName;
         document.querySelectorAll('.chat-tab').forEach(el => {
             el.classList.remove('active');
-            if(el.getAttribute('data-tab') === tabName) {
+            if (el.getAttribute('data-tab') === tabName) {
                 el.classList.add('active');
             }
         });
@@ -270,25 +322,25 @@
     function renderTickets() {
         const search = document.getElementById('filterSearch').value.toLowerCase();
         const section = document.getElementById('filterSection').value.toLowerCase();
-        
+
         let filtered = allTickets.filter(t => {
             // Check status array (Done tab can include Resolved and Closed or others)
             let statusMatch = false;
-            if(currentTab === 'Open') statusMatch = t.status === 'Open';
-            if(currentTab === 'Assigned') statusMatch = ['Assigned', 'In Progress'].includes(t.status);
-            if(currentTab === 'Resolved') statusMatch = ['Resolved', 'Closed'].includes(t.status);
-            if(currentTab === 'All') statusMatch = true;
+            if (currentTab === 'Open') statusMatch = t.status === 'Open';
+            if (currentTab === 'Assigned') statusMatch = ['Assigned', 'In Progress'].includes(t.status);
+            if (currentTab === 'Resolved') statusMatch = ['Resolved', 'Closed'].includes(t.status);
+            if (currentTab === 'All') statusMatch = true;
 
-            let searchMatch = String(t.ticket_no || '').toLowerCase().includes(search) || 
-                              String(t.employee_id || '').toLowerCase().includes(search);
-            
+            let searchMatch = String(t.ticket_no || '').toLowerCase().includes(search) ||
+                String(t.employee_id || '').toLowerCase().includes(search);
+
             let sectionMatch = String(t.section || '').toLowerCase().includes(section);
 
             return statusMatch && searchMatch && sectionMatch;
         });
 
         let html = '';
-        if(filtered.length === 0) {
+        if (filtered.length === 0) {
             html = `<div class="p-4 text-center text-muted">No tickets found in ${currentTab}.</div>`;
         }
 
@@ -304,7 +356,7 @@
                 // First letter for avatar
                 let sectionStr = String(t.section || 'T');
                 let letter = sectionStr.length > 0 ? sectionStr.charAt(0).toUpperCase() : 'T';
-                
+
                 let isActive = selectedTicketId === t.id ? 'active' : '';
 
                 // Format date lightly
@@ -336,21 +388,21 @@
     function selectTicket(id) {
         selectedTicketId = id;
         renderTickets(); // Re-render to show active state on left side
-        
+
         const t = allTickets.find(t => t.id === id);
-        if(!t) return;
+        if (!t) return;
         renderTicketDetails(t);
     }
 
     function renderTicketDetails(t) {
         let techName = t.technician ? t.technician.name : 'Unassigned';
-        
+
         let headerHtml = `
             <div class="chat-main-header">
                 <div class="chat-avatar" style="background-color: #00a884; margin-right: 15px;">#</div>
                 <div>
                     <h6 class="mb-0">${t.ticket_no} <span class="badge bg-secondary ms-2">${t.status}</span></h6>
-                    <small class="text-muted">Requested by ${t.employee_id || 'Unknown'}</small>
+                    <small class="text-muted">Requested by ${getEmployeeName(t.employee_id)}</small>
                 </div>
             </div>
         `;
@@ -362,7 +414,7 @@
                     <div class="ticket-details mt-2">
                         <table>
                             <tr><td class="lbl">Section</td><td>${t.section || '-'}</td></tr>
-                            <tr><td class="lbl">Location/Room</td><td>${t.office_location_id || '-'} / ${t.floor || '-'} / ${t.room_id || '-'}</td></tr>
+                            <tr><td class="lbl">Location/Room</td><td>${(t.location ? t.location.location : t.office_location_id) || '-'} / ${t.floor || '-'} / ${(t.room ? t.room.name : t.room_id) || '-'}</td></tr>
                             <tr><td class="lbl">Type</td><td>${t.complaint_type || '-'}</td></tr>
                             <tr><td class="lbl">Description</td><td>${t.description || '-'}</td></tr>
                         </table>
@@ -383,7 +435,7 @@
         `;
 
         let footerHtml = '';
-        if(t.status === 'Open') {
+        if (t.status === 'Open' && canTakeTicket) {
             footerHtml = `
                 <div class="action-footer">
                     <button class="btn btn-success px-4" onclick="takeTicket(${t.id})">
@@ -391,22 +443,22 @@
                     </button>
                 </div>
             `;
-        } else if (t.status === 'Assigned' && t.technician_id === {{ auth()->id() ?? 'null' }}) {
+        } else if (t.status === 'Assigned' && String(t.technician_id) === String(currentUserId)) {
             footerHtml = `
-                <div class="action-footer">
-                    <button class="btn btn-primary px-4" onclick="resolveTicket(${t.id})">
-                        ✅ Mark as Resolved
-                    </button>
-                </div>
-            `;
+                    <div class="action-footer">
+                        <button class="btn btn-primary px-4" onclick="resolveTicket(${t.id})">
+                            ✅ Mark as Resolved
+                        </button>
+                    </div>
+                `;
         }
 
         document.getElementById('ticketDetailPane').innerHTML = headerHtml + bodyHtml + footerHtml;
     }
 
     function takeTicket(id) {
-        if(!confirm("Are you sure you want to take this ticket?")) return;
-        
+        if (!confirm("Are you sure you want to take this ticket?")) return;
+
         fetch(`/helpdesk/take-ticket/${id}`, {
             method: 'POST',
             headers: {
@@ -414,26 +466,26 @@
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : ''
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success) {
-                // Immediately refresh data
-                loadTickets();
-                alert(data.message);
-            } else {
-                alert(data.message || "Failed to assign ticket.");
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Error occurring while assigning ticket.");
-        });
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Immediately refresh data
+                    loadTickets();
+                    alert(data.message);
+                } else {
+                    alert(data.message || "Failed to assign ticket.");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Error occurring while assigning ticket.");
+            });
     }
 
     function resolveTicket(id) {
         let remarks = prompt("Enter resolution remarks (optional):");
-        if(remarks === null) return; // Cancelled
-        
+        if (remarks === null) return; // Cancelled
+
         fetch(`/helpdesk/resolve-ticket/${id}`, {
             method: 'POST',
             headers: {
@@ -442,24 +494,25 @@
             },
             body: JSON.stringify({ remarks: remarks })
         })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success) {
-                loadTickets();
-                alert(data.message);
-            } else {
-                alert(data.message || "Failed to resolve ticket.");
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Error occurring while resolving ticket.");
-        });
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    loadTickets();
+                    alert(data.message);
+                } else {
+                    alert(data.message || "Failed to resolve ticket.");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Error occurring while resolving ticket.");
+            });
     }
 
     // Interval to refresh automatically
     setInterval(loadTickets, 5000);
     // Initial fetch
-    loadTickets();
+    loadEmployees(); // Load employees in parallel
+    loadTickets();   // Load tickets immediately
 </script>
 @endsection

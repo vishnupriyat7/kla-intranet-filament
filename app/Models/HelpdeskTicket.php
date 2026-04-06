@@ -23,7 +23,17 @@ class HelpdeskTicket extends Model
 
     public function technician()
     {
-        return $this->belongsTo(User::class, 'technician_id');
+        return $this->belongsTo(User::class , 'technician_id');
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(OfficeLocation::class , 'office_location_id');
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class , 'room_id');
     }
 
     protected static function boot()
@@ -32,12 +42,13 @@ class HelpdeskTicket extends Model
 
         static::creating(function ($ticket) {
             DB::transaction(function () use ($ticket) {
-                $today = now()->format('dmy');
-                $count = static::whereDate('created_at', today())
-                    ->lockForUpdate()
-                    ->count() + 1;
-                $ticket->ticket_no = 'IT-' . $today . '-' . $count;
+                    $today = now()->format('Ymd');
+                    $count = static::whereDate('created_at', today())
+                        ->lockForUpdate()
+                        ->count() + 1;
+                    $ticket->ticket_no = 'IT-' . $today . '-' . $count;
+                }
+                );
             });
-        });
     }
 }

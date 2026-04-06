@@ -63,7 +63,7 @@ class HelpdeskController extends Controller
     }
     public function liveData()
     {
-        $tickets = HelpdeskTicket::with('technician')->latest()->get();
+        $tickets = HelpdeskTicket::with(['technician', 'location', 'room'])->latest()->get();
 
         return response()->json($tickets);
     }
