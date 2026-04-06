@@ -25,16 +25,32 @@
             <div class="row g-4">
                 <div class="row">
                     <div class="col d-flex justify-content-end gap-2 flex-wrap">
-                        {{-- <a href="{{ route('helpdesk.create') }}" class="btn btn-warning d-flex align-items-center">
-                            --}}
-                            <a href="#" class="btn btn-warning d-flex align-items-center" data-bs-toggle="modal"
-                                data-bs-target="#helpdeskModal">
-
+                        <div class="dropdown">
+                            <button class="btn btn-warning d-flex align-items-center dropdown-toggle" type="button"
+                                id="helpdeskDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-tools me-1"></i>
                                 IT Helpdesk
-                                <span class="badge bg-danger ms-2">3</span>
-                            </a>
-                        </a>
+                                <span class="badge bg-danger ms-2">{{ \App\Models\HelpdeskTicket::where('status',
+                                    'Open')->count() }}</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="helpdeskDropdown">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#helpdeskModal">
+                                        <i class="bi bi-plus-circle me-2"></i> Raise Ticket
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="/helpdesk/live-screen"
+                                        target="_blank">
+                                        <i class="bi bi-display me-2 text-primary"></i> Complaint Status
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                         <a href="{{ route('home.advanced-search') }}" class="btn btn-info">
                             <i class="bi bi-search me-1"></i><span class="ms-2">Advanced Search</span>
                         </a>
@@ -820,8 +836,17 @@
 </div>
 <!-- IT Helpdesk Modal -->
 @if(session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
+<div class="container mt-3">
+    <div class="alert alert-success alert-dismissible fade show shadow-sm border-start border-success border-5" role="alert">
+        <div class="d-flex align-items-center">
+            <i class="bi bi-check-circle-fill fs-4 me-3 text-success"></i>
+            <div>
+                <h6 class="mb-0 fw-bold">Ticket Submitted Successfully!</h6>
+                <span>{{ session('success') }}</span>
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 </div>
 @endif
 <div class="modal fade" id="helpdeskModal" tabindex="-1">
@@ -840,79 +865,114 @@
                 @csrf
 
                 <div class="modal-body">
+                    <!-- Form Content -->
+                    <div id="helpdeskFormContent">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Section <span class="text-danger">*</span></label>
+                                <select class="form-select" name="section" id="sectionSelect" style="width: 100%">
+                                    <option value="">Select Section..</option>
+                                </select>
+                                <div class="invalid-feedback d-none" id="err-section">Please select a section.</div>
+                            </div>
 
-                    <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Employee</label>
+                                <select class="form-select" name="employee_id" id="employeeSelect" style="width: 100%">
+                                    <option value="">Select Employee..</option>
+                                </select>
+                                <div class="invalid-feedback d-none" id="err-employee">Please select an employee.</div>
+                            </div>
 
-                        <div class="col-md-6">
-                            <label class="form-label">Employee <span class="text-danger">*</span></label>
-                            <select class="form-select" name="employee_id" id="employeeSelect" style="width: 100%">
-                                <option value="">Select Employee..</option>
-                            </select>
-                            <div class="invalid-feedback d-none" id="err-employee">Please select an employee.</div>
+                            <div class="col-md-4">
+                                <label class="form-label">Building <span class="text-danger">*</span></label>
+                                <select class="form-select" id="buildingSelect" name="office_location_id">
+                                    <option value="">Select Building</option>
+                                    @foreach ($locations as $loc)
+                                    <option value="{{ $loc->id }}">{{ $loc->location }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback d-none" id="err-building">Please select a building.</div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Floor <span class="text-danger">*</span></label>
+                                <select class="form-select" id="floorSelect" name="floor">
+                                    <option value="">Select Floor</option>
+                                </select>
+                                <div class="invalid-feedback d-none" id="err-floor">Please select a floor.</div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Room <span class="text-danger">*</span></label>
+                                <select class="form-select" id="roomSelect" name="room_id">
+                                    <option value="">Select Room</option>
+                                </select>
+                                <div class="invalid-feedback d-none" id="err-room">Please select a room.</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Complaint Type <span class="text-danger">*</span></label>
+                                <select class="form-select" name="complaint_type">
+                                    <option value="">Select Type</option>
+                                    <option>Hardware</option>
+                                    <option>Software</option>
+                                    <option>Network</option>
+                                    <option>Printer</option>
+                                    <option>Email</option>
+                                </select>
+                                <div class="invalid-feedback d-none" id="err-complaint">Please select a complaint type.
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Issue Description <span class="text-danger">*</span></label>
+                                <textarea class="form-control" name="description" id="helpdeskDescription" rows="3"></textarea>
+                                <div class="invalid-feedback d-none" id="err-description">Please describe the issue.</div>
+                            </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Section <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="section" id="employeeSection" readonly>
-                            <div class="invalid-feedback d-none" id="err-section">Section could not be determined. Please re-select the employee.</div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Building <span class="text-danger">*</span></label>
-                            <select class="form-select" id="buildingSelect" name="office_location_id">
-                                <option value="">Select Building</option>
-                                @foreach ($locations as $loc)
-                                <option value="{{ $loc->id }}">{{ $loc->location }}</option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback d-none" id="err-building">Please select a building.</div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Floor <span class="text-danger">*</span></label>
-                            <select class="form-select" id="floorSelect" name="floor">
-                                <option value="">Select Floor</option>
-                            </select>
-                            <div class="invalid-feedback d-none" id="err-floor">Please select a floor.</div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Room <span class="text-danger">*</span></label>
-                            <select class="form-select" id="roomSelect" name="room_id">
-                                <option value="">Select Room</option>
-                            </select>
-                            <div class="invalid-feedback d-none" id="err-room">Please select a room.</div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Complaint Type <span class="text-danger">*</span></label>
-                            <select class="form-select" name="complaint_type">
-                                <option value="">Select Type</option>
-                                <option>Hardware</option>
-                                <option>Software</option>
-                                <option>Network</option>
-                                <option>Printer</option>
-                                <option>Email</option>
-                            </select>
-                            <div class="invalid-feedback d-none" id="err-complaint">Please select a complaint type.</div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label class="form-label">Issue Description <span class="text-danger">*</span></label>
-                            <textarea class="form-control" name="description" id="helpdeskDescription" rows="3"></textarea>
-                            <div class="invalid-feedback d-none" id="err-description">Please describe the issue.</div>
-                        </div>
-
                     </div>
 
+                    <!-- Preview Content (Hidden by default) -->
+                    <div id="helpdeskPreviewContent" class="d-none">
+                        <div class="alert alert-info py-2">
+                            <i class="bi bi-info-circle me-2"></i> Please review your ticket details before final submission.
+                        </div>
+                        <table class="table table-bordered bg-light">
+                            <tr>
+                                <th width="35%" class="bg-light">Section</th>
+                                <td id="p-section"></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Employee</th>
+                                <td id="p-employee"></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Location</th>
+                                <td id="p-location"></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Complaint Type</th>
+                                <td id="p-type"></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Description</th>
+                                <td id="p-description"></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
-
-                    <button type="submit" class="btn btn-success">
-                        Submit Ticket
+                    <button type="button" class="btn btn-secondary d-none" id="btnBack">
+                        <i class="bi bi-arrow-left"></i> Back
                     </button>
-
+                    <button type="button" class="btn btn-primary" id="btnPreview">
+                        Next: Preview <i class="bi bi-eye"></i>
+                    </button>
+                    <button type="submit" class="btn btn-success d-none" id="btnConfirm">
+                        Confirm & Submit <i class="bi bi-check-circle"></i>
+                    </button>
                 </div>
 
             </form>
@@ -947,6 +1007,14 @@
 
         console.log("jQuery Loaded:", typeof $);
 
+        $('#sectionSelect').select2({
+            placeholder: "🔍 Search Section...",
+            allowClear: true,
+            dropdownParent: $('#helpdeskModal'),
+            theme: 'bootstrap-5',
+            width: '100%',
+        });
+
         $('#employeeSelect').select2({
             placeholder: "🔍 Search Employee...",
             allowClear: true,
@@ -972,32 +1040,43 @@
             width: '100%',
         });
 
+        let allEmployees = [];
+
         fetch("/employees/list")
             .then(res => res.json())
             .then(data => {
+                allEmployees = data;
+                let sectionSelect = $('#sectionSelect');
+                let sections = [...new Set(data.filter(emp => emp.section).map(emp => emp.section))].sort();
 
-                let select = $('#employeeSelect');
+                sections.forEach(section => {
+                    sectionSelect.append(new Option(section, section, false, false));
+                });
 
-                data.forEach(emp => {
+                sectionSelect.trigger('change');
+            })
+            .catch(err => console.error('Failed to load employee list:', err));
+
+        $('#sectionSelect').on('change', function () {
+            let section = $(this).val();
+            let employeeSelect = $('#employeeSelect');
+
+            employeeSelect.html('<option value="">Select Employee..</option>');
+
+            if (section) {
+                let filteredEmployees = allEmployees.filter(emp => emp.section === section);
+                filteredEmployees.forEach(emp => {
                     let option = new Option(
                         emp.name + " (" + emp.pen + ")",
                         emp.pen,
                         false,
                         false
                     );
-
-                    $(option).attr('data-section', emp.section);
-
-                    select.append(option);
+                    employeeSelect.append(option);
                 });
+            }
 
-                select.trigger('change');
-            })
-            .catch(err => console.error('Failed to load employee list:', err));
-
-        $('#employeeSelect').on('change', function () {
-            let section = $(this).find(':selected').data('section') || '';
-            $('#employeeSection').val(section);
+            employeeSelect.trigger('change');
         });
 
         // Building → Floors
@@ -1045,9 +1124,38 @@
             }
         });
 
-        // Helpdesk form validation
-        $('#helpdeskForm').on('submit', function (e) {
+        // Multi-step form logic
+        $('#btnPreview').on('click', function () {
+            if (validateForm()) {
+                populatePreview();
+                $('#helpdeskFormContent').addClass('d-none');
+                $('#helpdeskPreviewContent').removeClass('d-none');
+                $('#btnPreview').addClass('d-none');
+                $('#btnBack, #btnConfirm').removeClass('d-none');
+            }
+        });
 
+        $('#btnBack').on('click', function () {
+            $('#helpdeskPreviewContent').addClass('d-none');
+            $('#helpdeskFormContent').removeClass('d-none');
+            $('#btnBack, #btnConfirm').addClass('d-none');
+            $('#btnPreview').removeClass('d-none');
+        });
+
+        function populatePreview() {
+            $('#p-section').text($('#sectionSelect').val());
+            $('#p-employee').text($('#employeeSelect').find(':selected').text() || 'Not Specified');
+            
+            let building = $('#buildingSelect').find(':selected').text();
+            let floor = $('#floorSelect').val();
+            let room = $('#roomSelect').find(':selected').text();
+            $('#p-location').text(`${building}, Floor: ${floor}, Room: ${room}`);
+            
+            $('#p-type').text($('select[name="complaint_type"]').val());
+            $('#p-description').text($('#helpdeskDescription').val());
+        }
+
+        function validateForm() {
             let valid = true;
 
             function showError(errId, selectId) {
@@ -1064,20 +1172,12 @@
                 }
             }
 
-            // Employee
-            if (!$('#employeeSelect').val()) {
-                showError('err-employee', 'employeeSelect');
+            // Section
+            if (!$('#sectionSelect').val()) {
+                showError('err-section', 'sectionSelect');
                 valid = false;
             } else {
-                clearError('err-employee', 'employeeSelect');
-            }
-
-            // Section (auto-filled, but guard against empty)
-            if (!$('#employeeSection').val().trim()) {
-                $('#err-section').removeClass('d-none');
-                valid = false;
-            } else {
-                $('#err-section').addClass('d-none');
+                clearError('err-section', 'sectionSelect');
             }
 
             // Building
@@ -1124,14 +1224,21 @@
                 $('#helpdeskDescription').removeClass('is-invalid');
             }
 
-            if (!valid) {
+            return valid;
+        }
+
+        // Handle final form submission
+        $('#helpdeskForm').on('submit', function (e) {
+            // Already validated by btnPreview, just ensure we are in preview mode
+            if ($('#helpdeskPreviewContent').hasClass('d-none')) {
                 e.preventDefault();
+                $('#btnPreview').trigger('click');
             }
         });
 
         // Clear errors on change
-        $('#employeeSelect').on('change', function () {
-            if ($(this).val()) $('#err-employee').addClass('d-none');
+        $('#sectionSelect').on('change', function () {
+            if ($(this).val()) $('#err-section').addClass('d-none');
         });
         $('#buildingSelect').on('change', function () {
             if ($(this).val()) $('#err-building').addClass('d-none');
@@ -1141,6 +1248,12 @@
         });
         $('#roomSelect').on('change', function () {
             if ($(this).val()) $('#err-room').addClass('d-none');
+        });
+        $('select[name="complaint_type"]').on('change', function () {
+            if ($(this).val()) {
+                $(this).removeClass('is-invalid');
+                $('#err-complaint').addClass('d-none');
+            }
         });
         $('#helpdeskDescription').on('input', function () {
             if ($(this).val().trim()) {

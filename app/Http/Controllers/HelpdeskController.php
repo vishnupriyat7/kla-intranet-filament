@@ -36,7 +36,7 @@ class HelpdeskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'employee_id' => 'required',
+            'employee_id' => 'nullable',
             'section' => 'required',
             'office_location_id' => 'required',
             'floor' => 'required',
@@ -45,7 +45,7 @@ class HelpdeskController extends Controller
             'description' => 'required',
         ]);
 
-        HelpdeskTicket::create([
+        $ticket = HelpdeskTicket::create([
             'employee_id' => $request->employee_id,
             'section' => $request->section,
             'office_location_id' => $request->office_location_id,
@@ -55,7 +55,7 @@ class HelpdeskController extends Controller
             'description' => $request->description,
         ]);
 
-        return back()->with('success', 'Ticket submitted successfully!');
+        return back()->with('success', 'Ticket submitted successfully! Your Ticket ID is: ' . $ticket->ticket_no);
     }
     public function liveScreen()
     {
