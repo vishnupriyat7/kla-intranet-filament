@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class HelpdeskTicket extends Model
 {
@@ -30,7 +31,13 @@ class HelpdeskTicket extends Model
         parent::boot();
 
         static::creating(function ($ticket) {
-            $ticket->ticket_no = 'IT-' . now()->format('dmY') . '-' . rand(1000, 9999);
+            DB::transaction(function () use ($ticket) {
+                $today = now()->format('dmy');
+                $count = static::whereDate('created_at', today())
+                    ->lockForUpdate()
+                    ->count() + 1;
+                $ticket->ticket_no = 'IT-' . $today . '-' . $count;
+            });
         });
     }
 }

@@ -835,7 +835,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('helpdesk.store') }}" method="POST">
+            <form action="{{ route('helpdesk.store') }}" method="POST" id="helpdeskForm" novalidate>
 
                 @csrf
 
@@ -844,56 +844,63 @@
                     <div class="row g-3">
 
                         <div class="col-md-6">
-                            <label class="form-label">Employee</label>
+                            <label class="form-label">Employee <span class="text-danger">*</span></label>
                             <select class="form-select" name="employee_id" id="employeeSelect" style="width: 100%">
                                 <option value="">Select Employee..</option>
                             </select>
-
+                            <div class="invalid-feedback d-none" id="err-employee">Please select an employee.</div>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Section</label>
+                            <label class="form-label">Section <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="section" id="employeeSection" readonly>
+                            <div class="invalid-feedback d-none" id="err-section">Section could not be determined. Please re-select the employee.</div>
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label">Building</label>
+                            <label class="form-label">Building <span class="text-danger">*</span></label>
                             <select class="form-select" id="buildingSelect" name="office_location_id">
                                 <option value="">Select Building</option>
                                 @foreach ($locations as $loc)
                                 <option value="{{ $loc->id }}">{{ $loc->location }}</option>
                                 @endforeach
                             </select>
+                            <div class="invalid-feedback d-none" id="err-building">Please select a building.</div>
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label">Floor</label>
+                            <label class="form-label">Floor <span class="text-danger">*</span></label>
                             <select class="form-select" id="floorSelect" name="floor">
                                 <option value="">Select Floor</option>
                             </select>
+                            <div class="invalid-feedback d-none" id="err-floor">Please select a floor.</div>
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label">Room</label>
+                            <label class="form-label">Room <span class="text-danger">*</span></label>
                             <select class="form-select" id="roomSelect" name="room_id">
                                 <option value="">Select Room</option>
                             </select>
+                            <div class="invalid-feedback d-none" id="err-room">Please select a room.</div>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Complaint Type</label>
+                            <label class="form-label">Complaint Type <span class="text-danger">*</span></label>
                             <select class="form-select" name="complaint_type">
+                                <option value="">Select Type</option>
                                 <option>Hardware</option>
                                 <option>Software</option>
                                 <option>Network</option>
                                 <option>Printer</option>
                                 <option>Email</option>
                             </select>
+                            <div class="invalid-feedback d-none" id="err-complaint">Please select a complaint type.</div>
                         </div>
 
                         <div class="col-md-12">
-                            <label class="form-label">Issue Description</label>
-                            <textarea class="form-control" name="description" rows="3"></textarea>
+                            <label class="form-label">Issue Description <span class="text-danger">*</span></label>
+                            <textarea class="form-control" name="description" id="helpdeskDescription" rows="3"></textarea>
+                            <div class="invalid-feedback d-none" id="err-description">Please describe the issue.</div>
                         </div>
 
                     </div>
@@ -902,7 +909,7 @@
 
                 <div class="modal-footer">
 
-                    <button class="btn btn-success">
+                    <button type="submit" class="btn btn-success">
                         Submit Ticket
                     </button>
 
@@ -985,7 +992,8 @@
                 });
 
                 select.trigger('change');
-            });
+            })
+            .catch(err => console.error('Failed to load employee list:', err));
 
         $('#employeeSelect').on('change', function () {
             let section = $(this).find(':selected').data('section') || '';
@@ -1034,6 +1042,110 @@
 
                     $('#roomSelect').html(options).trigger('change');
                 });
+            }
+        });
+
+        // Helpdesk form validation
+        $('#helpdeskForm').on('submit', function (e) {
+
+            let valid = true;
+
+            function showError(errId, selectId) {
+                $('#' + errId).removeClass('d-none');
+                if (selectId) {
+                    $('#' + selectId).next('.select2-container').find('.select2-selection').addClass('border border-danger');
+                }
+            }
+
+            function clearError(errId, selectId) {
+                $('#' + errId).addClass('d-none');
+                if (selectId) {
+                    $('#' + selectId).next('.select2-container').find('.select2-selection').removeClass('border border-danger');
+                }
+            }
+
+            // Employee
+            if (!$('#employeeSelect').val()) {
+                showError('err-employee', 'employeeSelect');
+                valid = false;
+            } else {
+                clearError('err-employee', 'employeeSelect');
+            }
+
+            // Section (auto-filled, but guard against empty)
+            if (!$('#employeeSection').val().trim()) {
+                $('#err-section').removeClass('d-none');
+                valid = false;
+            } else {
+                $('#err-section').addClass('d-none');
+            }
+
+            // Building
+            if (!$('#buildingSelect').val()) {
+                showError('err-building', 'buildingSelect');
+                valid = false;
+            } else {
+                clearError('err-building', 'buildingSelect');
+            }
+
+            // Floor
+            if (!$('#floorSelect').val()) {
+                showError('err-floor', 'floorSelect');
+                valid = false;
+            } else {
+                clearError('err-floor', 'floorSelect');
+            }
+
+            // Room
+            if (!$('#roomSelect').val()) {
+                showError('err-room', 'roomSelect');
+                valid = false;
+            } else {
+                clearError('err-room', 'roomSelect');
+            }
+
+            // Complaint type
+            if (!$('select[name="complaint_type"]').val()) {
+                $('#err-complaint').removeClass('d-none');
+                $('select[name="complaint_type"]').addClass('is-invalid');
+                valid = false;
+            } else {
+                $('#err-complaint').addClass('d-none');
+                $('select[name="complaint_type"]').removeClass('is-invalid');
+            }
+
+            // Description
+            if (!$('#helpdeskDescription').val().trim()) {
+                $('#err-description').removeClass('d-none');
+                $('#helpdeskDescription').addClass('is-invalid');
+                valid = false;
+            } else {
+                $('#err-description').addClass('d-none');
+                $('#helpdeskDescription').removeClass('is-invalid');
+            }
+
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+
+        // Clear errors on change
+        $('#employeeSelect').on('change', function () {
+            if ($(this).val()) $('#err-employee').addClass('d-none');
+        });
+        $('#buildingSelect').on('change', function () {
+            if ($(this).val()) $('#err-building').addClass('d-none');
+        });
+        $('#floorSelect').on('change', function () {
+            if ($(this).val()) $('#err-floor').addClass('d-none');
+        });
+        $('#roomSelect').on('change', function () {
+            if ($(this).val()) $('#err-room').addClass('d-none');
+        });
+        $('#helpdeskDescription').on('input', function () {
+            if ($(this).val().trim()) {
+                $(this).removeClass('is-invalid');
+                $('#err-description').addClass('d-none');
             }
         });
 

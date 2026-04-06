@@ -61,13 +61,16 @@ class EmployeeController extends Controller
             // dd($response->json());
 
             if ($response->successful()) {
-                return response()->json($response->json());
+                return response()->json($response->json())
+                    ->header('Cache-Control', 'no-store');
             }
 
-            return response()->json([]);
+            return response()->json([])
+                ->header('Cache-Control', 'no-store');
         } catch (\Exception $e) {
 
-            return response()->json([]);
+            return response()->json([])
+                ->header('Cache-Control', 'no-store');
         }
     }
 
