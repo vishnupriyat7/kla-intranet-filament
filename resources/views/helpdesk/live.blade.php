@@ -217,9 +217,12 @@
             </div>
 
             <div class="chat-tabs">
-                <div class="chat-tab active" data-tab="Open" onclick="setTab('Open')">Open</div>
-                <div class="chat-tab" data-tab="Assigned" onclick="setTab('Assigned')">Assigned</div>
-                <div class="chat-tab" data-tab="Resolved" onclick="setTab('Resolved')">Resolved</div>
+                <div class="chat-tab active" data-tab="Open" onclick="setTab('Open')">Open <span id="count-Open"
+                        class="badge bg-secondary ms-1">0</span></div>
+                <div class="chat-tab" data-tab="Assigned" onclick="setTab('Assigned')">Assigned / In Progress <span
+                        id="count-Assigned" class="badge bg-secondary ms-1">0</span></div>
+                <div class="chat-tab" data-tab="Resolved" onclick="setTab('Resolved')">Resolved <span
+                        id="count-Resolved" class="badge bg-secondary ms-1">0</span></div>
             </div>
 
             <div class="chat-search">
@@ -277,6 +280,7 @@
             .then(res => res.json())
             .then(data => {
                 allTickets = data;
+                updateCounts();
                 renderTickets();
 
                 // If a ticket is currently selected, re-render its details
@@ -291,6 +295,18 @@
                 }
             })
             .catch(err => console.error('Error fetching tickets:', err));
+    }
+
+    function updateCounts() {
+        const counts = {
+            Open: allTickets.filter(t => t.status === 'Open').length,
+            Assigned: allTickets.filter(t => ['Assigned', 'In Progress', 'InProgress', 'Pending', 'Complaint'].includes(t.status)).length,
+            Resolved: allTickets.filter(t => ['Resolved', 'Closed'].includes(t.status)).length
+        };
+
+        document.getElementById('count-Open').innerText = counts.Open;
+        document.getElementById('count-Assigned').innerText = counts.Assigned;
+        document.getElementById('count-Resolved').innerText = counts.Resolved;
     }
 
     function getEmployeeName(id) {
@@ -327,7 +343,7 @@
             // Check status array (Done tab can include Resolved and Closed or others)
             let statusMatch = false;
             if (currentTab === 'Open') statusMatch = t.status === 'Open';
-            if (currentTab === 'Assigned') statusMatch = ['Assigned', 'In Progress'].includes(t.status);
+            if (currentTab === 'Assigned') statusMatch = ['Assigned', 'In Progress', 'InProgress', 'Pending', 'Complaint'].includes(t.status);
             if (currentTab === 'Resolved') statusMatch = ['Resolved', 'Closed'].includes(t.status);
             if (currentTab === 'All') statusMatch = true;
 
@@ -350,6 +366,9 @@
                     'Open': '#f64a4a',
                     'Assigned': '#fbc02d',
                     'In Progress': '#1976d2',
+                    'InProgress': '#1976d2',
+                    'Pending': '#ff9800',
+                    'Complaint': '#e91e63',
                     'Resolved': '#388e3c'
                 }[t.status] || '#667781';
 
@@ -373,6 +392,9 @@
                             </div>
                             <div class="chat-message">
                                 ${t.section || 'N/A'} • ${t.complaint_type || ''}
+                            </div>
+                            <div class="chat-message mt-1" style="font-size: 11px; opacity: 0.8;">
+                                <i class="bi bi-geo-alt"></i> ${(t.location ? t.location.location : t.office_location_id) || '-'} / ${(t.room ? t.room.name : t.room_id) || '-'}
                             </div>
                         </div>
                     </div>
@@ -409,8 +431,11 @@
 
         let bodyHtml = `
             <div class="chat-main-body">
-                <div class="message-bubble">
-                    <strong>Complaint Details</strong>
+                <div class="message-bubble w-100">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong>Complaint Details</strong>
+                        <span class="badge bg-light text-dark border">#${t.ticket_no}</span>
+                    </div>
                     <div class="ticket-details mt-2">
                         <table>
                             <tr><td class="lbl">Section</td><td>${t.section || '-'}</td></tr>
@@ -422,15 +447,16 @@
                     <div class="message-info">${new Date(t.created_at).toLocaleString()}</div>
                 </div>
 
-                ${t.status !== 'Open' ? `
-                <div class="message-bubble mt-3" style="background-color: #d1f4cc; border: 1px solid #c1e4bc;">
-                    <strong>Assignment Details</strong>
-                    <p class="mb-0 mt-1">Technician: <b>${techName}</b></p>
-                    <p class="mb-0">Status: ${t.status}</p>
-                    ${t.remarks ? `<p class="mb-0 mt-2"><b>Remarks:</b> <br/> ${t.remarks}</p>` : ''}
-                    <div class="message-info mt-2">${new Date(t.updated_at).toLocaleString()}</div>
+                ${(t.status_histories || []).map(h => `
+                <div class="message-bubble mt-3 w-100" style="background-color: #d1f4cc; border: 1px solid #c1e4bc;">
+                    <div class="d-flex justify-content-between">
+                        <strong>Status Update: ${h.status}</strong>
+                        <small class="text-muted">${new Date(h.created_at).toLocaleString()}</small>
+                    </div>
+                    <p class="mb-0 mt-1">Technician: <b>${h.technician ? h.technician.name : 'Unknown'}</b></p>
+                    ${h.remarks ? `<p class="mb-0 mt-1"><b>Remarks:</b> <br/> ${h.remarks}</p>` : ''}
                 </div>
-                ` : ''}
+                `).join('')}
             </div>
         `;
 
@@ -443,11 +469,11 @@
                     </button>
                 </div>
             `;
-        } else if (t.status === 'Assigned' && String(t.technician_id) === String(currentUserId)) {
+        } else if (['Assigned', 'In Progress', 'InProgress', 'Pending', 'Complaint'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
             footerHtml = `
                     <div class="action-footer">
-                        <button class="btn btn-primary px-4" onclick="resolveTicket(${t.id})">
-                            ✅ Mark as Resolved
+                        <button class="btn btn-primary px-4" onclick="openStatusModal(${t.id})">
+                            🔄 Update Status
                         </button>
                     </div>
                 `;
@@ -482,9 +508,22 @@
             });
     }
 
-    function resolveTicket(id) {
-        let remarks = prompt("Enter resolution remarks (optional):");
-        if (remarks === null) return; // Cancelled
+    function openStatusModal(id) {
+        const t = allTickets.find(t => t.id === id);
+        if (!t) return;
+
+        document.getElementById('modalTicketId').value = t.id;
+        document.getElementById('modalStatus').value = t.status === 'In Progress' ? 'InProgress' : (['Resolved', 'Pending', 'InProgress', 'Complaint'].includes(t.status) ? t.status : 'InProgress');
+        document.getElementById('modalRemarks').value = t.remarks || '';
+
+        var statusModal = new bootstrap.Modal(document.getElementById('statusUpdateModal'));
+        statusModal.show();
+    }
+
+    function submitStatusUpdate() {
+        const id = document.getElementById('modalTicketId').value;
+        const status = document.getElementById('modalStatus').value;
+        const remarks = document.getElementById('modalRemarks').value;
 
         fetch(`/helpdesk/resolve-ticket/${id}`, {
             method: 'POST',
@@ -492,21 +531,31 @@
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : ''
             },
-            body: JSON.stringify({ remarks: remarks })
+            body: JSON.stringify({
+                status: status,
+                remarks: remarks
+            })
         })
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
+                    var statusModalEl = document.getElementById('statusUpdateModal');
+                    var modal = bootstrap.Modal.getInstance(statusModalEl);
+                    modal.hide();
                     loadTickets();
                     alert(data.message);
                 } else {
-                    alert(data.message || "Failed to resolve ticket.");
+                    alert(data.message || "Failed to update status.");
                 }
             })
             .catch(err => {
                 console.error(err);
-                alert("Error occurring while resolving ticket.");
+                alert("Error occurring while updating status.");
             });
+    }
+
+    function resolveTicket(id) {
+        // Keep for legacy if needed or remove
     }
 
     // Interval to refresh automatically
@@ -515,4 +564,35 @@
     loadEmployees(); // Load employees in parallel
     loadTickets();   // Load tickets immediately
 </script>
+<!-- Status Update Modal -->
+<div class="modal fade" id="statusUpdateModal" tabindex="-1" aria-labelledby="statusUpdateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="statusUpdateModalLabel">Update Ticket Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="modalTicketId">
+                <div class="mb-3">
+                    <label for="modalStatus" class="form-label">Select Status</label>
+                    <select class="form-select" id="modalStatus">
+                        <option value="Resolved">Resolved</option>
+                        <option value="Pending">Pending</option>
+                        <option value="InProgress">InProgress</option>
+                        <option value="Complaint">Complaint</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="modalRemarks" class="form-label">Remarks</label>
+                    <textarea class="form-control" id="modalRemarks" rows="3" placeholder="Enter remarks if any..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="submitStatusUpdate()">Update Status</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

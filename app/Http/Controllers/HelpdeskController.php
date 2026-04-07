@@ -63,7 +63,7 @@ class HelpdeskController extends Controller
     }
     public function liveData()
     {
-        $tickets = HelpdeskTicket::with(['technician', 'location', 'room'])->latest()->get();
+        $tickets = HelpdeskTicket::with(['technician', 'location', 'room', 'statusHistories.technician'])->latest()->get();
 
         return response()->json($tickets);
     }
@@ -81,6 +81,14 @@ class HelpdeskController extends Controller
         $ticket->update([
             'technician_id' => auth()->id(),
             'status' => 'Assigned',
+        ]);
+
+        // Log history
+        \App\Models\HelpdeskStatusHistory::create([
+            'helpdesk_ticket_id' => $ticket->id,
+            'status' => 'Assigned',
+            'remarks' => 'Ticket assigned to self',
+            'technician_id' => auth()->id(),
         ]);
 
         return response()->json(['success' => true, 'message' => 'Ticket Assigned']);
@@ -101,10 +109,18 @@ class HelpdeskController extends Controller
         }
 
         $ticket->update([
-            'status' => 'Resolved',
+            'status' => $request->input('status', 'Resolved'),
             'remarks' => $request->input('remarks'),
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Ticket Resolved successfully']);
+        // Log history
+        \App\Models\HelpdeskStatusHistory::create([
+            'helpdesk_ticket_id' => $ticket->id,
+            'status' => $ticket->status,
+            'remarks' => $ticket->remarks,
+            'technician_id' => auth()->id(),
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Ticket Status Updated successfully']);
     }
 }
