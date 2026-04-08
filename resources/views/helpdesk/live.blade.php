@@ -316,6 +316,8 @@
 
     function setTab(tabName) {
         currentTab = tabName;
+        selectedTicketId = null;
+        clearDetailPane();
         document.querySelectorAll('.chat-tab').forEach(el => {
             el.classList.remove('active');
             if (el.getAttribute('data-tab') === tabName) {
