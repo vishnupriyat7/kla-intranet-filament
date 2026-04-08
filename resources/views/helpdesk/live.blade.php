@@ -337,7 +337,8 @@
             .then(res => res.json())
             .then(data => {
                 data.forEach(emp => {
-                    employeeMap[emp.attendanceId] = emp.name;
+                    if (emp.attendanceId) employeeMap[emp.attendanceId] = emp.name;
+                    if (emp.pen) employeeMap[emp.pen] = emp.name;
                 });
             })
             .catch(err => console.error('Error loading employees:', err));
@@ -475,9 +476,6 @@
                             <div class="chat-message">
                                 ${t.section || 'N/A'} • ${t.complaint_type || ''}
                             </div>
-                            <div class="chat-message" style="font-size: 11px; color: #667781;">
-                                <i class="bi bi-person"></i> ${getEmployeeName(t.employee_id)}
-                            </div>
                             <div class="chat-message mt-1" style="font-size: 11px; opacity: 0.8;">
                                 <i class="bi bi-geo-alt"></i> ${(t.location ? t.location.location : t.office_location_id) || '-'} / ${(t.room ? t.room.name : t.room_id) || '-'}
                             </div>
@@ -514,7 +512,7 @@
                 <div class="chat-avatar" style="background-color: #00a884; margin-right: 15px;">#</div>
                 <div>
                     <h6 class="mb-0">${t.ticket_no} <span class="badge bg-secondary ms-2">${t.status}</span></h6>
-                    <small class="text-muted">Requested by ${t.section || 'Unknown'} ${t.technician ? ` • <span style="color: #008069; font-weight: 500;">Assigned to: ${t.technician.name}</span>` : ''}</small>
+                    <small class="text-muted">Requested by <b>${getEmployeeName(t.employee_id)}</b> (${t.section || 'Unknown'}) ${t.technician ? ` • <span style="color: #008069; font-weight: 500;">Assigned to: ${t.technician.name}</span>` : ''}</small>
                 </div>
             </div>
         `;
@@ -528,6 +526,7 @@
                     </div>
                     <div class="ticket-details mt-2">
                         <table>
+                            <tr><td class="lbl">Requested By</td><td><b>${getEmployeeName(t.employee_id)}</b></td></tr>
                             <tr><td class="lbl">Section</td><td>${t.section || '-'}</td></tr>
                             <tr><td class="lbl">Location/Room</td><td>${(t.location ? t.location.location : t.office_location_id) || '-'} / ${t.floor || '-'} / ${(t.room ? t.room.name : t.room_id) || '-'}</td></tr>
                             <tr><td class="lbl">Type</td><td>${t.complaint_type || '-'}</td></tr>
