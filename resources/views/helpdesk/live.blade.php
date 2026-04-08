@@ -11,6 +11,7 @@
         border: 1px solid #d1d7db;
         border-radius: 8px;
         overflow: hidden;
+        position: relative;
     }
 
     .chat-sidebar {
@@ -205,10 +206,77 @@
         color: #667781;
         text-align: center;
     }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .whatsapp-container {
+            height: calc(100vh - 60px);
+            margin: 0;
+            border-radius: 0;
+            border: none;
+            overflow: hidden;
+        }
+
+        .chat-sidebar {
+            width: 100%;
+            border-right: none;
+            display: flex;
+        }
+
+        .show-detail .chat-sidebar {
+            display: none;
+        }
+
+        .chat-main {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            background-color: #efeae2;
+        }
+
+        .show-detail .chat-main {
+            display: flex;
+        }
+
+        .btn-toggle-sidebar {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            margin-right: 8px;
+            background: none;
+            border: none;
+            color: #54656f;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .chat-main-header {
+            padding: 10px 12px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .message-bubble {
+            max-width: 95%;
+        }
+
+        .chat-main-body {
+            padding: 15px 10px;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .btn-toggle-sidebar {
+            display: none !important;
+        }
+    }
 </style>
 
-<div class="container-fluid px-3 mt-3 mb-4">
-    <div class="whatsapp-container">
+<div class="container-fluid px-0 px-md-3 mt-0 mt-md-3 mb-4">
+    <div class="whatsapp-container" id="whatsappContainer">
 
         <!-- Left Sidebar: Ticket List -->
         <div class="chat-sidebar">
@@ -318,6 +386,7 @@
         currentTab = tabName;
         selectedTicketId = null;
         clearDetailPane();
+        showSidebar(); // Ensure sidebar is shown on mobile when switching tabs
         document.querySelectorAll('.chat-tab').forEach(el => {
             el.classList.remove('active');
             if (el.getAttribute('data-tab') === tabName) {
@@ -331,10 +400,19 @@
         document.getElementById('ticketDetailPane').innerHTML = `
             <div class="empty-state">
                 <i class="bi bi-tools" style="font-size: 4rem; color: #aebac1; margin-bottom: 20px;"></i>
-                <h4>WhatsApp Web for Helpdesk</h4>
+                <h4>IT Helpdesk</h4>
                 <p>Select a ticket from the left to view details.</p>
             </div>
         `;
+        showSidebar();
+    }
+
+    function showSidebar() {
+        document.getElementById('whatsappContainer').classList.remove('show-detail');
+    }
+
+    function showDetail() {
+        document.getElementById('whatsappContainer').classList.add('show-detail');
     }
 
     function renderTickets() {
@@ -397,6 +475,9 @@
                             <div class="chat-message">
                                 ${t.section || 'N/A'} • ${t.complaint_type || ''}
                             </div>
+                            <div class="chat-message" style="font-size: 11px; color: #667781;">
+                                <i class="bi bi-person"></i> ${getEmployeeName(t.employee_id)}
+                            </div>
                             <div class="chat-message mt-1" style="font-size: 11px; opacity: 0.8;">
                                 <i class="bi bi-geo-alt"></i> ${(t.location ? t.location.location : t.office_location_id) || '-'} / ${(t.room ? t.room.name : t.room_id) || '-'}
                             </div>
@@ -419,6 +500,7 @@
         const t = allTickets.find(t => t.id === id);
         if (!t) return;
         renderTicketDetails(t);
+        showDetail(); // Show detail pane on mobile
     }
 
     function renderTicketDetails(t) {
@@ -426,6 +508,9 @@
 
         let headerHtml = `
             <div class="chat-main-header">
+                <button class="btn-toggle-sidebar" onclick="showSidebar()">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="chat-avatar" style="background-color: #00a884; margin-right: 15px;">#</div>
                 <div>
                     <h6 class="mb-0">${t.ticket_no} <span class="badge bg-secondary ms-2">${t.status}</span></h6>
