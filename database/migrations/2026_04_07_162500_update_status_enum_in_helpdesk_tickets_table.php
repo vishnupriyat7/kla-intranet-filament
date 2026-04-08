@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('helpdesk_tickets', function (Blueprint $table) {
-            $table->string('status')->change();
+            $table->string('status')->default('Open')->change();
         });
     }
 

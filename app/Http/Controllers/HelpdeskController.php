@@ -91,7 +91,7 @@ class HelpdeskController extends Controller
             'technician_id' => auth()->id(),
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Ticket Assigned']);
+        return response()->json(['success' => true, 'message' => 'Ticket Assigned to ' . auth()->user()->name]);
     }
 
     public function resolveTicket(Request $request, HelpdeskTicket $ticket)

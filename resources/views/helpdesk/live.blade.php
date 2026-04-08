@@ -382,6 +382,8 @@
                 let d = new Date(t.created_at || Date.now());
                 let timeStr = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
 
+                let techDisplay = t.technician ? `<div class="chat-message mt-1" style="font-size: 11px; color: #008069; font-weight: 500;"><i class="bi bi-person-gear"></i> ${t.technician.name}</div>` : '';
+
                 html += `
                     <div class="chat-item ${isActive}" onclick="selectTicket(${t.id})">
                         <div class="chat-avatar" style="background-color: ${badgeColor}">${letter}</div>
@@ -396,6 +398,7 @@
                             <div class="chat-message mt-1" style="font-size: 11px; opacity: 0.8;">
                                 <i class="bi bi-geo-alt"></i> ${(t.location ? t.location.location : t.office_location_id) || '-'} / ${(t.room ? t.room.name : t.room_id) || '-'}
                             </div>
+                            ${techDisplay}
                         </div>
                     </div>
                 `;
@@ -424,7 +427,7 @@
                 <div class="chat-avatar" style="background-color: #00a884; margin-right: 15px;">#</div>
                 <div>
                     <h6 class="mb-0">${t.ticket_no} <span class="badge bg-secondary ms-2">${t.status}</span></h6>
-                    <small class="text-muted">Requested by ${getEmployeeName(t.employee_id)}</small>
+                    <small class="text-muted">Requested by ${t.section || 'Unknown'} ${t.technician ? ` • <span style="color: #008069; font-weight: 500;">Assigned to: ${t.technician.name}</span>` : ''}</small>
                 </div>
             </div>
         `;
