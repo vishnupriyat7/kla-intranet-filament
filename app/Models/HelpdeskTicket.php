@@ -54,5 +54,22 @@ class HelpdeskTicket extends Model
                 $ticket->ticket_no = 'IT-' . $today . '-' . $count;
             });
         });
+
+        static::created(function ($ticket) {
+            $ticket->statusHistories()->create([
+                'status' => $ticket->status ?? 'Open',
+                'remarks' => 'Ticket created',
+            ]);
+        });
+
+        static::updated(function ($ticket) {
+            if ($ticket->wasChanged('status')) {
+                $ticket->statusHistories()->create([
+                    'status' => $ticket->status,
+                    'remarks' => $ticket->remarks,
+                    'technician_id' => $ticket->technician_id,
+                ]);
+            }
+        });
     }
 }

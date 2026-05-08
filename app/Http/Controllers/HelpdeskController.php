@@ -83,14 +83,6 @@ class HelpdeskController extends Controller
             'status' => 'Assigned',
         ]);
 
-        // Log history
-        \App\Models\HelpdeskStatusHistory::create([
-            'helpdesk_ticket_id' => $ticket->id,
-            'status' => 'Assigned',
-            'remarks' => 'Ticket assigned to self',
-            'technician_id' => auth()->id(),
-        ]);
-
         return response()->json(['success' => true, 'message' => 'Ticket Assigned to ' . auth()->user()->name]);
     }
 
@@ -111,14 +103,6 @@ class HelpdeskController extends Controller
         $ticket->update([
             'status' => $request->input('status', 'Resolved'),
             'remarks' => $request->input('remarks'),
-        ]);
-
-        // Log history
-        \App\Models\HelpdeskStatusHistory::create([
-            'helpdesk_ticket_id' => $ticket->id,
-            'status' => $ticket->status,
-            'remarks' => $ticket->remarks,
-            'technician_id' => auth()->id(),
         ]);
 
         return response()->json(['success' => true, 'message' => 'Ticket Status Updated successfully']);

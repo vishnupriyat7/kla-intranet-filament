@@ -416,6 +416,33 @@
         document.getElementById('whatsappContainer').classList.add('show-detail');
     }
 
+    // Format date aesthetically
+    function formatTicketDate(dateStr) {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        const now = new Date();
+
+        const isToday = d.getDate() === now.getDate() &&
+            d.getMonth() === now.getMonth() &&
+            d.getFullYear() === now.getFullYear();
+
+        const yesterday = new Date();
+        yesterday.setDate(now.getDate() - 1);
+        const isYesterday = d.getDate() === yesterday.getDate() &&
+            d.getMonth() === yesterday.getMonth() &&
+            d.getFullYear() === yesterday.getFullYear();
+
+        const timeStr = d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+
+        if (isToday) return `Today ${timeStr}`;
+        if (isYesterday) return `Yesterday ${timeStr}`;
+
+        const day = d.getDate().toString().padStart(2, '0');
+        const month = (d.getMonth() + 1).toString().padStart(2, '0');
+        const year = d.getFullYear().toString().slice(-2);
+        return `${day}/${month}/${year} ${timeStr}`;
+    }
+
     function renderTickets() {
         const search = document.getElementById('filterSearch').value.toLowerCase();
         const section = document.getElementById('filterSection').value.toLowerCase();
@@ -459,9 +486,7 @@
 
                 let isActive = selectedTicketId === t.id ? 'active' : '';
 
-                // Format date lightly
-                let d = new Date(t.created_at || Date.now());
-                let timeStr = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
+                let timeStr = formatTicketDate(t.created_at);
 
                 let techDisplay = t.technician ? `<div class="chat-message mt-1" style="font-size: 11px; color: #008069; font-weight: 500;"><i class="bi bi-person-gear"></i> ${t.technician.name}</div>` : '';
 
@@ -533,14 +558,14 @@
                             <tr><td class="lbl">Description</td><td>${t.description || '-'}</td></tr>
                         </table>
                     </div>
-                    <div class="message-info">${new Date(t.created_at).toLocaleString()}</div>
+                    <div class="message-info">${formatTicketDate(t.created_at)}</div>
                 </div>
 
                 ${(t.status_histories || []).map(h => `
                 <div class="message-bubble mt-3 w-100" style="background-color: #d1f4cc; border: 1px solid #c1e4bc;">
                     <div class="d-flex justify-content-between">
                         <strong>Status Update: ${h.status}</strong>
-                        <small class="text-muted">${new Date(h.created_at).toLocaleString()}</small>
+                        <small class="text-muted">${formatTicketDate(h.created_at)}</small>
                     </div>
                     <p class="mb-0 mt-1">Technician: <b>${h.technician ? h.technician.name : 'Unknown'}</b></p>
                     ${h.remarks ? `<p class="mb-0 mt-1"><b>Remarks:</b> <br/> ${h.remarks}</p>` : ''}

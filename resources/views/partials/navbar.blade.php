@@ -144,10 +144,22 @@
                             </div>
 
 
-                            {{-- <a href="{{ route('home.employees') }}"
-                                class="nav-item nav-link {{ request()->routeIs('home.employees') ? 'active' : '' }}">
-                                Employee Corner
-                            </a> --}}
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    IT Helpdesk
+                                    <span class="badge bg-danger ms-1" style="font-size: 0.7rem; vertical-align: top;">{{
+                                        \App\Models\HelpdeskTicket::where('status', 'Open')->count() }}</span>
+                                </a>
+                                <div class="dropdown-menu m-0 drop-bg rounded-0">
+                                    <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#helpdeskModal">
+                                        <i class="bi bi-plus-circle me-2"></i> Raise Ticket
+                                    </a>
+                                    <a class="dropdown-item" href="/helpdesk/live-screen" target="_blank">
+                                        <i class="bi bi-display me-2 text-primary"></i> Complaint Status
+                                    </a>
+                                </div>
+                            </div>
 
                             <a href="http://172.24.18.28/attendance-mgmt-backend/booking_tv" class="nav-item nav-link"
                                 target="_blank">
