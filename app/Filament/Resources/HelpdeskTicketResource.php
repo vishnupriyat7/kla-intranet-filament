@@ -89,6 +89,8 @@ class HelpdeskTicketResource extends Resource
                                         'Open' => 'danger',
                                         'Assigned' => 'warning',
                                         'In Progress', 'InProgress' => 'info',
+                                        'Pending' => 'warning',
+                                        'Complaint' => 'danger',
                                         'Resolved' => 'success',
                                         'Closed' => 'gray',
                                         default => 'secondary',
@@ -135,38 +137,6 @@ class HelpdeskTicketResource extends Resource
                             ->columnSpanFull(),
                     ])->columns(2),
 
-                Infolists\Components\Section::make('Detailed Status Log')
-                    ->collapsible()
-                    ->collapsed()
-                    ->schema([
-                        Infolists\Components\RepeatableEntry::make('statusHistories')
-                            ->label(false)
-                            ->schema([
-                                Infolists\Components\Grid::make(3)
-                                    ->schema([
-                                        Infolists\Components\TextEntry::make('status')
-                                            ->badge()
-                                            ->color(fn(string $state): string => match ($state) {
-                                                'Open' => 'danger',
-                                                'Assigned' => 'warning',
-                                                'In Progress', 'InProgress' => 'info',
-                                                'Resolved' => 'success',
-                                                'Closed' => 'gray',
-                                                default => 'secondary',
-                                            }),
-                                        Infolists\Components\TextEntry::make('technician.name')
-                                            ->label('Updated By'),
-                                        Infolists\Components\TextEntry::make('created_at')
-                                            ->label('At')
-                                            ->dateTime(),
-                                        Infolists\Components\TextEntry::make('remarks')
-                                            ->label('Remarks')
-                                            ->columnSpanFull()
-                                            ->placeholder('No remarks'),
-                                    ]),
-                            ])
-                            ->grid(1),
-                    ]),
             ]);
     }
 
@@ -184,6 +154,8 @@ class HelpdeskTicketResource extends Resource
                         'Open' => 'danger',
                         'Assigned' => 'warning',
                         'In Progress', 'InProgress' => 'info',
+                        'Pending' => 'warning',
+                        'Complaint' => 'danger',
                         'Resolved' => 'success',
                         'Closed' => 'gray',
                         default => 'secondary',
@@ -218,6 +190,8 @@ class HelpdeskTicketResource extends Resource
                         'Open' => 'Open',
                         'Assigned' => 'Assigned',
                         'InProgress' => 'In Progress',
+                        'Pending' => 'Pending',
+                        'Complaint' => 'Complaint',
                         'Resolved' => 'Resolved',
                     ]),
                 Tables\Filters\SelectFilter::make('complaint_type')

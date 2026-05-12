@@ -35,6 +35,8 @@ class StatusHistoriesRelationManager extends RelationManager
                         'Open' => 'danger',
                         'Assigned' => 'warning',
                         'In Progress', 'InProgress' => 'info',
+                        'Pending' => 'warning',
+                        'Complaint' => 'danger',
                         'Resolved' => 'success',
                         'Closed' => 'gray',
                         default => 'secondary',

@@ -46,27 +46,27 @@ class HelpdeskTicket extends Model
         parent::boot();
 
         static::creating(function ($ticket) {
-            DB::transaction(function () use ($ticket) {
-                $today = now()->format('Ymd');
-                $count = static::whereDate('created_at', today())
-                    ->lockForUpdate()
-                    ->count() + 1;
-                $ticket->ticket_no = 'IT-' . $today . '-' . $count;
-            });
+            if (empty($ticket->ticket_no)) {
+                DB::transaction(function () use ($ticket) {
+                    $today = now()->format('Ymd');
+                    $count = static::whereDate('created_at', today())
+                        ->lockForUpdate()
+                        ->count() + 1;
+                    $ticket->ticket_no = 'IT-' . $today . '-' . $count;
+                });
+            }
         });
 
-        static::created(function ($ticket) {
-            $ticket->statusHistories()->create([
-                'status' => $ticket->status ?? 'Open',
-                'remarks' => 'Ticket created',
-            ]);
-        });
+        static::saved(function ($ticket) {
+            $isNew = $ticket->wasRecentlyCreated;
+            $statusChanged = $ticket->wasChanged('status');
+            $remarksChanged = $ticket->wasChanged('remarks');
+            $techChanged = $ticket->wasChanged('technician_id');
 
-        static::updated(function ($ticket) {
-            if ($ticket->wasChanged('status')) {
+            if ($isNew || $statusChanged || $remarksChanged || $techChanged) {
                 $ticket->statusHistories()->create([
-                    'status' => $ticket->status,
-                    'remarks' => $ticket->remarks,
+                    'status' => $ticket->status ?? 'Open',
+                    'remarks' => $ticket->remarks ?? ($isNew ? 'Ticket created' : 'Status/Remarks updated'),
                     'technician_id' => $ticket->technician_id,
                 ]);
             }
