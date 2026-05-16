@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Http;
 
 class HelpdeskTicketResource extends Resource
 {
@@ -22,6 +23,36 @@ class HelpdeskTicketResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
     protected static ?string $navigationGroup = 'Helpdesk';
     protected static ?string $modelLabel = 'Helpdesk Ticket';
+
+    protected static $employeeCache = null;
+
+    public static function resolveEmployeeName($employeeId)
+    {
+        if (!$employeeId) return '-';
+        
+        // If it's a name (contains letters), return as is
+        if (preg_match('/[a-zA-Z]/', $employeeId)) return $employeeId;
+
+        if (static::$employeeCache === null) {
+            try {
+                $response = Http::get(env('EMPLOYEE_API_URL'));
+                if ($response->successful()) {
+                    static::$employeeCache = collect($response->json());
+                } else {
+                    static::$employeeCache = collect([]);
+                }
+            } catch (\Exception $e) {
+                static::$employeeCache = collect([]);
+            }
+        }
+
+        $employee = static::$employeeCache->first(function ($emp) use ($employeeId) {
+            return (string)($emp['pen'] ?? '') === (string)$employeeId || 
+                   (string)($emp['attendanceId'] ?? '') === (string)$employeeId;
+        });
+
+        return $employee ? $employee['name'] : $employeeId;
+    }
 
     public static function form(Form $form): Form
     {
@@ -96,28 +127,31 @@ class HelpdeskTicketResource extends Resource
                                         default => 'secondary',
                                     }),
                                 Infolists\Components\TextEntry::make('employee_id')
-                                    ->label('Employee'),
+                                    ->label('Employee')
+                                    ->formatStateUsing(fn ($state) => static::resolveEmployeeName($state)),
                                 Infolists\Components\TextEntry::make('section'),
                                 Infolists\Components\TextEntry::make('complaint_type')
                                     ->label('Category'),
                                 Infolists\Components\TextEntry::make('created_at')
                                     ->label('Raised At')
-                                    ->dateTime(),
-                            ]),
-                        Infolists\Components\ViewEntry::make('divider')
-                            ->view('filament.helpdesk.divider')
-                            ->columnSpanFull(),
-                        Infolists\Components\Grid::make(3)
-                            ->schema([
-                                Infolists\Components\TextEntry::make('location.location')
-                                    ->label('Building'),
-                                Infolists\Components\TextEntry::make('floor')
-                                    ->label('Floor'),
-                                Infolists\Components\TextEntry::make('room.name')
-                                    ->label('Room'),
+                                    ->dateTime('d-M-Y h:i A')
+                                    ->timezone('Asia/Kolkata'),
+                                Infolists\Components\TextEntry::make('location_details')
+                                    ->label('Location (Bldg/Floor/Room)')
+                                    ->getStateUsing(fn (HelpdeskTicket $record): string => 
+                                        ($record->location?->location ?? '-') . ' / ' . 
+                                        ($record->floor ?? '-') . ' / ' . 
+                                        ($record->room?->name ?? '-')
+                                    )
+                                    ->icon('heroicon-m-map-pin')
+                                    ->color('primary')
+                                    ->columnSpan(1),
                                 Infolists\Components\TextEntry::make('description')
-                                    ->columnSpanFull()
-                                    ->prose(),
+                                    ->label('Problem Description')
+                                    ->columnSpan(2)
+                                    ->prose()
+                                    ->markdown()
+                                    ->icon('heroicon-m-chat-bubble-bottom-center-text'),
                             ]),
                     ]),
 
@@ -130,7 +164,7 @@ class HelpdeskTicketResource extends Resource
 
                         Infolists\Components\TextEntry::make('technician.name')
                             ->label('Assigned Technician')
-                            ->placeholder('Not assigned yet'),
+                            ->placeholder('Unassigned'),
                         Infolists\Components\TextEntry::make('remarks')
                             ->label('Final Resolution Remarks')
                             ->placeholder('No remarks provided')
@@ -163,6 +197,7 @@ class HelpdeskTicketResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('employee_id')
                     ->label('Requested By')
+                    ->formatStateUsing(fn ($state) => static::resolveEmployeeName($state))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('section')
                     ->searchable(),
@@ -181,7 +216,8 @@ class HelpdeskTicketResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Raised At')
-                    ->dateTime()
+                    ->dateTime('d-M-Y h:i A')
+                    ->timezone('Asia/Kolkata')
                     ->sortable(),
             ])
             ->filters([
@@ -233,7 +269,8 @@ class HelpdeskTicketResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array

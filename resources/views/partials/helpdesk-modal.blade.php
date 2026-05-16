@@ -90,7 +90,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label">Room <span class="text-danger">*</span></label>
+                                <label class="form-label">Room</label>
                                 <select class="form-select" id="roomSelect" name="room_id">
                                     <option value="">Select Room</option>
                                 </select>
@@ -271,8 +271,8 @@
             if (locationId && floor) {
                 $.get(`/get-rooms/${locationId}/${floor}`, function (rooms) {
                     let options = '<option value=""></option>';
-                    Object.entries(rooms).forEach(([id, name]) => {
-                        options += `<option value="${id}">${name}</option>`;
+                    rooms.forEach(room => {
+                        options += `<option value="${room.id}">${room.name}</option>`;
                     });
                     $('#roomSelect').html(options).trigger('change');
                 });
@@ -303,7 +303,7 @@
 
             let building = $('#buildingSelect').find(':selected').text();
             let floor = $('#floorSelect').val();
-            let room = $('#roomSelect').find(':selected').text();
+            let room = $('#roomSelect').find(':selected').text() || 'Not Specified';
             $('#p-location').text(`${building}, Floor: ${floor}, Room: ${room}`);
 
             $('#p-type').text($('select[name="complaint_type"]').val());
@@ -328,7 +328,8 @@
             if (!$('#sectionSelect').val()) { showError('err-section', 'sectionSelect'); valid = false; } else { clearError('err-section', 'sectionSelect'); }
             if (!$('#buildingSelect').val()) { showError('err-building', 'buildingSelect'); valid = false; } else { clearError('err-building', 'buildingSelect'); }
             if (!$('#floorSelect').val()) { showError('err-floor', 'floorSelect'); valid = false; } else { clearError('err-floor', 'floorSelect'); }
-            if (!$('#roomSelect').val()) { showError('err-room', 'roomSelect'); valid = false; } else { clearError('err-room', 'roomSelect'); }
+            
+            // Room is now optional - no validation check here
 
             if (!$('select[name="complaint_type"]').val()) {
                 $('#err-complaint').removeClass('d-none');

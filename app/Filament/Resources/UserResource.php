@@ -95,6 +95,26 @@ class UserResource extends Resource
                     ->multiple(),
             ])
             ->actions([
+                Tables\Actions\Action::make('resetPassword')
+                    ->label('Reset Password')
+                    ->icon('heroicon-m-key')
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->modalHeading('Reset User Password')
+                    ->modalDescription('Are you sure you want to reset this user\'s password? It will be set to today\'s date (ddmmyy).')
+                    ->action(function (User $record) {
+                        $newPassword = now()->format('dmy');
+                        $record->update([
+                            'password' => Hash::make($newPassword),
+                        ]);
+                        
+                        \Filament\Notifications\Notification::make()
+                            ->title('Password Reset Successfully')
+                            ->body("New password for {$record->name} is: {$newPassword}")
+                            ->success()
+                            ->send();
+                    })
+                    ->visible(fn () => Auth::user()->isSuperAdmin()),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

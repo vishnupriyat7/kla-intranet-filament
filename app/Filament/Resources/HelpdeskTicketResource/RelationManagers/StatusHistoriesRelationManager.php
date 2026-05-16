@@ -44,10 +44,12 @@ class StatusHistoriesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('remarks')
                     ->wrap(),
                 Tables\Columns\TextColumn::make('technician.name')
-                    ->label('Updated By'),
+                    ->label('Updated By')
+                    ->placeholder('Unassigned'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Timestamp')
-                    ->dateTime()
+                    ->dateTime('d-M-Y h:i A')
+                    ->timezone('Asia/Kolkata')
                     ->sortable(),
             ])
             ->filters([

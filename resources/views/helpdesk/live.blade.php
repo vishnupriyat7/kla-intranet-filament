@@ -379,7 +379,7 @@
     }
 
     function getEmployeeName(id) {
-        if (!id) return 'Unknown';
+        if (!id) return 'Not Provided';
         return employeeMap[id] || id; // Return name if in map, otherwise return the ID itself (covers manually typed names)
     }
 
@@ -537,7 +537,7 @@
                 <div class="chat-avatar" style="background-color: #00a884; margin-right: 15px;">#</div>
                 <div>
                     <h6 class="mb-0">${t.ticket_no} <span class="badge bg-secondary ms-2">${t.status}</span></h6>
-                    <small class="text-muted">Requested by <b>${getEmployeeName(t.employee_id)}</b> (${t.section || 'Unknown'}) ${t.technician ? ` • <span style="color: #008069; font-weight: 500;">Assigned to: ${t.technician.name}</span>` : ''}</small>
+                    <small class="text-muted">Requested by <b>${getEmployeeName(t.employee_id)}</b> (${t.section || 'N/A'}) ${t.technician ? ` • <span style="color: #008069; font-weight: 500;">Assigned to: ${t.technician.name}</span>` : ''}</small>
                 </div>
             </div>
         `;
@@ -567,7 +567,7 @@
                         <strong>Status Update: ${h.status}</strong>
                         <small class="text-muted">${formatTicketDate(h.created_at)}</small>
                     </div>
-                    <p class="mb-0 mt-1">Technician: <b>${h.technician ? h.technician.name : 'Unknown'}</b></p>
+                    <p class="mb-0 mt-1">Technician: <b>${h.technician ? h.technician.name : 'Unassigned'}</b></p>
                     ${h.remarks ? `<p class="mb-0 mt-1"><b>Remarks:</b> <br/> ${h.remarks}</p>` : ''}
                 </div>
                 `).join('')}

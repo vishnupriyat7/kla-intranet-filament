@@ -26,7 +26,7 @@ class SubCategoryResource extends Resource
     }
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Sub-Category';
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 5;
     protected static bool $shouldRegisterNavigation = false;
 
     public static function shouldRegisterNavigation(): bool

@@ -28,7 +28,8 @@ class HelpdeskController extends Controller
     {
         $rooms = Room::where('office_location_id', $locationId)
             ->where('floor', $floor)
-            ->pluck('name', 'id'); // id => name
+            ->orderBy('name', 'asc')
+            ->get(['id', 'name']);
 
         return response()->json($rooms);
     }
@@ -40,7 +41,7 @@ class HelpdeskController extends Controller
             'section' => 'required',
             'office_location_id' => 'required',
             'floor' => 'required',
-            'room_id' => 'required',
+            'room_id' => 'nullable',
             'complaint_type' => 'required',
             'description' => 'required',
         ]);

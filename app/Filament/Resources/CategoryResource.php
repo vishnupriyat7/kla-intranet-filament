@@ -23,7 +23,7 @@ class CategoryResource extends Resource
     }
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Category';
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 4;
     protected static bool $shouldRegisterNavigation = false;
 
     public static function shouldRegisterNavigation(): bool
