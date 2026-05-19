@@ -15,10 +15,18 @@ class HelpdeskController extends Controller
     // ✅ Get Floors based on Building
     public function getFloors($locationId)
     {
-        $floors = Room::where('office_location_id', $locationId)
+        $roomFloors = Room::where('office_location_id', $locationId)
             ->whereNotNull('floor')
             ->distinct()
             ->pluck('floor');
+
+        $floors = \App\Models\Floor::whereIn('name', $roomFloors)
+            ->orderBy('sort_order')
+            ->pluck('name');
+
+        // Append any floors that exist in rooms but not in floors table just in case
+        $missing = $roomFloors->diff($floors);
+        $floors = $floors->concat($missing);
 
         return response()->json($floors);
     }

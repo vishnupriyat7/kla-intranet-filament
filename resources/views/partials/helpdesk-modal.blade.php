@@ -67,6 +67,7 @@
                                 <select class="form-select" name="employee_id" id="employeeSelect" style="width: 100%">
                                     <option value="">Select Employee..</option>
                                 </select>
+                                <small class="text-muted mt-1 d-block" style="font-size: 0.75rem;"><i class="bi bi-info-circle"></i> Not listed? You can type your name manually.</small>
                                 <div class="invalid-feedback d-none" id="err-employee">Please select an employee.</div>
                             </div>
 
@@ -215,7 +216,29 @@
             .then(data => {
                 allEmployees = data;
                 let sectionSelect = $('#sectionSelect');
-                let sections = [...new Set(data.filter(emp => emp.section).map(emp => emp.section))].sort();
+                let sections = [...new Set(data.filter(emp => emp.section).map(emp => emp.section))];
+                
+                // Add custom sections
+                let customSections = [
+                    "Minister's Room",
+                    "Residence of Deputy Speaker",
+                    "Residence of Secretary",
+                    "Residence of Speaker"
+                ];
+                
+                customSections.forEach(cs => {
+                    if (!sections.includes(cs)) {
+                        sections.push(cs);
+                    }
+                });
+                
+                sections.sort();
+                
+                console.log("Loaded " + sections.length + " sections including customs.");
+
+                // Clear existing options except placeholder
+                sectionSelect.empty();
+                sectionSelect.append(new Option("Select Section..", "", false, false));
 
                 sections.forEach(section => {
                     sectionSelect.append(new Option(section, section, false, false));

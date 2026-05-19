@@ -11,6 +11,11 @@ class HelpdeskTypeChart extends ChartWidget
     protected static ?string $heading = 'Tickets by Complaint Type';
     protected static ?string $maxHeight = '300px';
 
+    public static function canView(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
+
     protected function getData(): array
     {
         $data = HelpdeskTicket::select('complaint_type', DB::raw('count(*) as total'))

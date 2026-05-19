@@ -273,6 +273,11 @@ class HelpdeskTicketResource extends Resource
             ->defaultSort('created_at', 'desc');
     }
 
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
+
     public static function getRelations(): array
     {
         return [

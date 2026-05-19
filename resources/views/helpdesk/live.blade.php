@@ -630,8 +630,20 @@
         document.getElementById('modalStatus').value = t.status === 'In Progress' ? 'InProgress' : (['Resolved', 'Pending', 'InProgress', 'Complaint'].includes(t.status) ? t.status : 'InProgress');
         document.getElementById('modalRemarks').value = t.remarks || '';
 
+        toggleComplaintLink();
+
         var statusModal = new bootstrap.Modal(document.getElementById('statusUpdateModal'));
         statusModal.show();
+    }
+
+    function toggleComplaintLink() {
+        const status = document.getElementById('modalStatus').value;
+        const linkDiv = document.getElementById('complaintLinkDiv');
+        if (status === 'Complaint') {
+            linkDiv.style.display = 'block';
+        } else {
+            linkDiv.style.display = 'none';
+        }
     }
 
     function submitStatusUpdate() {
@@ -690,12 +702,21 @@
                 <input type="hidden" id="modalTicketId">
                 <div class="mb-3">
                     <label for="modalStatus" class="form-label">Select Status</label>
-                    <select class="form-select" id="modalStatus">
+                    <select class="form-select" id="modalStatus" onchange="toggleComplaintLink()">
                         <option value="Resolved">Resolved</option>
                         <option value="Pending">Pending</option>
                         <option value="InProgress">InProgress</option>
                         <option value="Complaint">Complaint</option>
                     </select>
+                </div>
+                <div class="mb-3" id="complaintLinkDiv" style="display: none;">
+                    <label class="form-label text-danger fw-bold"><i class="bi bi-exclamation-triangle"></i> Register IHRD Complaint</label>
+                    <div>
+                        <a href="https://pmdamc.ihrd.ac.in" target="_blank" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-box-arrow-up-right"></i> pmdamc.ihrd.ac.in
+                        </a>
+                        <small class="text-muted d-block mt-1">Please register the complaint on the IHRD site before updating the status.</small>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="modalRemarks" class="form-label">Remarks</label>

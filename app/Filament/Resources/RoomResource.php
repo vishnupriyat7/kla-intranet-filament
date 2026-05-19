@@ -37,14 +37,7 @@ class RoomResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('floor')
-                    ->options([
-                        'Ground Floor' => 'Ground Floor',
-                        'First Floor' => 'First Floor',
-                        'Second Floor' => 'Second Floor',
-                        'Third Floor' => 'Third Floor',
-                        'Fourth Floor' => 'Fourth Floor',
-                        'Fifth Floor' => 'Fifth Floor',
-                    ])
+                    ->options(fn () => \App\Models\Floor::orderBy('sort_order')->pluck('name', 'name')->toArray())
                     ->required()
                     ->searchable(),
                 Forms\Components\TextInput::make('block')
@@ -89,14 +82,7 @@ class RoomResource extends Resource
                     ->label('Building')
                     ->relationship('location', 'location'),
                 Tables\Filters\SelectFilter::make('floor')
-                    ->options([
-                        'Ground Floor' => 'Ground Floor',
-                        'First Floor' => 'First Floor',
-                        'Second Floor' => 'Second Floor',
-                        'Third Floor' => 'Third Floor',
-                        'Fourth Floor' => 'Fourth Floor',
-                        'Fifth Floor' => 'Fifth Floor',
-                    ]),
+                    ->options(fn () => \App\Models\Floor::orderBy('sort_order')->pluck('name', 'name')->toArray()),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

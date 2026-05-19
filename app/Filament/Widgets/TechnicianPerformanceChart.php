@@ -11,6 +11,11 @@ class TechnicianPerformanceChart extends ChartWidget
     protected static ?string $heading = 'Resolved Tickets by Technician';
     protected static ?string $maxHeight = '300px';
 
+    public static function canView(): bool
+    {
+        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+    }
+
     protected function getData(): array
     {
         $data = HelpdeskTicket::where('status', 'Resolved')
