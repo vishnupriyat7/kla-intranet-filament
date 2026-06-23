@@ -83,8 +83,9 @@ class HelpdeskController extends Controller
             return response()->json(['success' => false, 'message' => 'Unauthenticated.'], 401);
         }
 
-        if (strtolower(auth()->user()->role ?? '') !== 'chm') {
-            return response()->json(['success' => false, 'message' => 'Unauthorized. Only CHM technicians can process tickets.']);
+        $role = strtolower(auth()->user()->role ?? '');
+        if (!in_array($role, ['chm', 'programmer', 'admin', 'superadmin'])) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized. Only CHM, Programmer, and Admin technicians can process tickets.']);
         }
 
         $ticket->update([
@@ -101,8 +102,9 @@ class HelpdeskController extends Controller
             return response()->json(['success' => false, 'message' => 'Unauthenticated.'], 401);
         }
 
-        if (strtolower(auth()->user()->role ?? '') !== 'chm') {
-            return response()->json(['success' => false, 'message' => 'Unauthorized. Only CHM technicians can process tickets.']);
+        $role = strtolower(auth()->user()->role ?? '');
+        if (!in_array($role, ['chm', 'programmer', 'admin', 'superadmin'])) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized. Only CHM, Programmer, and Admin technicians can process tickets.']);
         }
 
         if ($ticket->technician_id !== auth()->id()) {

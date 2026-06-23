@@ -280,8 +280,13 @@
 
         <!-- Left Sidebar: Ticket List -->
         <div class="chat-sidebar">
-            <div class="chat-header">
+            <div class="chat-header d-flex justify-content-between align-items-center w-100">
                 <strong>🛠️ IT Helpdesk Live</strong>
+                @auth
+                <a href="{{ url('/admin') }}" class="btn btn-sm btn-outline-secondary" style="border-radius: 8px;">
+                    <i class="bi bi-house-door"></i> Dashboard
+                </a>
+                @endauth
             </div>
 
             <div class="chat-tabs">
@@ -529,15 +534,33 @@
     function renderTicketDetails(t) {
         let techName = t.technician ? t.technician.name : 'Unassigned';
 
+        let actionButtons = '';
+        if (t.status === 'Open' && canTakeTicket) {
+            actionButtons = `
+                <button class="btn btn-success btn-sm ms-auto" onclick="takeTicket(${t.id})">
+                    🙋 Take Ticket
+                </button>
+            `;
+        } else if (['Assigned', 'In Progress', 'InProgress', 'Pending', 'Complaint'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
+            actionButtons = `
+                <button class="btn btn-primary btn-sm ms-auto" onclick="openStatusModal(${t.id})">
+                    🔄 Update Status
+                </button>
+            `;
+        }
+
         let headerHtml = `
-            <div class="chat-main-header">
+            <div class="chat-main-header w-100 d-flex align-items-center">
                 <button class="btn-toggle-sidebar" onclick="showSidebar()">
                     <i class="bi bi-list"></i>
                 </button>
                 <div class="chat-avatar" style="background-color: #00a884; margin-right: 15px;">#</div>
-                <div>
+                <div class="flex-grow-1">
                     <h6 class="mb-0">${t.ticket_no} <span class="badge bg-secondary ms-2">${t.status}</span></h6>
                     <small class="text-muted">Requested by <b>${getEmployeeName(t.employee_id)}</b> (${t.section || 'N/A'}) ${t.technician ? ` • <span style="color: #008069; font-weight: 500;">Assigned to: ${t.technician.name}</span>` : ''}</small>
+                </div>
+                <div>
+                    ${actionButtons}
                 </div>
             </div>
         `;
