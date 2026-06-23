@@ -43,6 +43,10 @@ class UserResource extends Resource
                     ->required()
                     ->unique(ignorable: fn($record) => $record)
                     ->maxLength(255),
+                Forms\Components\TextInput::make('username')
+                    ->label('PEN / Attendance ID')
+                    ->unique(ignorable: fn($record) => $record)
+                    ->maxLength(255),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
                     ->password()
@@ -69,6 +73,9 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('username')
+                    ->label('PEN / Attendance ID')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('role')
                     ->badge()
