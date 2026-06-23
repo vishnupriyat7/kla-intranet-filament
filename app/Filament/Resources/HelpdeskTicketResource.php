@@ -294,4 +294,18 @@ class HelpdeskTicketResource extends Resource
             'edit' => Pages\EditHelpdeskTicket::route('/{record}/edit'),
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        
+        $role = strtolower(auth()->user()->role ?? '');
+        
+        // Admin and Superadmin can see all tickets. Others (like chm, programmer) only see their assigned tickets.
+        if (!in_array($role, ['admin', 'superadmin'])) {
+            $query->where('technician_id', auth()->id());
+        }
+        
+        return $query;
+    }
 }

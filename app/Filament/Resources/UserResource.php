@@ -55,6 +55,7 @@ class UserResource extends Resource
                         'superadmin' => 'SuperAdmin',
                         'admin' => 'Admin',
                         'chm' => 'CHM Technician',
+                        'programmer' => 'Programmer',
                     ])
                     ->required(),
 
@@ -107,14 +108,14 @@ class UserResource extends Resource
                         $record->update([
                             'password' => Hash::make($newPassword),
                         ]);
-                        
+
                         \Filament\Notifications\Notification::make()
                             ->title('Password Reset Successfully')
                             ->body("New password for {$record->name} is: {$newPassword}")
                             ->success()
                             ->send();
                     })
-                    ->visible(fn () => Auth::user()->isSuperAdmin()),
+                    ->visible(fn() => Auth::user()->isSuperAdmin()),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
