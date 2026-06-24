@@ -114,6 +114,7 @@ class HelpdeskController extends Controller
         $ticket->update([
             'status' => $request->input('status', 'Resolved'),
             'remarks' => $request->input('remarks'),
+            'vendor_complaint_id' => $request->input('vendor_complaint_id'),
         ]);
 
         return response()->json(['success' => true, 'message' => 'Ticket Status Updated successfully']);

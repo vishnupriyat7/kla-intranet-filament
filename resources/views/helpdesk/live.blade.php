@@ -652,6 +652,7 @@
         document.getElementById('modalTicketId').value = t.id;
         document.getElementById('modalStatus').value = t.status === 'In Progress' ? 'InProgress' : (['Resolved', 'Pending', 'InProgress', 'Complaint'].includes(t.status) ? t.status : 'InProgress');
         document.getElementById('modalRemarks').value = t.remarks || '';
+        document.getElementById('modalVendorComplaintId').value = t.vendor_complaint_id || '';
 
         toggleComplaintLink();
 
@@ -673,6 +674,7 @@
         const id = document.getElementById('modalTicketId').value;
         const status = document.getElementById('modalStatus').value;
         const remarks = document.getElementById('modalRemarks').value;
+        const vendor_complaint_id = document.getElementById('modalVendorComplaintId').value;
 
         fetch(`/helpdesk/resolve-ticket/${id}`, {
             method: 'POST',
@@ -682,7 +684,8 @@
             },
             body: JSON.stringify({
                 status: status,
-                remarks: remarks
+                remarks: remarks,
+                vendor_complaint_id: vendor_complaint_id
             })
         })
             .then(res => res.json())
@@ -733,12 +736,15 @@
                     </select>
                 </div>
                 <div class="mb-3" id="complaintLinkDiv" style="display: none;">
-                    <label class="form-label text-danger fw-bold"><i class="bi bi-exclamation-triangle"></i> Register IHRD Complaint</label>
+                    <label class="form-label text-danger fw-bold"><i class="bi bi-exclamation-triangle"></i> Register Vendor Complaint</label>
                     <div>
                         <a href="https://pmdamc.ihrd.ac.in" target="_blank" class="btn btn-outline-danger btn-sm">
                             <i class="bi bi-box-arrow-up-right"></i> pmdamc.ihrd.ac.in
                         </a>
-                        <small class="text-muted d-block mt-1">Please register the complaint on the IHRD site before updating the status.</small>
+                        <small class="text-muted d-block mt-1">Please register the complaint on the vendor site before updating the status.</small>
+                    </div>
+                    <div class="mt-2">
+                        <input type="text" class="form-control form-control-sm" id="modalVendorComplaintId" placeholder="Enter Vendor Complaint ID (Optional)">
                     </div>
                 </div>
                 <div class="mb-3">

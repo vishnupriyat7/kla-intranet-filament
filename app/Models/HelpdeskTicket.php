@@ -19,6 +19,7 @@ class HelpdeskTicket extends Model
         'status',
         'technician_id',
         'remarks',
+        'vendor_complaint_id',
     ];
 
     public function technician()

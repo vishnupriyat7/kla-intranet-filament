@@ -23,15 +23,18 @@ class HelpdeskTicketResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
     protected static ?string $navigationGroup = 'Helpdesk';
     protected static ?string $modelLabel = 'Helpdesk Ticket';
+    protected static ?int $navigationSort = 1;
 
     protected static $employeeCache = null;
 
     public static function resolveEmployeeName($employeeId)
     {
-        if (!$employeeId) return '-';
-        
+        if (!$employeeId)
+            return '-';
+
         // If it's a name (contains letters), return as is
-        if (preg_match('/[a-zA-Z]/', $employeeId)) return $employeeId;
+        if (preg_match('/[a-zA-Z]/', $employeeId))
+            return $employeeId;
 
         if (static::$employeeCache === null) {
             try {
@@ -47,8 +50,8 @@ class HelpdeskTicketResource extends Resource
         }
 
         $employee = static::$employeeCache->first(function ($emp) use ($employeeId) {
-            return (string)($emp['pen'] ?? '') === (string)$employeeId || 
-                   (string)($emp['attendanceId'] ?? '') === (string)$employeeId;
+            return (string) ($emp['pen'] ?? '') === (string) $employeeId ||
+                (string) ($emp['attendanceId'] ?? '') === (string) $employeeId;
         });
 
         return $employee ? $employee['name'] : $employeeId;
@@ -126,9 +129,15 @@ class HelpdeskTicketResource extends Resource
                                         'Closed' => 'gray',
                                         default => 'secondary',
                                     }),
+                                Infolists\Components\TextEntry::make('vendor_complaint_id')
+                                    ->label('Complaint ID')
+                                    ->badge()
+                                    ->color('danger')
+                                    ->icon('heroicon-m-exclamation-triangle')
+                                    ->visible(fn($state) => filled($state)),
                                 Infolists\Components\TextEntry::make('employee_id')
                                     ->label('Employee')
-                                    ->formatStateUsing(fn ($state) => static::resolveEmployeeName($state)),
+                                    ->formatStateUsing(fn($state) => static::resolveEmployeeName($state)),
                                 Infolists\Components\TextEntry::make('section'),
                                 Infolists\Components\TextEntry::make('complaint_type')
                                     ->label('Category'),
@@ -138,9 +147,10 @@ class HelpdeskTicketResource extends Resource
                                     ->timezone('Asia/Kolkata'),
                                 Infolists\Components\TextEntry::make('location_details')
                                     ->label('Location (Bldg/Floor/Room)')
-                                    ->getStateUsing(fn (HelpdeskTicket $record): string => 
-                                        ($record->location?->location ?? '-') . ' / ' . 
-                                        ($record->floor ?? '-') . ' / ' . 
+                                    ->getStateUsing(
+                                        fn(HelpdeskTicket $record): string =>
+                                        ($record->location?->location ?? '-') . ' / ' .
+                                        ($record->floor ?? '-') . ' / ' .
                                         ($record->room?->name ?? '-')
                                     )
                                     ->icon('heroicon-m-map-pin')
@@ -165,6 +175,12 @@ class HelpdeskTicketResource extends Resource
                         Infolists\Components\TextEntry::make('technician.name')
                             ->label('Assigned Technician')
                             ->placeholder('Unassigned'),
+                        Infolists\Components\TextEntry::make('vendor_complaint_id')
+                            ->label('Complaint ID')
+                            ->badge()
+                            ->color('danger')
+                            ->icon('heroicon-m-exclamation-triangle')
+                            ->visible(fn($state) => filled($state)),
                         Infolists\Components\TextEntry::make('remarks')
                             ->label('Final Resolution Remarks')
                             ->placeholder('No remarks provided')
@@ -195,9 +211,13 @@ class HelpdeskTicketResource extends Resource
                         default => 'secondary',
                     })
                     ->searchable(),
+                Tables\Columns\TextColumn::make('vendor_complaint_id')
+                    ->label('Complaint ID')
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('employee_id')
                     ->label('Requested By')
-                    ->formatStateUsing(fn ($state) => static::resolveEmployeeName($state))
+                    ->formatStateUsing(fn($state) => static::resolveEmployeeName($state))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('section')
                     ->searchable(),
@@ -298,14 +318,14 @@ class HelpdeskTicketResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();
-        
+
         $role = strtolower(auth()->user()->role ?? '');
-        
+
         // Admin and Superadmin can see all tickets. Others (like chm, programmer) only see their assigned tickets.
         if (!in_array($role, ['admin', 'superadmin'])) {
             $query->where('technician_id', auth()->id());
         }
-        
+
         return $query;
     }
 }

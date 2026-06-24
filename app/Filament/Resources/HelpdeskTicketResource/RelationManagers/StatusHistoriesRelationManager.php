@@ -41,6 +41,12 @@ class StatusHistoriesRelationManager extends RelationManager
                         'Closed' => 'gray',
                         default => 'secondary',
                     }),
+                Tables\Columns\TextColumn::make('ticket.vendor_complaint_id')
+                    ->label('Complaint ID')
+                    ->badge()
+                    ->color('danger')
+                    ->icon('heroicon-m-exclamation-triangle')
+                    ->visible(fn (\Filament\Resources\RelationManagers\RelationManager $livewire) => filled($livewire->getOwnerRecord()->vendor_complaint_id)),
                 Tables\Columns\TextColumn::make('remarks')
                     ->wrap(),
                 Tables\Columns\TextColumn::make('technician.name')
