@@ -22,7 +22,7 @@ class SubCategoryResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+        return auth()->check() && !in_array(strtolower(auth()->user()->role ?? ''), ['chm', 'hardwareadmin']);
     }
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Sub-Category';

@@ -59,6 +59,7 @@ class UserResource extends Resource
                         'superadmin' => 'SuperAdmin',
                         'admin' => 'Admin',
                         'chm' => 'CHM Technician',
+                        'hardwareadmin' => 'Hardware Admin',
                         'programmer' => 'Programmer',
                     ])
                     ->required(),

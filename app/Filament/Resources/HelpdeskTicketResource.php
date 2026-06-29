@@ -213,6 +213,19 @@ class HelpdeskTicketResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('vendor_complaint_id')
                     ->label('Complaint ID')
+                    ->badge()
+                    ->color('danger')
+                    ->url(function ($record) {
+                        if (!$record->vendor_complaint_id) {
+                            return null;
+                        }
+                        $complaint = \App\Models\Complaint::where('complaint_id', $record->vendor_complaint_id)->first();
+                        if ($complaint) {
+                            return \App\Filament\Resources\ComplaintResource::getUrl('view', ['record' => $complaint->id]);
+                        }
+                        return \App\Filament\Resources\ComplaintResource::getUrl('index');
+                    })
+                    ->openUrlInNewTab()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('employee_id')
@@ -321,8 +334,8 @@ class HelpdeskTicketResource extends Resource
 
         $role = strtolower(auth()->user()->role ?? '');
 
-        // Admin and Superadmin can see all tickets. Others (like chm, programmer) only see their assigned tickets.
-        if (!in_array($role, ['admin', 'superadmin'])) {
+        // Admin, Superadmin, and Hardwareadmin can see all tickets. Others (like chm, programmer) only see their assigned tickets.
+        if (!in_array($role, ['superadmin', 'hardwareadmin'])) {
             $query->where('technician_id', auth()->id());
         }
 

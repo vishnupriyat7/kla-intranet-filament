@@ -12,7 +12,7 @@ class AssignedTicketsWidget extends BaseWidget
     public static function canView(): bool
     {
         $role = strtolower(auth()->user()->role ?? '');
-        return auth()->check() && in_array($role, ['chm', 'programmer', 'admin', 'superadmin']);
+        return auth()->check() && in_array($role, ['chm', 'programmer', 'admin', 'superadmin', 'hardwareadmin']);
     }
 
     protected function getStats(): array

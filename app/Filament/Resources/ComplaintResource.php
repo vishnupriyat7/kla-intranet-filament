@@ -59,18 +59,34 @@ class ComplaintResource extends Resource
                         Forms\Components\Textarea::make('description')
                             ->label('Complaint Description')
                             ->columnSpanFull(),
-                        Forms\Components\TextInput::make('report_no')
-                            ->label('Service Report No')
-                            ->maxLength(255),
-                        Forms\Components\Textarea::make('report_description')
-                            ->label('Service Report Description')
-                            ->columnSpanFull(),
-                        Forms\Components\FileUpload::make('image')
-                            ->label('Service Report Image')
-                            ->image()
-                            ->openable()
-                            ->downloadable()
-                            ->columnSpanFull(),
+                        Forms\Components\Repeater::make('service_reports')
+                            ->label('Service Reports')
+                            ->schema([
+                                Forms\Components\TextInput::make('component')
+                                    ->label('Component')
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('report_no')
+                                    ->label('Report No')
+                                    ->maxLength(255),
+                                Forms\Components\DatePicker::make('date')
+                                    ->label('Date'),
+                                Forms\Components\TextInput::make('staff')
+                                    ->label('Service Staff')
+                                    ->maxLength(255),
+                                Forms\Components\Textarea::make('description')
+                                    ->label('Service Report Description')
+                                    ->columnSpanFull(),
+                                Forms\Components\FileUpload::make('image')
+                                    ->label('Service Report Image')
+                                    ->image()
+                                    ->openable()
+                                    ->downloadable()
+                                    ->columnSpanFull(),
+                            ])
+                            ->columns(2)
+                            ->columnSpanFull()
+                            ->disabled(fn() => strtolower(auth()->user()->role ?? '') === 'chm')
+                            ->defaultItems(0),
                     ])->columns(2),
             ]);
     }
@@ -79,12 +95,17 @@ class ComplaintResource extends Resource
     {
         return $table
             ->columns([
+
+                Tables\Columns\TextColumn::make('Sl.no')
+                    ->rowIndex(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Registered By')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('vendor')
                     ->label('Vendor')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('Sl.no')
-                    ->rowIndex(),
                 Tables\Columns\TextColumn::make('complaint_id')
                     ->label('Complaint ID')
                     ->searchable(),
@@ -98,11 +119,6 @@ class ComplaintResource extends Resource
                         default => 'secondary',
                     })
                     ->searchable(),
-                Tables\Columns\TextColumn::make('report_no')
-                    ->label('Report No')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Report Image'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d-M-Y h:i A')
                     ->sortable()
@@ -122,6 +138,7 @@ class ComplaintResource extends Resource
                     ]),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -144,6 +161,7 @@ class ComplaintResource extends Resource
         return [
             'index' => Pages\ListComplaints::route('/'),
             'create' => Pages\CreateComplaint::route('/create'),
+            'view' => Pages\ViewComplaint::route('/{record}'),
             'edit' => Pages\EditComplaint::route('/{record}/edit'),
         ];
     }
