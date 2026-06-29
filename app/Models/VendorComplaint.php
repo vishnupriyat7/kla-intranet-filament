@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VendorComplaint extends Model
 {
-    protected $table = 'complaints';
+    protected $table = 'vendor_complaints';
     protected $fillable = [
         'vendor',
         'complaint_id',
