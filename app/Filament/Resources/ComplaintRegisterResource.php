@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\HelpdeskTicketResource\Pages;
-use App\Filament\Resources\HelpdeskTicketResource\RelationManagers;
-use App\Models\HelpdeskTicket;
+use App\Filament\Resources\ComplaintRegisterResource\Pages;
+use App\Filament\Resources\ComplaintRegisterResource\RelationManagers;
+use App\Models\ComplaintRegister;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
@@ -16,13 +16,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Http;
 
-class HelpdeskTicketResource extends Resource
+class ComplaintRegisterResource extends Resource
 {
-    protected static ?string $model = HelpdeskTicket::class;
+    protected static ?string $model = ComplaintRegister::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
-    protected static ?string $navigationGroup = 'Helpdesk';
-    protected static ?string $modelLabel = 'Helpdesk Ticket';
+    protected static ?string $navigationGroup = 'Complaint Register';
+    protected static ?string $modelLabel = 'Complaint Register';
     protected static ?int $navigationSort = 1;
 
     protected static $employeeCache = null;
@@ -148,7 +148,7 @@ class HelpdeskTicketResource extends Resource
                                 Infolists\Components\TextEntry::make('location_details')
                                     ->label('Location (Bldg/Floor/Room)')
                                     ->getStateUsing(
-                                        fn(HelpdeskTicket $record): string =>
+                                        fn(ComplaintRegister $record): string =>
                                         ($record->location?->location ?? '-') . ' / ' .
                                         ($record->floor ?? '-') . ' / ' .
                                         ($record->room?->name ?? '-')
@@ -169,7 +169,7 @@ class HelpdeskTicketResource extends Resource
                     ->schema([
                         Infolists\Components\ViewEntry::make('status_timeline')
                             ->hiddenLabel()
-                            ->view('filament.helpdesk.timeline')
+                            ->view('filament.complaintregister.timeline')
                             ->columnSpanFull(),
 
                         Infolists\Components\TextEntry::make('technician.name')
@@ -219,11 +219,11 @@ class HelpdeskTicketResource extends Resource
                         if (!$record->vendor_complaint_id) {
                             return null;
                         }
-                        $complaint = \App\Models\Complaint::where('complaint_id', $record->vendor_complaint_id)->first();
+                        $complaint = \App\Models\VendorComplaint::where('complaint_id', $record->vendor_complaint_id)->first();
                         if ($complaint) {
-                            return \App\Filament\Resources\ComplaintResource::getUrl('view', ['record' => $complaint->id]);
+                            return \App\Filament\Resources\VendorComplaintResource::getUrl('view', ['record' => $complaint->id]);
                         }
-                        return \App\Filament\Resources\ComplaintResource::getUrl('index');
+                        return \App\Filament\Resources\VendorComplaintResource::getUrl('index');
                     })
                     ->openUrlInNewTab()
                     ->searchable(),
@@ -321,10 +321,10 @@ class HelpdeskTicketResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListHelpdeskTickets::route('/'),
-            'create' => Pages\CreateHelpdeskTicket::route('/create'),
-            'view' => Pages\ViewHelpdeskTicket::route('/{record}'),
-            'edit' => Pages\EditHelpdeskTicket::route('/{record}/edit'),
+            'index' => Pages\ListComplaintRegisters::route('/'),
+            'create' => Pages\CreateComplaintRegister::route('/create'),
+            'view' => Pages\ViewComplaintRegister::route('/{record}'),
+            'edit' => Pages\EditComplaintRegister::route('/{record}/edit'),
         ];
     }
 

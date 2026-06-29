@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HelpdeskStatusHistory extends Model
+class ComplaintRegisterStatusHistory extends Model
 {
+    protected $table = 'complaint_status_histories';
+
     protected $fillable = [
         'helpdesk_ticket_id',
         'status',
@@ -15,7 +17,7 @@ class HelpdeskStatusHistory extends Model
 
     public function ticket()
     {
-        return $this->belongsTo(HelpdeskTicket::class, 'helpdesk_ticket_id');
+        return $this->belongsTo(ComplaintRegister::class, 'helpdesk_ticket_id');
     }
 
     public function technician()

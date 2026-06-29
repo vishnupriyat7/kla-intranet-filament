@@ -24,7 +24,7 @@
                 </p>
                 <p class="mb-4 text-secondary">
                     You can monitor the progress of your complaint in real-time by selecting <strong>Complaint
-                        Status</strong> from the IT Helpdesk menu.
+                        Status</strong> from the IT Complaint Register menu.
                 </p>
                 <button type="button" class="btn btn-success px-5 py-2 fw-bold" data-bs-dismiss="modal">
                     Great, Got it!
@@ -34,19 +34,19 @@
     </div>
 </div>
 
-<!-- IT Helpdesk Modal -->
-<div class="modal fade" id="helpdeskModal" tabindex="-1">
+<!-- IT Complaint Register Modal -->
+<div class="modal fade" id="complaintregisterModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <i class="bi bi-tools"></i> IT Helpdesk
+                    <i class="bi bi-tools"></i> IT Complaint Register
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('helpdesk.store') }}" method="POST" id="helpdeskForm" novalidate>
+            <form action="{{ route('complaintregister.store') }}" method="POST" id="helpdeskForm" novalidate>
 
                 @csrf
 
@@ -174,11 +174,11 @@
 <script>
     $(function () {
         // Initialize Select2 when the modal is shown
-        $('#helpdeskModal').on('shown.bs.modal', function () {
+        $('#complaintregisterModal').on('shown.bs.modal', function () {
             $('#sectionSelect').select2({
                 placeholder: "🔍 Search Section...",
                 allowClear: true,
-                dropdownParent: $('#helpdeskModal'),
+                dropdownParent: $('#complaintregisterModal'),
                 theme: 'bootstrap-5',
                 width: '100%',
             });
@@ -187,7 +187,7 @@
                 placeholder: "🔍 Search or Type Name...",
                 allowClear: true,
                 tags: true,
-                dropdownParent: $('#helpdeskModal'),
+                dropdownParent: $('#complaintregisterModal'),
                 theme: 'bootstrap-5',
                 width: '100%',
             });
@@ -195,14 +195,14 @@
             $('#roomSelect').select2({
                 placeholder: "🔍 Search Room...",
                 allowClear: true,
-                dropdownParent: $('#helpdeskModal'),
+                dropdownParent: $('#complaintregisterModal'),
                 theme: 'bootstrap-5',
                 width: '100%',
             });
 
             $('#floorSelect').select2({
                 placeholder: "Select Floor",
-                dropdownParent: $('#helpdeskModal'),
+                dropdownParent: $('#complaintregisterModal'),
                 theme: 'bootstrap-5',
                 width: '100%',
             });

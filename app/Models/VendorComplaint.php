@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Complaint extends Model
+class VendorComplaint extends Model
 {
+    protected $table = 'complaints';
     protected $fillable = [
         'vendor',
         'complaint_id',
@@ -31,9 +32,9 @@ class Complaint extends Model
     {
         parent::boot();
 
-        static::saving(function ($complaint) {
-            if (empty($complaint->user_id) && auth()->check()) {
-                $complaint->user_id = auth()->id();
+        static::saving(function ($vendor_complaint) {
+            if (empty($vendor_complaint->user_id) && auth()->check()) {
+                $vendor_complaint->user_id = auth()->id();
             }
         });
     }

@@ -281,7 +281,7 @@
         <!-- Left Sidebar: Ticket List -->
         <div class="chat-sidebar">
             <div class="chat-header d-flex justify-content-between align-items-center w-100">
-                <strong>🛠️ IT Helpdesk Live</strong>
+                <strong>🛠️ IT Complaint Register Live</strong>
                 @auth
                 <a href="{{ url('/admin') }}" class="btn btn-sm btn-outline-secondary" style="border-radius: 8px;">
                     <i class="bi bi-house-door"></i> Dashboard
@@ -320,7 +320,7 @@
         <div class="chat-main" id="ticketDetailPane">
             <div class="empty-state">
                 <i class="bi bi-tools" style="font-size: 4rem; color: #aebac1; margin-bottom: 20px;"></i>
-                <h4>IT Helpdesk</h4>
+                <h4>IT Complaint Register</h4>
                 <p>Select a ticket from the left to view details.</p>
             </div>
         </div>
@@ -350,7 +350,7 @@
     }
 
     function loadTickets() {
-        fetch('/helpdesk/live-data')
+        fetch('/complaintregister/live-data')
             .then(res => res.json())
             .then(data => {
                 allTickets = data;
@@ -406,7 +406,7 @@
         document.getElementById('ticketDetailPane').innerHTML = `
             <div class="empty-state">
                 <i class="bi bi-tools" style="font-size: 4rem; color: #aebac1; margin-bottom: 20px;"></i>
-                <h4>IT Helpdesk</h4>
+                <h4>IT Complaint Register</h4>
                 <p>Select a ticket from the left to view details.</p>
             </div>
         `;
@@ -622,7 +622,7 @@
     function takeTicket(id) {
         if (!confirm("Are you sure you want to take this ticket?")) return;
 
-        fetch(`/helpdesk/take-ticket/${id}`, {
+        fetch(`/complaintregister/take-ticket/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -676,7 +676,7 @@
         const remarks = document.getElementById('modalRemarks').value;
         const vendor_complaint_id = document.getElementById('modalVendorComplaintId').value;
 
-        fetch(`/helpdesk/resolve-ticket/${id}`, {
+        fetch(`/complaintregister/resolve-ticket/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

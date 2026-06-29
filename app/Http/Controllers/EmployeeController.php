@@ -52,7 +52,7 @@ class EmployeeController extends Controller
         }
     }
 
-    // for IT Helpdesk employee list
+    // for IT Complaint Register employee list
     public function list()
     {
         try {

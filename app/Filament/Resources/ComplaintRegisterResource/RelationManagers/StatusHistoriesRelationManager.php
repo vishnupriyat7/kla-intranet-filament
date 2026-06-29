@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\HelpdeskTicketResource\RelationManagers;
+namespace App\Filament\Resources\ComplaintRegisterResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;

@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Room;
-use App\Models\HelpdeskTicket;
+use App\Models\ComplaintRegister;
 
 
-class HelpdeskController extends Controller
+class ComplaintRegisterController extends Controller
 {
 
 
@@ -54,7 +54,7 @@ class HelpdeskController extends Controller
             'description' => 'required',
         ]);
 
-        $ticket = HelpdeskTicket::create([
+        $ticket = ComplaintRegister::create([
             'employee_id' => $request->employee_id,
             'section' => $request->section,
             'office_location_id' => $request->office_location_id,
@@ -68,16 +68,16 @@ class HelpdeskController extends Controller
     }
     public function liveScreen()
     {
-        return view('helpdesk.live');
+        return view('complaintregister.live');
     }
     public function liveData()
     {
-        $tickets = HelpdeskTicket::with(['technician', 'location', 'room', 'statusHistories.technician'])->latest()->get();
+        $tickets = ComplaintRegister::with(['technician', 'location', 'room', 'statusHistories.technician'])->latest()->get();
 
         return response()->json($tickets);
     }
 
-    public function takeTicket(Request $request, HelpdeskTicket $ticket)
+    public function takeTicket(Request $request, ComplaintRegister $ticket)
     {
         if (!auth()->check()) {
             return response()->json(['success' => false, 'message' => 'Unauthenticated.'], 401);
@@ -96,7 +96,7 @@ class HelpdeskController extends Controller
         return response()->json(['success' => true, 'message' => 'Ticket Assigned to ' . auth()->user()->name]);
     }
 
-    public function resolveTicket(Request $request, HelpdeskTicket $ticket)
+    public function resolveTicket(Request $request, ComplaintRegister $ticket)
     {
         if (!auth()->check()) {
             return response()->json(['success' => false, 'message' => 'Unauthenticated.'], 401);

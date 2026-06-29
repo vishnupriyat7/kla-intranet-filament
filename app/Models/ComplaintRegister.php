@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class HelpdeskTicket extends Model
+class ComplaintRegister extends Model
 {
+    protected $table = 'complaint_tickets';
+
     protected $fillable = [
         'ticket_no',
         'employee_id',
@@ -39,7 +41,7 @@ class HelpdeskTicket extends Model
 
     public function statusHistories()
     {
-        return $this->hasMany(HelpdeskStatusHistory::class, 'helpdesk_ticket_id')->latest();
+        return $this->hasMany(ComplaintRegisterStatusHistory::class, 'helpdesk_ticket_id')->latest();
     }
 
     protected static function boot()

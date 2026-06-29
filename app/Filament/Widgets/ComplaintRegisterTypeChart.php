@@ -2,11 +2,11 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\HelpdeskTicket;
+use App\Models\ComplaintRegister;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 
-class HelpdeskTypeChart extends ChartWidget
+class ComplaintRegisterTypeChart extends ChartWidget
 {
     protected static ?string $heading = 'Tickets by Complaint Type';
     protected static ?string $maxHeight = '300px';
@@ -18,7 +18,7 @@ class HelpdeskTypeChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = HelpdeskTicket::select('complaint_type', DB::raw('count(*) as total'))
+        $data = ComplaintRegister::select('complaint_type', DB::raw('count(*) as total'))
             ->groupBy('complaint_type')
             ->pluck('total', 'complaint_type')
             ->toArray();

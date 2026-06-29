@@ -10,7 +10,7 @@
     @yield('content')
 
     @include('partials.footer')
-    @include('partials.helpdesk-modal')
+    @include('partials.complaintregister-modal')
 
     @yield('scripts')
 

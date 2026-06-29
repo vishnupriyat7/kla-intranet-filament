@@ -146,17 +146,17 @@
 
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                    IT Helpdesk
+                                    IT Complaint Register
                                     <span class="badge bg-danger ms-1"
                                         style="font-size: 0.7rem; vertical-align: top;">{{
-    \App\Models\HelpdeskTicket::where('status', 'Open')->count() }}</span>
+    \App\Models\ComplaintRegister::where('status', 'Open')->count() }}</span>
                                 </a>
                                 <div class="dropdown-menu m-0 drop-bg rounded-0">
                                     <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                        data-bs-target="#helpdeskModal">
+                                        data-bs-target="#complaintregisterModal">
                                         <i class="bi bi-plus-circle me-2"></i> Raise Ticket
                                     </a>
-                                    <!-- <a class="dropdown-item" href="/helpdesk/live-screen" target="_blank">
+                                    <!-- <a class="dropdown-item" href="/complaintregister/live-screen" target="_blank">
                                         <i class="bi bi-display me-2 text-primary"></i>  
                                     </a> -->
                                 </div>

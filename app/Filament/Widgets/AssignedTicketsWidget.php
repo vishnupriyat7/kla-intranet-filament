@@ -4,7 +4,7 @@ namespace App\Filament\Widgets;
 
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use App\Models\HelpdeskTicket;
+use App\Models\ComplaintRegister;
 use Illuminate\Support\HtmlString;
 
 class AssignedTicketsWidget extends BaseWidget
@@ -19,27 +19,27 @@ class AssignedTicketsWidget extends BaseWidget
     {
         $userId = auth()->id();
         
-        $myTickets = HelpdeskTicket::where('technician_id', $userId)
+        $myTickets = ComplaintRegister::where('technician_id', $userId)
             ->where('status', 'Assigned')
             ->count();
             
-        $openTickets = HelpdeskTicket::where('status', 'Open')->count();
+        $openTickets = ComplaintRegister::where('status', 'Open')->count();
         
-        $doneTickets = HelpdeskTicket::where('status', 'Resolved')
+        $doneTickets = ComplaintRegister::where('status', 'Resolved')
             ->where('technician_id', $userId)
             ->count();
 
         return [
             Stat::make('My Assigned Tickets', $myTickets)
-                ->description(new HtmlString('<a href="' . url('/helpdesk/live-screen') . '" style="color: blue; text-decoration: underline;">Click here to process tickets</a>'))
+                ->description(new HtmlString('<a href="' . url('/complaintregister/live-screen') . '" style="color: blue; text-decoration: underline;">Click here to process tickets</a>'))
                 ->color('success'),
                 
             Stat::make('Total Open Tickets', $openTickets) // New tickets that need taking
-                ->description(new HtmlString('<a href="' . url('/helpdesk/live-screen') . '" style="color: blue; text-decoration: underline;">Go to Live Board</a>'))
+                ->description(new HtmlString('<a href="' . url('/complaintregister/live-screen') . '" style="color: blue; text-decoration: underline;">Go to Live Board</a>'))
                 ->color('warning'),
                 
             Stat::make('My Done Tickets', $doneTickets) 
-                ->description(new HtmlString('<a href="' . url('/helpdesk/live-screen') . '" style="color: blue; text-decoration: underline;">View Done Tickets</a>'))
+                ->description(new HtmlString('<a href="' . url('/complaintregister/live-screen') . '" style="color: blue; text-decoration: underline;">View Done Tickets</a>'))
                 ->color('gray'),
         ];
     }

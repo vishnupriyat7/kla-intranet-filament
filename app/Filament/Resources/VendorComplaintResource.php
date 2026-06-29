@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ComplaintResource\Pages;
-use App\Filament\Resources\ComplaintResource\RelationManagers;
-use App\Models\Complaint;
+use App\Filament\Resources\VendorComplaintResource\Pages;
+use App\Filament\Resources\VendorComplaintResource\RelationManagers;
+use App\Models\VendorComplaint;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,14 +13,14 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ComplaintResource extends Resource
+class VendorComplaintResource extends Resource
 {
-    protected static ?string $model = Complaint::class;
+    protected static ?string $model = VendorComplaint::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-triangle';
-    protected static ?string $navigationGroup = 'Helpdesk';
-    protected static ?string $modelLabel = 'Complaint Register';
-    protected static ?string $pluralModelLabel = 'Complaint Register';
+    protected static ?string $navigationGroup = 'Complaint Register';
+    protected static ?string $modelLabel = 'Vendor Complaint Register';
+    protected static ?string $pluralModelLabel = 'Vendor Complaint Register';
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -41,7 +41,7 @@ class ComplaintResource extends Resource
                         Forms\Components\Select::make('complaint_id')
                             ->label('Complaint ID')
                             ->options(
-                                fn() => \App\Models\HelpdeskTicket::whereNotNull('vendor_complaint_id')
+                                fn() => \App\Models\ComplaintRegister::whereNotNull('vendor_complaint_id')
                                     ->where('vendor_complaint_id', '!=', '')
                                     ->distinct()
                                     ->pluck('vendor_complaint_id', 'vendor_complaint_id')
@@ -159,10 +159,10 @@ class ComplaintResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListComplaints::route('/'),
-            'create' => Pages\CreateComplaint::route('/create'),
-            'view' => Pages\ViewComplaint::route('/{record}'),
-            'edit' => Pages\EditComplaint::route('/{record}/edit'),
+            'index' => Pages\ListVendorComplaints::route('/'),
+            'create' => Pages\CreateVendorComplaint::route('/create'),
+            'view' => Pages\ViewVendorComplaint::route('/{record}'),
+            'edit' => Pages\EditVendorComplaint::route('/{record}/edit'),
         ];
     }
 }

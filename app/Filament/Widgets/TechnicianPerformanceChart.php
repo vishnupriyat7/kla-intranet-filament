@@ -2,7 +2,7 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\HelpdeskTicket;
+use App\Models\ComplaintRegister;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 
@@ -18,8 +18,8 @@ class TechnicianPerformanceChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = HelpdeskTicket::where('status', 'Resolved')
-            ->join('users', 'helpdesk_tickets.technician_id', '=', 'users.id')
+        $data = ComplaintRegister::where('status', 'Resolved')
+            ->join('users', 'complaint_registers.technician_id', '=', 'users.id')
             ->select('users.name', DB::raw('count(*) as total'))
             ->groupBy('users.name')
             ->pluck('total', 'users.name')
