@@ -3,7 +3,7 @@
     .whatsapp-container {
         display: flex;
         flex-direction: row-reverse;
-        height: calc(100vh - 100px);
+        height: calc(100vh - 75px);
         /* Adjust based on navbar height */
         background-color: #f0f2f5;
         border: 1px solid #d1d7db;
@@ -329,7 +329,7 @@
         .whatsapp-container {
             display: flex;
             flex-direction: row-reverse;
-            height: calc(100vh - 120px);
+            height: calc(100vh - 75px);
             background-color: #ffffff;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -338,9 +338,9 @@
     }
 </style>
 
-<div class="container-fluid px-0 px-md-3 mt-0 mt-md-3 mb-4">
+<div class="container-fluid px-0 px-md-3 mt-0 mt-md-2 h-100">
     <div class="chat-tabs-header px-2 px-md-0">
-        <h3>IT Complaint Register Live</h3>
+        <h3 style="font-size: 1.25rem;">IT Complaint Register Live</h3>
         <div class="chat-tabs">
             <div class="chat-tab active" data-tab="Open" onclick="setTab('Open')">Open <span id="count-Open"
                     class="badge bg-secondary ms-1">0</span></div>
