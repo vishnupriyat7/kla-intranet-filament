@@ -111,11 +111,25 @@ class ComplaintRegisterController extends Controller
             return response()->json(['success' => false, 'message' => 'You are not assigned to this ticket.']);
         }
 
+        $status = $request->input('status', 'Resolved');
+
         $ticket->update([
-            'status' => $request->input('status', 'Resolved'),
+            'status' => $status,
             'remarks' => $request->input('remarks'),
             'vendor_complaint_id' => $request->input('vendor_complaint_id'),
         ]);
+
+        if ($status === 'Complaint') {
+            \App\Models\VendorComplaint::create([
+                'vendor' => $request->input('vendor_name'),
+                'complaint_ticket_id' => $ticket->id,
+                'vendor_complaint_no' => $request->input('vendor_complaint_id'),
+                'status' => $request->input('vendor_status', 'Pending Spare'),
+                'complaint_description' => $request->input('vendor_description'),
+                'chm_remark' => $request->input('remarks'),
+                'user_id' => auth()->id(),
+            ]);
+        }
 
         return response()->json(['success' => true, 'message' => 'Ticket Status Updated successfully']);
     }

@@ -31,15 +31,15 @@ class AssignedTicketsWidget extends BaseWidget
 
         return [
             Stat::make('My Assigned Tickets', $myTickets)
-                ->description(new HtmlString('<a href="' . url('/complaintregister/live-screen') . '" style="color: blue; text-decoration: underline;">Click here to process tickets</a>'))
+                ->description(new HtmlString('<a href="' . url('/admin/complaint-live-screen') . '" style="color: blue; text-decoration: underline;">Click here to process tickets</a>'))
                 ->color('success'),
                 
             Stat::make('Total Open Tickets', $openTickets) // New tickets that need taking
-                ->description(new HtmlString('<a href="' . url('/complaintregister/live-screen') . '" style="color: blue; text-decoration: underline;">Go to Live Board</a>'))
+                ->description(new HtmlString('<a href="' . url('/admin/complaint-live-screen') . '" style="color: blue; text-decoration: underline;">Go to Live Board</a>'))
                 ->color('warning'),
                 
             Stat::make('My Done Tickets', $doneTickets) 
-                ->description(new HtmlString('<a href="' . url('/complaintregister/live-screen') . '" style="color: blue; text-decoration: underline;">View Done Tickets</a>'))
+                ->description(new HtmlString('<a href="' . url('/admin/complaint-live-screen') . '" style="color: blue; text-decoration: underline;">View Done Tickets</a>'))
                 ->color('gray'),
         ];
     }

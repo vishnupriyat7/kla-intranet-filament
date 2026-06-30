@@ -19,7 +19,7 @@ class TechnicianPerformanceChart extends ChartWidget
     protected function getData(): array
     {
         $data = ComplaintRegister::where('status', 'Resolved')
-            ->join('users', 'complaint_registers.technician_id', '=', 'users.id')
+            ->join('users', 'complaint_tickets.technician_id', '=', 'users.id')
             ->select('users.name', DB::raw('count(*) as total'))
             ->groupBy('users.name')
             ->pluck('total', 'users.name')

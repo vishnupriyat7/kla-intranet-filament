@@ -147,9 +147,6 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     IT Complaint Register
-                                    <span class="badge bg-danger ms-1"
-                                        style="font-size: 0.7rem; vertical-align: top;">{{
-    \App\Models\ComplaintRegister::where('status', 'Open')->count() }}</span>
                                 </a>
                                 <div class="dropdown-menu m-0 drop-bg rounded-0">
                                     <a class="dropdown-item" href="#" data-bs-toggle="modal"

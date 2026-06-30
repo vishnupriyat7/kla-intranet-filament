@@ -38,8 +38,8 @@ class VendorComplaintResource extends Resource
                             ])
                             ->searchable()
                             ->required(),
-                        Forms\Components\Select::make('complaint_id')
-                            ->label('Complaint ID')
+                        Forms\Components\Select::make('vendor_complaint_no')
+                            ->label('Vendor Complaint No')
                             ->options(
                                 fn() => \App\Models\ComplaintRegister::whereNotNull('vendor_complaint_id')
                                     ->where('vendor_complaint_id', '!=', '')
@@ -56,8 +56,11 @@ class VendorComplaintResource extends Resource
                                 'Closed' => 'Closed',
                             ])
                             ->required(),
-                        Forms\Components\Textarea::make('description')
+                        Forms\Components\Textarea::make('complaint_description')
                             ->label('Complaint Description')
+                            ->columnSpanFull(),
+                        Forms\Components\Textarea::make('chm_remark')
+                            ->label('CHM Remark')
                             ->columnSpanFull(),
                         Forms\Components\Repeater::make('service_reports')
                             ->label('Service Reports')
@@ -102,12 +105,19 @@ class VendorComplaintResource extends Resource
                     ->label('Registered By')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('complaintTicket.ticket_no')
+                    ->label('Internal Ticket No')
+                    ->badge()
+                    ->url(fn ($record) => $record->complaint_ticket_id ? \App\Filament\Resources\ComplaintRegisterResource::getUrl('view', ['record' => $record->complaint_ticket_id]) : null)
+                    ->color('primary')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('vendor')
                     ->label('Vendor')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('complaint_id')
-                    ->label('Complaint ID')
+                Tables\Columns\TextColumn::make('vendor_complaint_no')
+                    ->label('Vendor Complaint No')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
@@ -118,6 +128,14 @@ class VendorComplaintResource extends Resource
                         'Closed' => 'success',
                         default => 'secondary',
                     })
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('complaint_description')
+                    ->label('Vendor Complaint Description')
+                    ->limit(30)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('chm_remark')
+                    ->label('Remark')
+                    ->limit(30)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d-M-Y h:i A')
@@ -164,5 +182,10 @@ class VendorComplaintResource extends Resource
             'view' => Pages\ViewVendorComplaint::route('/{record}'),
             'edit' => Pages\EditVendorComplaint::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }

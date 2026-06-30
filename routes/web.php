@@ -38,6 +38,7 @@ Route::post('/complaintregister/store', [ComplaintRegisterController::class, 'st
 //Live screen
 Route::get('/complaintregister/live-screen', [ComplaintRegisterController::class, 'liveScreen']);
 Route::get('/complaintregister/live-data', [ComplaintRegisterController::class, 'liveData']);
+Route::view('/complaintregister/live-iframe', 'complaintregister.live-iframe');
 Route::post('/complaintregister/take-ticket/{ticket}', [ComplaintRegisterController::class, 'takeTicket']);
 Route::post('/complaintregister/resolve-ticket/{ticket}', [ComplaintRegisterController::class, 'resolveTicket']);
 

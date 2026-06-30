@@ -9,11 +9,12 @@ class VendorComplaint extends Model
     protected $table = 'vendor_complaints';
     protected $fillable = [
         'vendor',
-        'complaint_id',
-        'description',
+        'complaint_ticket_id',
+        'vendor_complaint_no',
+        'complaint_description',
         'status',
         'report_no',
-        'report_description',
+        'chm_remark',
         'image',
         'service_reports',
         'user_id',
@@ -26,6 +27,11 @@ class VendorComplaint extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function complaintTicket()
+    {
+        return $this->belongsTo(ComplaintRegister::class, 'complaint_ticket_id');
     }
 
     protected static function boot()

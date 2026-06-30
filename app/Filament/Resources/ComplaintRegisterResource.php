@@ -219,9 +219,9 @@ class ComplaintRegisterResource extends Resource
                         if (!$record->vendor_complaint_id) {
                             return null;
                         }
-                        $complaint = \App\Models\VendorComplaint::where('complaint_id', $record->vendor_complaint_id)->first();
+                        $complaint = \App\Models\VendorComplaint::where('vendor_complaint_no', $record->vendor_complaint_id)->first();
                         if ($complaint) {
-                            return \App\Filament\Resources\VendorComplaintResource::getUrl('view', ['record' => $complaint->id]);
+                            return \App\Filament\Resources\VendorComplaintResource::getUrl('edit', ['record' => $complaint->id]);
                         }
                         return \App\Filament\Resources\VendorComplaintResource::getUrl('index');
                     })

@@ -43,9 +43,10 @@ class StatusHistoriesRelationManager extends RelationManager
                     }),
                 Tables\Columns\TextColumn::make('ticket.vendor_complaint_id')
                     ->label('Complaint ID')
+                    ->getStateUsing(fn ($record) => $record->status === 'Complaint' ? $record->ticket->vendor_complaint_id : null)
                     ->badge()
                     ->color('danger')
-                    ->icon('heroicon-m-exclamation-triangle')
+                    ->icon(fn ($state) => $state ? 'heroicon-m-exclamation-triangle' : null)
                     ->visible(fn (\Filament\Resources\RelationManagers\RelationManager $livewire) => filled($livewire->getOwnerRecord()->vendor_complaint_id)),
                 Tables\Columns\TextColumn::make('remarks')
                     ->wrap(),
