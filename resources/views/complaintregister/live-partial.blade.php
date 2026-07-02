@@ -338,7 +338,7 @@
     }
 </style>
 
-<div class="container-fluid px-0 px-md-3 mt-0 mt-md-2 h-100">
+<div class="container-fluid px-0 mt-0 h-100">
     <div class="chat-tabs-header px-2 px-md-0">
         <h3 style="font-size: 1.25rem;">IT Complaint Register Live</h3>
         <div class="chat-tabs">
@@ -715,9 +715,35 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    // Immediately refresh data
+                    const t = allTickets.find(t => t.id === id);
+                    if (t) {
+                        let assignedName = data.message.replace('Ticket Assigned to ', '');
+                        
+                        let locationParts = [];
+                        if(t.location && t.location.location) locationParts.push(t.location.location);
+                        if(t.floor) locationParts.push(t.floor);
+                        if(t.room && t.room.name) locationParts.push(t.room.name);
+                        let locationStr = locationParts.join(' / ');
+
+                        let waMessage = `*Ticket Taken by ${assignedName}*\n`;
+                        waMessage += `━━━━━━━━━━━━━━━━━━━━━\n`;
+                        waMessage += `*Ticket No:*   [${t.ticket_no}]\n`;
+                        waMessage += `*Section:*     ${t.section || 'N/A'}\n`;
+                        if (locationStr) waMessage += `*Location / Room:* ${locationStr}\n`;
+                        waMessage += `*Complaint Type:* ${t.complaint_type || 'N/A'}\n`;
+                        if (t.description) waMessage += `*Description:* _${t.description}_`;
+                        
+                        document.getElementById('btnAssignWa').href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(waMessage);
+                        document.getElementById('assignSuccessMessage').innerText = data.message;
+                        
+                        var modal = new bootstrap.Modal(document.getElementById('assignSuccessModal'));
+                        modal.show();
+                    } else {
+                        alert(data.message);
+                    }
+                    
+                    // Refresh data after assignment
                     loadTickets();
-                    alert(data.message);
                 } else {
                     alert(data.message || "Failed to assign ticket.");
                 }
@@ -783,8 +809,32 @@
                     var statusModalEl = document.getElementById('statusUpdateModal');
                     var modal = bootstrap.Modal.getInstance(statusModalEl);
                     modal.hide();
+                    
+                    const t = allTickets.find(ticket => ticket.id == id);
+                    if (t) {
+                        let waMessage = `*STATUS UPDATED BY ${data.updated_by.toUpperCase()}*\n`;
+                        waMessage += `━━━━━━━━━━━━━━━━━━━━━\n`;
+                        waMessage += `*Ticket No:*   [${t.ticket_no}]\n`;
+                        waMessage += `*Status:*      ${status}\n`;
+                        if (vendor_complaint_id) {
+                            waMessage += `*Vendor:*      ${vendor_name}\n`;
+                            waMessage += `*Vendor ID:*   ${vendor_complaint_id}\n`;
+                        }
+                        if (remarks) {
+                            waMessage += `\n*Remarks:*\n_${remarks}_\n`;
+                        }
+                        waMessage += `━━━━━━━━━━━━━━━━━━━━━\n`;
+                        
+                        document.getElementById('btnUpdateWa').href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(waMessage);
+                        document.getElementById('updateSuccessMessage').innerText = data.message;
+                        
+                        var updateModal = new bootstrap.Modal(document.getElementById('updateSuccessModal'));
+                        updateModal.show();
+                    } else {
+                        alert(data.message);
+                    }
+                    
                     loadTickets();
-                    alert(data.message);
                 } else {
                     alert(data.message || "Failed to update status.");
                 }
@@ -805,6 +855,46 @@
     loadEmployees(); // Load employees in parallel
     loadTickets();   // Load tickets immediately
 </script>
+<!-- Assign Success Modal -->
+<div class="modal fade" id="assignSuccessModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-body text-center p-5">
+                <i class="bi bi-person-check-fill text-success mb-3" style="font-size: 4rem;"></i>
+                <h4 class="fw-bold mb-2">Ticket Assigned Successfully!</h4>
+                <p class="text-muted mb-4" id="assignSuccessMessage"></p>
+                
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-outline-secondary px-4 py-2 fw-bold" data-bs-dismiss="modal">Close</button>
+                    <a href="#" target="_blank" id="btnAssignWa" class="btn btn-success px-4 py-2 fw-bold" style="background-color: #25D366; border-color: #25D366;" onclick="setTimeout(function(){ bootstrap.Modal.getInstance(document.getElementById('assignSuccessModal')).hide(); }, 500);">
+                        <i class="bi bi-whatsapp me-2"></i> Notify IT Cell Group
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Success Modal -->
+<div class="modal fade" id="updateSuccessModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-body text-center p-5">
+                <i class="bi bi-arrow-repeat text-primary mb-3" style="font-size: 4rem;"></i>
+                <h4 class="fw-bold mb-2">Status Updated Successfully!</h4>
+                <p class="text-muted mb-4" id="updateSuccessMessage"></p>
+                
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-outline-secondary px-4 py-2 fw-bold" data-bs-dismiss="modal">Close</button>
+                    <a href="#" target="_blank" id="btnUpdateWa" class="btn btn-success px-4 py-2 fw-bold" style="background-color: #25D366; border-color: #25D366;" onclick="setTimeout(function(){ bootstrap.Modal.getInstance(document.getElementById('updateSuccessModal')).hide(); }, 500);">
+                        <i class="bi bi-whatsapp me-2"></i> Notify IT Cell Group
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Status Update Modal -->
 <div class="modal fade" id="statusUpdateModal" tabindex="-1" aria-labelledby="statusUpdateModalLabel" aria-hidden="true">
     <div class="modal-dialog">

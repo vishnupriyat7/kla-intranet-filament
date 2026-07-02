@@ -51,11 +51,13 @@ class ComplaintRegister extends Model
         static::creating(function ($ticket) {
             if (empty($ticket->ticket_no)) {
                 DB::transaction(function () use ($ticket) {
-                    $today = now()->format('Ymd');
-                    $count = static::whereDate('created_at', today())
+                    $year = now()->format('Y');
+                    $count = static::whereYear('created_at', now()->year)
                         ->lockForUpdate()
                         ->count() + 1;
-                    $ticket->ticket_no = 'IT-' . $today . '-' . $count;
+                    
+                    // Format: IT-YYYY0001
+                    $ticket->ticket_no = 'IT-' . $year . str_pad($count, 4, '0', STR_PAD_LEFT);
                 });
             }
         });

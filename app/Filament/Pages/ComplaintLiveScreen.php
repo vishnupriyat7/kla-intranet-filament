@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
+use Filament\Support\Enums\MaxWidth;
 
 class ComplaintLiveScreen extends Page
 {
@@ -20,5 +21,10 @@ class ComplaintLiveScreen extends Page
     public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable
     {
         return '';
+    }
+
+    public function getMaxContentWidth(): MaxWidth
+    {
+        return MaxWidth::Full;
     }
 }

@@ -64,7 +64,10 @@ class ComplaintRegisterController extends Controller
             'description' => $request->description,
         ]);
 
-        return back()->with('success', 'Ticket submitted successfully! Your Ticket ID is: ' . $ticket->ticket_no);
+        return back()->with([
+            'success' => 'Ticket submitted successfully! Your Ticket ID is: ' . $ticket->ticket_no,
+            'ticket' => $ticket
+        ]);
     }
     public function liveScreen()
     {
@@ -131,6 +134,10 @@ class ComplaintRegisterController extends Controller
             ]);
         }
 
-        return response()->json(['success' => true, 'message' => 'Ticket Status Updated successfully']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Ticket Status Updated successfully',
+            'updated_by' => auth()->user()->name
+        ]);
     }
 }

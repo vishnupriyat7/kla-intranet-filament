@@ -1,4 +1,21 @@
 @if(session('success'))
+@php
+    $ticket = session('ticket');
+    $waText = "";
+    if($ticket) {
+        $buildingName = $ticket->location ? $ticket->location->location : ''; 
+        $roomName = $ticket->room ? $ticket->room->name : '';
+        $locationStr = trim(implode(' / ', array_filter([$buildingName, $ticket->floor, $roomName])));
+
+        $waMessage = "*New Ticket No. [" . $ticket->ticket_no . "]*\n";
+        $waMessage .= "━━━━━━━━━━━━━━━━━━━━━\n";
+        $waMessage .= "*Section:* " . $ticket->section . "\n";
+        $waMessage .= "*Location / Room:* " . $locationStr . "\n";
+        $waMessage .= "*Complaint Type:* " . $ticket->complaint_type . "\n";
+        $waMessage .= "*Description:* _" . $ticket->description . "_";
+        $waText = urlencode($waMessage);
+    }
+@endphp
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var successModalEl = document.getElementById('successModal');
@@ -26,9 +43,16 @@
                     You can monitor the progress of your complaint in real-time by selecting <strong>Complaint
                         Status</strong> from the IT Complaint Register menu.
                 </p>
-                <button type="button" class="btn btn-success px-5 py-2 fw-bold" data-bs-dismiss="modal">
-                    Great, Got it!
-                </button>
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-outline-secondary px-4 py-2 fw-bold" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    @if(session('ticket'))
+                    <a href="https://api.whatsapp.com/send?text={{ $waText }}" target="_blank" class="btn btn-success px-4 py-2 fw-bold" style="background-color: #25D366; border-color: #25D366;" onclick="setTimeout(function(){ bootstrap.Modal.getInstance(document.getElementById('successModal')).hide(); }, 500);">
+                        <i class="bi bi-whatsapp me-2"></i> Notify IT Cell Group
+                    </a>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
