@@ -344,8 +344,12 @@
         <div class="chat-tabs">
             <div class="chat-tab active" data-tab="Open" onclick="setTab('Open')">Open <span id="count-Open"
                     class="badge bg-secondary ms-1">0</span></div>
-            <div class="chat-tab" data-tab="Assigned" onclick="setTab('Assigned')">Assigned / In Progress <span
+            <div class="chat-tab" data-tab="Assigned" onclick="setTab('Assigned')">Assigned <span
                     id="count-Assigned" class="badge bg-secondary ms-1">0</span></div>
+            <div class="chat-tab" data-tab="Pending" onclick="setTab('Pending')">Pending <span
+                    id="count-Pending" class="badge bg-secondary ms-1">0</span></div>
+            <div class="chat-tab" data-tab="Complaint" onclick="setTab('Complaint')">Complaint <span
+                    id="count-Complaint" class="badge bg-secondary ms-1">0</span></div>
             <div class="chat-tab" data-tab="Resolved" onclick="setTab('Resolved')">Resolved <span
                     id="count-Resolved" class="badge bg-secondary ms-1">0</span></div>
         </div>
@@ -432,12 +436,16 @@
     function updateCounts() {
         const counts = {
             Open: allTickets.filter(t => t.status === 'Open').length,
-            Assigned: allTickets.filter(t => ['Assigned', 'In Progress', 'InProgress', 'Pending', 'Complaint'].includes(t.status)).length,
+            Assigned: allTickets.filter(t => t.status === 'Assigned').length,
+            Pending: allTickets.filter(t => t.status === 'Pending').length,
+            Complaint: allTickets.filter(t => t.status === 'Complaint').length,
             Resolved: allTickets.filter(t => ['Resolved', 'Closed'].includes(t.status)).length
         };
 
         document.getElementById('count-Open').innerText = counts.Open;
         document.getElementById('count-Assigned').innerText = counts.Assigned;
+        document.getElementById('count-Pending').innerText = counts.Pending;
+        document.getElementById('count-Complaint').innerText = counts.Complaint;
         document.getElementById('count-Resolved').innerText = counts.Resolved;
     }
 
@@ -514,7 +522,9 @@
             // Check status array (Done tab can include Resolved and Closed or others)
             let statusMatch = false;
             if (currentTab === 'Open') statusMatch = t.status === 'Open';
-            if (currentTab === 'Assigned') statusMatch = ['Assigned', 'In Progress', 'InProgress', 'Pending', 'Complaint'].includes(t.status);
+            if (currentTab === 'Assigned') statusMatch = t.status === 'Assigned';
+            if (currentTab === 'Pending') statusMatch = t.status === 'Pending';
+            if (currentTab === 'Complaint') statusMatch = t.status === 'Complaint';
             if (currentTab === 'Resolved') statusMatch = ['Resolved', 'Closed'].includes(t.status);
             if (currentTab === 'All') statusMatch = true;
 
@@ -599,7 +609,7 @@
                     🙋 Take Ticket
                 </button>
             `;
-        } else if (['Assigned', 'In Progress', 'InProgress', 'Pending', 'Complaint'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
+        } else if (['Assigned', 'Pending', 'Complaint'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
             actionButtons = `
                 <button class="btn btn-primary btn-sm ms-auto" onclick="openStatusModal(${t.id})">
                     🔄 Update Status
@@ -689,7 +699,7 @@
                     </button>
                 </div>
             `;
-        } else if (['Assigned', 'In Progress', 'InProgress', 'Pending', 'Complaint'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
+        } else if (['Assigned', 'Pending', 'Complaint'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
             footerHtml = `
                     <div class="action-footer">
                         <button class="btn btn-primary px-4" onclick="openStatusModal(${t.id})">
@@ -759,7 +769,7 @@
         if (!t) return;
 
         document.getElementById('modalTicketId').value = t.id;
-        document.getElementById('modalStatus').value = t.status === 'In Progress' ? 'InProgress' : (['Resolved', 'Pending', 'InProgress', 'Complaint'].includes(t.status) ? t.status : 'InProgress');
+        document.getElementById('modalStatus').value = ['Resolved', 'Pending', 'Complaint', 'Assigned'].includes(t.status) ? t.status : 'Assigned';
         document.getElementById('modalRemarks').value = t.remarks || '';
         document.getElementById('modalVendorComplaintId').value = t.vendor_complaint_id || '';
 
@@ -788,6 +798,11 @@
         const vendor_status = document.getElementById('modalVendorStatus').value;
         const vendor_description = document.getElementById('modalVendorDescription').value;
 
+        if (status === 'Pending' && remarks.trim() === '') {
+            alert('Please enter Remarks to explain why this ticket is Pending.');
+            return;
+        }
+
         fetch(`/complaintregister/resolve-ticket/${id}`, {
             method: 'POST',
             headers: {
@@ -812,18 +827,19 @@
                     
                     const t = allTickets.find(ticket => ticket.id == id);
                     if (t) {
-                        let waMessage = `*STATUS UPDATED BY ${data.updated_by.toUpperCase()}*\n`;
+                        let waMessage = `${data.updated_by}\n`;
                         waMessage += `━━━━━━━━━━━━━━━━━━━━━\n`;
                         waMessage += `*Ticket No:*   [${t.ticket_no}]\n`;
-                        waMessage += `*Status:*      ${status}\n`;
                         if (vendor_complaint_id) {
                             waMessage += `*Vendor:*      ${vendor_name}\n`;
                             waMessage += `*Vendor ID:*   ${vendor_complaint_id}\n`;
                         }
                         if (remarks) {
-                            waMessage += `\n*Remarks:*\n_${remarks}_\n`;
+                            waMessage += `*Remarks:* _${remarks}_\n`;
                         }
-                        waMessage += `━━━━━━━━━━━━━━━━━━━━━\n`;
+                        
+                        let displayStatus = status === 'Resolved' ? 'Resolved ✅' : status;
+                        waMessage += `\n*Status:*      ${displayStatus}`;
                         
                         document.getElementById('btnUpdateWa').href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(waMessage);
                         document.getElementById('updateSuccessMessage').innerText = data.message;
@@ -908,10 +924,10 @@
                 <div class="mb-3">
                     <label for="modalStatus" class="form-label">Select Status</label>
                     <select class="form-select" id="modalStatus" onchange="toggleComplaintLink()">
-                        <option value="Resolved">Resolved</option>
+                        <option value="Assigned">Assigned</option>
                         <option value="Pending">Pending</option>
-                        <option value="InProgress">InProgress</option>
                         <option value="Complaint">Complaint</option>
+                        <option value="Resolved">Resolved</option>
                     </select>
                 </div>
                 <div class="mb-3" id="complaintLinkDiv" style="display: none; background: #fff5f5; padding: 10px; border-radius: 6px; border: 1px solid #ffcccc;">
