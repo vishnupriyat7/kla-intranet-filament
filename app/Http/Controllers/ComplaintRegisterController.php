@@ -48,7 +48,7 @@ class ComplaintRegisterController extends Controller
             'employee_id' => 'nullable',
             'section' => 'required',
             'office_location_id' => 'required',
-            'floor' => 'required',
+            'floor' => 'nullable',
             'room_id' => 'nullable',
             'complaint_type' => 'required',
             'description' => 'required',

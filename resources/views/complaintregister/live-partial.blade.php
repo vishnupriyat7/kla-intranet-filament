@@ -293,7 +293,7 @@
     
     .chat-tabs-header .chat-tab {
         border-radius: 6px;
-        padding: 8px 16px;
+        padding: 6px 10px;
         margin-left: 0;
         background: transparent;
         border-bottom: none !important;

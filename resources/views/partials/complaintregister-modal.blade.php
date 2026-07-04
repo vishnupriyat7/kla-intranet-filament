@@ -107,11 +107,10 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label">Floor <span class="text-danger">*</span></label>
+                                <label class="form-label">Floor</label>
                                 <select class="form-select" id="floorSelect" name="floor">
                                     <option value="">Select Floor</option>
                                 </select>
-                                <div class="invalid-feedback d-none" id="err-floor">Please select a floor.</div>
                             </div>
 
                             <div class="col-md-4">
@@ -202,6 +201,7 @@
             $('#sectionSelect').select2({
                 placeholder: "🔍 Search Section...",
                 allowClear: true,
+                tags: true,
                 dropdownParent: $('#complaintregisterModal'),
                 theme: 'bootstrap-5',
                 width: '100%',
@@ -374,8 +374,8 @@
 
             if (!$('#sectionSelect').val()) { showError('err-section', 'sectionSelect'); valid = false; } else { clearError('err-section', 'sectionSelect'); }
             if (!$('#buildingSelect').val()) { showError('err-building', 'buildingSelect'); valid = false; } else { clearError('err-building', 'buildingSelect'); }
-            if (!$('#floorSelect').val()) { showError('err-floor', 'floorSelect'); valid = false; } else { clearError('err-floor', 'floorSelect'); }
             
+            // Floor is now optional - no validation check here
             // Room is now optional - no validation check here
 
             if (!$('select[name="complaint_type"]').val()) {
@@ -411,7 +411,6 @@
             let id = $(this).attr('id');
             if (id === 'sectionSelect') $('#err-section').addClass('d-none');
             if (id === 'buildingSelect') $('#err-building').addClass('d-none');
-            if (id === 'floorSelect') $('#err-floor').addClass('d-none');
             if (id === 'roomSelect') $('#err-room').addClass('d-none');
             $(this).next('.select2-container').find('.select2-selection').removeClass('border border-danger');
         });

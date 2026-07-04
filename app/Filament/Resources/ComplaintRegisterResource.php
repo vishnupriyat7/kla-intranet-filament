@@ -27,15 +27,8 @@ class ComplaintRegisterResource extends Resource
 
     protected static $employeeCache = null;
 
-    public static function resolveEmployeeName($employeeId)
+    public static function getEmployees()
     {
-        if (!$employeeId)
-            return '-';
-
-        // If it's a name (contains letters), return as is
-        if (preg_match('/[a-zA-Z]/', $employeeId))
-            return $employeeId;
-
         if (static::$employeeCache === null) {
             try {
                 $response = Http::get(env('EMPLOYEE_API_URL'));
@@ -48,6 +41,19 @@ class ComplaintRegisterResource extends Resource
                 static::$employeeCache = collect([]);
             }
         }
+        return static::$employeeCache;
+    }
+
+    public static function resolveEmployeeName($employeeId)
+    {
+        if (!$employeeId)
+            return '-';
+
+        // If it's a name (contains letters), return as is
+        if (preg_match('/[a-zA-Z]/', $employeeId))
+            return $employeeId;
+
+        static::getEmployees();
 
         $employee = static::$employeeCache->first(function ($emp) use ($employeeId) {
             return (string) ($emp['pen'] ?? '') === (string) $employeeId ||
@@ -65,13 +71,124 @@ class ComplaintRegisterResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('ticket_no')
                             ->disabled()
+                            ->hiddenOn('create')
                             ->dehydrated(false),
                         Forms\Components\TextInput::make('status')
                             ->disabled()
+                            ->hiddenOn('create')
                             ->dehydrated(false),
-                        Forms\Components\TextInput::make('employee_id')
-                            ->label('Employee ID / Name'),
-                        Forms\Components\TextInput::make('section'),
+                        Forms\Components\Select::make('section')
+                            ->label('Section')
+                            ->options(function (Forms\Get $get) {
+                                $employees = static::getEmployees();
+                                $sections = $employees->pluck('section')->filter()->unique()->values()->toArray();
+                                $customSections = [
+                                    "Minister's Room",
+                                    "Residence of Deputy Speaker",
+                                    "Residence of Secretary",
+                                    "Residence of Speaker"
+                                ];
+                                $allSections = array_unique(array_merge($sections, $customSections));
+                                sort($allSections);
+                                
+                                $options = array_combine($allSections, $allSections);
+                                $current = $get('section');
+                                if ($current && !isset($options[$current])) {
+                                    $options[$current] = $current;
+                                }
+                                return $options;
+                            })
+                            ->searchable()
+                            ->getSearchResultsUsing(function (string $search) {
+                                $employees = static::getEmployees();
+                                $sections = $employees->pluck('section')->filter()->unique()->values()->toArray();
+                                $customSections = [
+                                    "Minister's Room",
+                                    "Residence of Deputy Speaker",
+                                    "Residence of Secretary",
+                                    "Residence of Speaker"
+                                ];
+                                $allSections = array_unique(array_merge($sections, $customSections));
+                                sort($allSections);
+                                
+                                $filtered = collect($allSections)->filter(fn($sec) => stripos($sec, $search) !== false)->take(50);
+                                $results = $filtered->mapWithKeys(fn($s) => [$s => $s])->toArray();
+                                
+                                if (trim($search) !== '' && !isset($results[$search])) {
+                                    $results[$search] = $search . ' (Add New)';
+                                }
+                                
+                                return $results;
+                            })
+                            ->getOptionLabelUsing(fn ($value): ?string => str_replace(' (Add New)', '', $value))
+                            ->live()
+                            ->afterStateUpdated(function (Forms\Set $set, $state) {
+                                // If they selected the "Add New" option string, strip the "(Add New)" part
+                                if (str_ends_with($state, ' (Add New)')) {
+                                    $set('section', str_replace(' (Add New)', '', $state));
+                                }
+                                $set('employee_id', null);
+                            })
+                            ->required(),
+                        Forms\Components\Select::make('employee_id')
+                            ->label('Employee')
+                            ->options(function (Forms\Get $get) {
+                                $section = $get('section');
+                                if (! $section) {
+                                    return [];
+                                }
+                                
+                                $options = static::getEmployees()
+                                    ->where('section', $section)
+                                    ->mapWithKeys(function ($emp) {
+                                        return [$emp['pen'] => $emp['name'] . ' (' . $emp['pen'] . ')'];
+                                    })->toArray();
+                                    
+                                $current = $get('employee_id');
+                                if ($current && !isset($options[$current])) {
+                                    $options[$current] = $current;
+                                }
+                                
+                                return $options;
+                            })
+                            ->searchable()
+                            ->getSearchResultsUsing(function (string $search, Forms\Get $get) {
+                                $section = $get('section');
+                                if (! $section) {
+                                    return [];
+                                }
+                                
+                                $employees = static::getEmployees()
+                                    ->where('section', $section)
+                                    ->mapWithKeys(function ($emp) {
+                                        return [$emp['pen'] => $emp['name'] . ' (' . $emp['pen'] . ')'];
+                                    });
+                                
+                                $filtered = $employees->filter(fn($name, $pen) => stripos($name, $search) !== false || stripos($pen, $search) !== false)->take(50);
+                                $results = $filtered->toArray();
+                                
+                                if (trim($search) !== '' && !in_array($search, $results) && !isset($results[$search])) {
+                                    $results[$search] = $search . ' (Add New)'; 
+                                }
+                                
+                                return $results;
+                            })
+                            ->getOptionLabelUsing(function ($value, Forms\Get $get) {
+                                $section = $get('section');
+                                if (! $section) return str_replace(' (Add New)', '', $value);
+                                
+                                $emp = static::getEmployees()->firstWhere('pen', $value);
+                                if ($emp) {
+                                    return $emp['name'] . ' (' . $emp['pen'] . ')';
+                                }
+                                return str_replace(' (Add New)', '', $value);
+                            })
+                            ->live()
+                            ->afterStateUpdated(function (Forms\Set $set, $state) {
+                                if (str_ends_with($state, ' (Add New)')) {
+                                    $set('employee_id', str_replace(' (Add New)', '', $state));
+                                }
+                            }),
                         Forms\Components\Select::make('complaint_type')
                             ->options([
                                 'Hardware' => 'Hardware',
@@ -79,22 +196,60 @@ class ComplaintRegisterResource extends Resource
                                 'Network' => 'Network',
                                 'Printer' => 'Printer',
                                 'Email' => 'Email',
-                            ]),
+                            ])
+                            ->required(),
                     ])->columns(2),
                 Forms\Components\Section::make('Location Details')
                     ->schema([
                         Forms\Components\Select::make('office_location_id')
                             ->relationship('location', 'location')
-                            ->label('Building'),
-                        Forms\Components\TextInput::make('floor'),
+                            ->label('Building')
+                            ->live()
+                            ->afterStateUpdated(function (Forms\Set $set) {
+                                $set('floor', null);
+                                $set('room_id', null);
+                            })
+                            ->required(),
+                        Forms\Components\Select::make('floor')
+                            ->label('Floor')
+                            ->options(function (Forms\Get $get) {
+                                $locationId = $get('office_location_id');
+                                if (! $locationId) {
+                                    return [];
+                                }
+                                $roomFloors = \App\Models\Room::where('office_location_id', $locationId)
+                                    ->whereNotNull('floor')
+                                    ->pluck('floor');
+                                $floors = \App\Models\Floor::whereIn('name', $roomFloors)
+                                    ->orderBy('sort_order')
+                                    ->pluck('name');
+                                $missing = $roomFloors->diff($floors);
+                                $floors = $floors->concat($missing)->unique();
+                                return $floors->mapWithKeys(fn ($f) => [$f => $f])->toArray();
+                            })
+                            ->live()
+                            ->afterStateUpdated(fn (Forms\Set $set) => $set('room_id', null))
+                            ->searchable(),
                         Forms\Components\Select::make('room_id')
-                            ->relationship('room', 'name')
-                            ->label('Room'),
+                            ->label('Room')
+                            ->options(function (Forms\Get $get) {
+                                $locationId = $get('office_location_id');
+                                $floor = $get('floor');
+                                if (! $locationId || ! $floor) {
+                                    return [];
+                                }
+                                return \App\Models\Room::where('office_location_id', $locationId)
+                                    ->where('floor', $floor)
+                                    ->orderBy('name')
+                                    ->pluck('name', 'id')
+                                    ->toArray();
+                            })
+                            ->searchable(),
                     ])->columns(3),
                 Forms\Components\Section::make('Problem & Resolution')
                     ->schema([
                         Forms\Components\Textarea::make('description')
-                            ->disabled()
+                            ->required()
                             ->columnSpanFull(),
                         Forms\Components\Select::make('technician_id')
                             ->relationship('technician', 'name')
@@ -122,7 +277,6 @@ class ComplaintRegisterResource extends Resource
                                     ->color(fn(string $state): string => match ($state) {
                                         'Open' => 'danger',
                                         'Assigned' => 'warning',
-                                        'In Progress', 'InProgress' => 'info',
                                         'Pending' => 'warning',
                                         'Complaint' => 'danger',
                                         'Resolved' => 'success',
@@ -203,7 +357,6 @@ class ComplaintRegisterResource extends Resource
                     ->color(fn(string $state): string => match ($state) {
                         'Open' => 'danger',
                         'Assigned' => 'warning',
-                        'In Progress', 'InProgress' => 'info',
                         'Pending' => 'warning',
                         'Complaint' => 'danger',
                         'Resolved' => 'success',
@@ -258,7 +411,6 @@ class ComplaintRegisterResource extends Resource
                     ->options([
                         'Open' => 'Open',
                         'Assigned' => 'Assigned',
-                        'InProgress' => 'In Progress',
                         'Pending' => 'Pending',
                         'Complaint' => 'Complaint',
                         'Resolved' => 'Resolved',
