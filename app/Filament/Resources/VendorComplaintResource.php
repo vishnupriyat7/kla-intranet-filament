@@ -48,6 +48,7 @@ class VendorComplaintResource extends Resource
                                     ->toArray()
                             )
                             ->searchable()
+                            ->unique(ignoreRecord: true)
                             ->required(),
                         Forms\Components\Select::make('status')
                             ->options([

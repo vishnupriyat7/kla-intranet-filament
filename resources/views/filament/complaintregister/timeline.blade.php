@@ -1,5 +1,5 @@
-<div class="py-12 px-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
-    <div class="relative w-full max-w-5xl mx-auto">
+<div class="py-12 px-2 md:px-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-x-auto">
+    <div class="relative w-full max-w-5xl mx-auto min-w-[700px] px-2 md:px-4">
         @php
             $histories = $getRecord()->statusHistories->sortBy('created_at');
             $statuses = [

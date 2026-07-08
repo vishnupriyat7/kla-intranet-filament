@@ -13,6 +13,8 @@
         body, html { height: 100%; margin: 0; padding: 0; background-color: #f0f2f5; overflow: hidden; }
         .whatsapp-container { height: 100vh !important; margin: 0 !important; border: none !important; border-radius: 0 !important; }
     </style>
+    @pwaHead
+    @laravelPwa
 </head>
 <body>
     @include('complaintregister.live-partial')

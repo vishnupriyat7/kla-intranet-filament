@@ -23,6 +23,10 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->renderHook(
+                \Filament\View\PanelsRenderHook::HEAD_END,
+                fn (): string => \Illuminate\Support\Facades\Blade::render('@pwaHead @laravelPwa')
+            )
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('18rem') // Optional: Set default sidebar width
             ->collapsedSidebarWidth('9rem') // Optional: Set collapsed width

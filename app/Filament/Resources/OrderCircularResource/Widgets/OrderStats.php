@@ -14,7 +14,8 @@ class OrderStats extends BaseWidget
 {
     public static function canView(): bool
     {
-        return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
+        $role = strtolower(auth()->user()->role ?? '');
+        return auth()->check() && !in_array($role, ['chm', 'hardwareadmin']);
     }
     protected function getStats(): array
     {

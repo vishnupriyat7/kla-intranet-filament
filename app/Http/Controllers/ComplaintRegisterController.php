@@ -116,22 +116,33 @@ class ComplaintRegisterController extends Controller
 
         $status = $request->input('status', 'Resolved');
 
+        $vendor_complaint_id = $request->input('vendor_complaint_id');
+
+        if ($status === 'Complaint' && $vendor_complaint_id) {
+            $existing = \App\Models\VendorComplaint::where('vendor_complaint_no', $vendor_complaint_id)->first();
+            if ($existing && $existing->complaint_ticket_id !== $ticket->id) {
+                return response()->json(['success' => false, 'message' => 'The Vendor Complaint ID must be unique. It is already registered to another ticket.']);
+            }
+        }
+
         $ticket->update([
             'status' => $status,
             'remarks' => $request->input('remarks'),
-            'vendor_complaint_id' => $request->input('vendor_complaint_id'),
+            'vendor_complaint_id' => $vendor_complaint_id,
         ]);
 
-        if ($status === 'Complaint') {
-            \App\Models\VendorComplaint::create([
-                'vendor' => $request->input('vendor_name'),
-                'complaint_ticket_id' => $ticket->id,
-                'vendor_complaint_no' => $request->input('vendor_complaint_id'),
-                'status' => $request->input('vendor_status', 'Pending Spare'),
-                'complaint_description' => $request->input('vendor_description'),
-                'chm_remark' => $request->input('remarks'),
-                'user_id' => auth()->id(),
-            ]);
+        if ($status === 'Complaint' && $vendor_complaint_id) {
+            \App\Models\VendorComplaint::updateOrCreate(
+                ['complaint_ticket_id' => $ticket->id],
+                [
+                    'vendor' => $request->input('vendor_name'),
+                    'vendor_complaint_no' => $vendor_complaint_id,
+                    'status' => $request->input('vendor_status', 'Pending Spare'),
+                    'complaint_description' => $request->input('vendor_description'),
+                    'chm_remark' => $request->input('remarks'),
+                    'user_id' => auth()->id(),
+                ]
+            );
         }
 
         return response()->json([

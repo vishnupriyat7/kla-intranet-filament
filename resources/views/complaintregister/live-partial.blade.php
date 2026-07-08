@@ -336,6 +336,20 @@
             overflow: hidden;
         }
     }
+
+    @media (max-width: 768px) {
+        .chat-tabs-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .chat-tabs-header .chat-tabs {
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            justify-content: flex-start;
+        }
+    }
 </style>
 
 <div class="container-fluid px-0 mt-0 h-100">
@@ -609,7 +623,7 @@
                     🙋 Take Ticket
                 </button>
             `;
-        } else if (['Assigned', 'Pending', 'Complaint'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
+        } else if (['Assigned', 'Pending', 'Complaint', 'Resolved'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
             actionButtons = `
                 <button class="btn btn-primary btn-sm ms-auto" onclick="openStatusModal(${t.id})">
                     🔄 Update Status
@@ -619,25 +633,25 @@
 
         let headerHtml = `
             <div class="chat-main-header w-100 d-flex flex-column" style="background-color: #f0f2f5; padding: 15px 20px; border-bottom: 1px solid #d1d7db;">
-                <div class="d-flex align-items-center justify-content-between w-100">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 w-100">
                     <div class="d-flex align-items-center">
                         <button class="btn-toggle-sidebar me-2 d-md-none" onclick="showSidebar()" style="background:none; border:none; color:#54656f;">
                             <i class="bi bi-arrow-left fs-4"></i>
                         </button>
-                        <div class="chat-avatar me-3" style="background-color: #008069; width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white;">
+                        <div class="chat-avatar me-2 me-md-3" style="background-color: #008069; width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
                             <i class="bi bi-ticket-detailed fs-5"></i>
                         </div>
                         <div>
-                            <h5 class="mb-1 fw-bold text-dark d-flex align-items-center">
+                            <h5 class="mb-1 fw-bold text-dark d-flex flex-wrap align-items-center gap-1">
                                 ${t.ticket_no} 
-                                <span class="badge ms-2" style="background-color: #e6f2f0; color: #008069; font-size: 12px; font-weight:600; padding: 4px 8px;">${t.status}</span>
+                                <span class="badge" style="background-color: #e6f2f0; color: #008069; font-size: 11px; font-weight:600; padding: 4px 6px;">${t.status}</span>
                             </h5>
-                            <div class="text-muted" style="font-size: 13px;">
+                            <div class="text-muted" style="font-size: 12px;">
                                 <i class="bi bi-clock me-1"></i> ${new Date(t.created_at).toLocaleString('en-US', {day:'numeric', month:'short', year:'numeric', hour:'numeric', minute:'2-digit'})}
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div class="mt-2 mt-md-0 ms-auto">
                         ${actionButtons}
                     </div>
                 </div>
@@ -699,7 +713,7 @@
                     </button>
                 </div>
             `;
-        } else if (['Assigned', 'Pending', 'Complaint'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
+        } else if (['Assigned', 'Pending', 'Complaint', 'Resolved'].includes(t.status) && String(t.technician_id) === String(currentUserId)) {
             footerHtml = `
                     <div class="action-footer">
                         <button class="btn btn-primary px-4" onclick="openStatusModal(${t.id})">

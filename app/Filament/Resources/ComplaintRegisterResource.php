@@ -458,6 +458,12 @@ class ComplaintRegisterResource extends Resource
             ->defaultSort('created_at', 'desc');
     }
 
+    public static function canCreate(): bool
+    {
+        $role = strtolower(auth()->user()->role ?? '');
+        return auth()->check() && in_array($role, ['admin', 'hardwareadmin', 'superadmin']);
+    }
+
     public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
     {
         return auth()->check() && strtolower(auth()->user()->role ?? '') !== 'chm';
@@ -487,7 +493,7 @@ class ComplaintRegisterResource extends Resource
         $role = strtolower(auth()->user()->role ?? '');
 
         // Admin, Superadmin, and Hardwareadmin can see all tickets. Others (like chm, programmer) only see their assigned tickets.
-        if (!in_array($role, ['superadmin', 'hardwareadmin'])) {
+        if (!in_array($role, ['admin', 'superadmin', 'hardwareadmin'])) {
             $query->where('technician_id', auth()->id());
         }
 

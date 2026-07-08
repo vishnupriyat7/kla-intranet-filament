@@ -63,6 +63,15 @@ class ComplaintRegisterStatsOverview extends BaseWidget
                 ->description('Tickets resolved in the last 24 hours')
                 ->descriptionIcon('heroicon-m-check-badge')
                 ->color('success'),
+                
+            Stat::make('Vendor Complaints', \App\Models\VendorComplaint::count())
+                ->description(new \Illuminate\Support\HtmlString(
+                    '<span style="color: #ef4444;">New: ' . \App\Models\VendorComplaint::where('status', 'New')->count() . '</span> | ' .
+                    '<span style="color: #f59e0b;">Pending: ' . \App\Models\VendorComplaint::whereIn('status', ['Pending', 'Pending Spare'])->count() . '</span> | ' .
+                    '<span style="color: #22c55e;">Closed: ' . \App\Models\VendorComplaint::where('status', 'Closed')->count() . '</span>'
+                ))
+                ->descriptionIcon('heroicon-m-exclamation-triangle')
+                ->color('danger'),
         ];
 
         // 2. PERSONAL STATS (Only for technicians)
