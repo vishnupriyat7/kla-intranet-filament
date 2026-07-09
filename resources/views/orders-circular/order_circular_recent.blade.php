@@ -261,8 +261,13 @@
                                 let output = data; // title (HTML allowed)
 
                                 if (row.link && row.link.trim() !== "") {
-                                    output +=
-                                        `<br>Google form Link: <a href="${row.link}" target="_blank">Click here</a>`;
+                                    let links = row.link.split(',').map(l => l.trim()).filter(l => l !== "");
+                                    if (links.length > 0) {
+                                        links.forEach((link, index) => {
+                                            let linkLabel = links.length > 1 ? ` ${index + 1}` : '';
+                                            output += `<br>Google form Link${linkLabel}: <a href="${link}" target="_blank">Click here</a>`;
+                                        });
+                                    }
                                 }
 
                                 return output;

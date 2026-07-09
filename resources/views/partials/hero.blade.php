@@ -132,8 +132,12 @@
                                             @endif
 
                                             @if ($crclr->link)
-                                            <div>Google form Link: <a href="{{ $crclr->link }}" target="_blank">Click
-                                                    here</a></div>
+                                                @php
+                                                    $links = array_filter(array_map('trim', explode(',', $crclr->link)));
+                                                @endphp
+                                                @foreach ($links as $index => $link)
+                                                    <div>Google form Link{{ count($links) > 1 ? ' ' . ($index + 1) : '' }}: <a href="{{ $link }}" target="_blank">Click here</a></div>
+                                                @endforeach
                                             @endif
 
                                             <small class="text-body d-block">

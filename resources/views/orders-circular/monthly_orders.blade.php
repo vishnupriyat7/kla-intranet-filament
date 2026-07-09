@@ -181,12 +181,18 @@
 
                             // If a Google Form link exists, append it
                             if (row.link && row.link.trim() !== "") {
-                                title += `
+                                let links = row.link.split(',').map(l => l.trim()).filter(l => l !== "");
+                                if (links.length > 0) {
+                                    links.forEach((link, index) => {
+                                        let linkLabel = links.length > 1 ? ` ${index + 1}` : '';
+                                        title += `
                 <div style="white-space: normal; word-wrap: break-word; max-width: 600px; margin-top: 4px;">
-                    Google form Link:
-                    <a href="${row.link}" target="_blank">Click here</a>
+                    Google form Link${linkLabel}:
+                    <a href="${link}" target="_blank">Click here</a>
                 </div>
             `;
+                                    });
+                                }
                             }
 
                             return title;
