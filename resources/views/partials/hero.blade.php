@@ -589,13 +589,13 @@
                                                 target="_blank">
                                                 <i class="fas fa-phone-volume me-2"></i>Officers / Sections
                                             </a>
-                                            <a class="dropdown-item"
+                                            <!-- <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                 data-pdf="{{ asset('storage/uploads/contacts/AllemployeeMail ID.pdf') }}"
                                                 data-title="Official Mail IDs">
                                                 <i class="fas fa-users me-2"></i>Official Mail IDs
-                                            </a>
+                                            </a> -->
                                             <a class="dropdown-item"
                                                 href="{{ asset('storage/uploads/contacts/Sectionsemail -new.pdf') }}"
                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
