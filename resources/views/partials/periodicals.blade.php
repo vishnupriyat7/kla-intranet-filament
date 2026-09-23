@@ -79,7 +79,7 @@
                             <a href="http://www.niyamasabha.org/codes/publications/samnwayam.htm" target="_blank"
                                 class="periodical-text">
                                 <i class="fas fa-book"></i>
-                                <b>Samnwayam</b>
+                                <b>Samanwayam</b>
                             </a>
                         </div>
                     </div>
