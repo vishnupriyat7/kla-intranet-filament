@@ -10,7 +10,7 @@
                             Secretariat</small>
                     </a>
                     <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSempwI7-mTW2fiZgZiv-N6HkDfviPBE9HiRzHPQwAHCGejD8A/viewform?usp=send_form&pli=1"
-                        class="btn btn-primary py-2 px-5 rounded-pill text-white" target="_blank">Feed Back</a>
+                        class="btn btn-primary py-2 px-5 rounded-pill text-white" target="_blank">Feedback</a>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                     <span>
                         <i class="fas fa-angle-right text-white me-2"></i>
                         <a class="btn-link text-white" href="https://onlineksrtcswift.com/" target="_blank">KSRTC</a> /
-                        <a class ="btn-link text-white" href="https://www.irctc.co.in/nget/train-search"
+                        <a class="btn-link text-white" href="https://www.irctc.co.in/nget/train-search"
                             target="_blank">IRCTC Online
                             Booking</a>
                     </span>
@@ -56,8 +56,8 @@
                         <a class="btn-link text-white"
                             href="https://gad.kerala.gov.in/index.php/en/online-guest-house-booking-0"
                             target="_blank">Govt. Guest House</a> /
-                        <a class ="btn-link text-white" href="https://resthouse.pwd.kerala.gov.in/resthouse"
-                            target="_blank">PWD Rest
+                        <a class="btn-link text-white" href="https://resthouse.pwd.kerala.gov.in/" target="_blank">PWD
+                            Rest
                             House</a>
                     </span>
                 </div>
@@ -83,7 +83,7 @@
                         <i class="fas fa-angle-right text-white me-2"></i>
                         <a class="btn-link text-white" href="https://www.keralapsc.gov.in/" target="_blank">K.P.S.C</a>
                         /
-                        <a class ="btn-link text-white" href="https://upsc.gov.in/" target="_blank">U.P.S.C</a>
+                        <a class="btn-link text-white" href="https://upsc.gov.in/" target="_blank">U.P.S.C</a>
                     </span>
 
 
@@ -114,8 +114,7 @@
                         <a href="#">
                             <div class="d-flex align-items-center">
                                 <div class="rounded-circle border border-2 border-primary overflow-hidden">
-                                    <img src="img/footer-2.jpg" class="img-zoominimg-fluid rounded-circle w-100"
-                                        alt="">
+                                    <img src="img/footer-2.jpg" class="img-zoominimg-fluid rounded-circle w-100" alt="">
                                 </div>
                                 <div class="d-flex flex-column ps-4">
                                     <p class="text-uppercase text-white mb-3">Sports</p>
@@ -138,38 +137,32 @@
                     <div class="row g-2">
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-1.jpg" class="img-zoomin img-fluid rounded w-100"
-                                    alt="">
+                                <img src="img/footer-1.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-2.jpg" class="img-zoomin img-fluid rounded w-100"
-                                    alt="">
+                                <img src="img/footer-2.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-3.jpg" class="img-zoomin img-fluid rounded w-100"
-                                    alt="">
+                                <img src="img/footer-3.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-4.jpg" class="img-zoomin img-fluid rounded w-100"
-                                    alt="">
+                                <img src="img/footer-4.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-5.jpg" class="img-zoomin img-fluid rounded w-100"
-                                    alt="">
+                                <img src="img/footer-5.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-6.jpg" class="img-zoomin img-fluid rounded w-100"
-                                    alt="">
+                                <img src="img/footer-6.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
                             </div>
                         </div>
                     </div>
@@ -202,15 +195,15 @@
 
 
 <!-- Back to Top -->
-<a href="#" class="btn btn-primary border-2 border-white rounded-circle back-to-top"><i
-        class="fa fa-arrow-up"></i></a>
+<a href="#" class="btn btn-primary border-2 border-white rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <!-- JavaScript Libraries -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/main.min.js"></script> --}}
+{{--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/main.min.js"></script> --}}
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js'></script>
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -240,5 +233,5 @@
 
 
 <!-- ✅ Bootstrap -->
-{{-- <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
-
+{{--
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
