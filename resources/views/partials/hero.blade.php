@@ -104,11 +104,11 @@
                                                         @if ($crclr->title_lingo == 'E')
                                                             Number {{ $crclr->number }} dated
                                                             {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
-                                                            – Kerala Legislative Assembly – {!! $crclr->title !!}
+                                                            – Keralam Legislative Assembly – {!! $crclr->title !!}
                                                         @else
                                                             നമ്പര്‍ {{ $crclr->number }} തീയതി
                                                             {{ \Carbon\Carbon::parse($crclr->date)->format('d.m.Y') }}
-                                                            – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {!! $crclr->title !!}
+                                                            – കേരളനിയമസഭാ സെക്രട്ടേറിയറ്റ് – {!! $crclr->title !!}
                                                         @endif
 
                                                         @if (count($attachments) === 1)
@@ -179,11 +179,11 @@
                                                         @if ($oo->title_lingo == 'E')
                                                             Office Order No. {{ $oo->number }} dated
                                                             {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
-                                                            – Kerala Legislative Assembly – {{ $oo->title }}
+                                                            – Keralam Legislative Assembly – {{ $oo->title }}
                                                         @else
                                                             ഓഫീസ് ഉത്തരവ് നമ്പർ {{ $oo->number }} തീയതി
                                                             {{ \Carbon\Carbon::parse($oo->date)->format('d.m.Y') }}
-                                                            – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $oo->title }}
+                                                            – കേരളനിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $oo->title }}
                                                         @endif
 
                                                         @if (count($attachments) === 1)
@@ -245,15 +245,15 @@
 
                                                         {{-- {{ $go->number }} dated
                                                         {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        – Kerala Legislative Assembly – {{ $go->title }} --}}
+                                                        – Keralam Legislative Assembly – {{ $go->title }} --}}
                                                         @if ($go->title_lingo == 'E')
                                                             G.O.(Rt) No. {{ $go->number }} dated
                                                             {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                            – Kerala Legislative Assembly – {{ $go->title }}
+                                                            – Keralam Legislative Assembly – {{ $go->title }}
                                                         @else
                                                             ജി.ഒ.(ആർ.ടി) നമ്പർ {{ $go->number }} തീയതി
                                                             {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                            – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $go->title }}
+                                                            – കേരളനിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $go->title }}
                                                         @endif
 
                                                         @if (count($attachments) === 1)
@@ -312,17 +312,17 @@
 
                                                         {{-- {{ $go->number }} dated
                                                         {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        – Kerala Legislative Assembly – {{ $go->title }} --}}
+                                                        – Keralam Legislative Assembly – {{ $go->title }} --}}
 
 
                                                         @if ($go->title_lingo == 'E')
                                                             G.O.(Ms) No. {{ $go->number }} dated
                                                             {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                            – Kerala Legislative Assembly – {{ $go->title }}
+                                                            – Keralam Legislative Assembly – {{ $go->title }}
                                                         @else
                                                             ജി.ഒ.(എം.എസ്) നമ്പർ {{ $go->number }} തീയതി
                                                             {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                            – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $go->title }}
+                                                            – കേരളനിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $go->title }}
                                                         @endif
 
                                                         @if (count($attachments) === 1)
@@ -384,16 +384,16 @@
 
                                                         {{-- {{ $go->number }} dated
                                                         {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                        – Kerala Legislative Assembly – {{ $go->title }} --}}
+                                                        – Keralam Legislative Assembly – {{ $go->title }} --}}
 
                                                         @if ($go->title_lingo == 'E')
                                                             G.O.(P) No. {{ $go->number }} dated
                                                             {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                            – Kerala Legislative Assembly – {{ $go->title }}
+                                                            – Keralam Legislative Assembly – {{ $go->title }}
                                                         @else
                                                             ജി.ഒ.(പി) നമ്പർ {{ $go->number }} തീയതി
                                                             {{ \Carbon\Carbon::parse($go->date)->format('d.m.Y') }}
-                                                            – കേരള നിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $go->title }}
+                                                            – കേരളനിയമസഭാ സെക്രട്ടേറിയറ്റ് – {{ $go->title }}
                                                         @endif
 
                                                         @if (count($attachments) === 1)
