@@ -60,7 +60,7 @@
                             <div id="note" class="ps-2">
 
                                 <a href="{{ route('home.index') }}">
-                                    <p class="mb-0 link-hover">Welcome to INTRANET Service of KERALA LEGISLATURE
+                                    <p class="mb-0 link-hover">Welcome to INTRANET Service of KERALAM LEGISLATURE
                                         SECRETARIAT</p>
                                 </a>
                             </div>
@@ -99,7 +99,7 @@
                 <nav class="navbar navbar-light navbar-expand-xl">
                     <a href="{{ route('home.index') }}" class="navbar-brand mt-3">
                         <p class="text-primary display-6 mb-2" style="line-height: 0;">INTRANET</p>
-                        <small class="fw-normal" style="letter-spacing: 3px;">Kerala Legislature
+                        <small class="fw-normal" style="letter-spacing: 3px;">Keralam Legislature
                             Secretariat</small>
                     </a>
                     <button class="navbar-toggler py-2 px-0" type="button" data-bs-toggle="collapse"
@@ -144,7 +144,7 @@
                             </div>
 
 
-                            <div class="nav-item dropdown">
+                            <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     IT Complaint Register
                                 </a>
@@ -153,11 +153,11 @@
                                         data-bs-target="#complaintregisterModal">
                                         <i class="bi bi-plus-circle me-2"></i> Raise Ticket
                                     </a>
-                                    <!-- <a class="dropdown-item" href="/complaintregister/live-screen" target="_blank">
-                                        <i class="bi bi-display me-2 text-primary"></i>  
-                                    </a> -->
+                                    <a class="dropdown-item" href="/complaintregister/live-screen" target="_blank">
+                                        <i class="bi bi-display me-2 text-primary"></i>
+                                    </a>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <a href="http://172.24.18.28/attendance-mgmt-backend/booking_tv" class="nav-item nav-link"
                                 target="_blank">

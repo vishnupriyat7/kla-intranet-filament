@@ -6,7 +6,7 @@
                 <div class="col-lg-12 d-flex align-items-center justify-content-between">
                     <a href="{{ route('home.index') }}" class="d-flex flex-column flex-wrap">
                         <p class="text-white mb-0 display-6">INTRANET</p>
-                        <small class="text-light" style="letter-spacing: 5px; line-height: 0;">Kerala Legislature
+                        <small class="text-light" style="letter-spacing: 5px; line-height: 0;">Keralam Legislature
                             Secretariat</small>
                     </a>
                     <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSempwI7-mTW2fiZgZiv-N6HkDfviPBE9HiRzHPQwAHCGejD8A/viewform?usp=send_form&pli=1"
@@ -18,7 +18,7 @@
             <div class="col-lg-6 col-xl-3">
                 <div class="footer-item-1">
                     <h4 class="mb-4 text-white">Get In Touch</h4>
-                    <p class="text-secondary line-h">Address: <span class="text-white" style="font-size: 14px;">Kerala
+                    <p class="text-secondary line-h">Address: <span class="text-white" style="font-size: 14px;">Keralam
                             Legislature Secretariat, Vikas Bhavan PO, TVM-33, Kerala</span>
                     </p>
                     <p class="text-secondary line-h">Email: <span class="text-white">itsection@niyamasabha.in</span></p>
@@ -67,7 +67,7 @@
                     <h4 class="mb-4 text-white">Useful Links</h4>
                     <a class="btn-link text-white" href="http://www.niyamasabha.org/" target="_blank"><i
                             class="fas fa-angle-right text-white me-2"></i>
-                        Kerala Niyamasabha</a>
+                        Keralam Niyamasabha</a>
                     <a class="btn-link text-white" href="https://kerala.gov.in/" target="_blank"><i
                             class="fas fa-angle-right text-white me-2"></i>
                         Government of Kerala</a>
