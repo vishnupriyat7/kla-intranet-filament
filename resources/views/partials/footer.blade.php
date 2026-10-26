@@ -53,8 +53,7 @@
                     </span>
                     <span>
                         <i class="fas fa-angle-right text-white me-2"></i>
-                        <a class="btn-link text-white"
-                            href="https://gad.kerala.gov.in/index.php/en/online-guest-house-booking-0"
+                        <a class="btn-link text-white" href="https://stateprotocol.kerala.gov.in/public_login"
                             target="_blank">Govt. Guest House</a> /
                         <a class="btn-link text-white" href="https://resthouse.pwd.kerala.gov.in/" target="_blank">PWD
                             Rest
@@ -67,10 +66,10 @@
                     <h4 class="mb-4 text-white">Useful Links</h4>
                     <a class="btn-link text-white" href="http://www.niyamasabha.org/" target="_blank"><i
                             class="fas fa-angle-right text-white me-2"></i>
-                        Keralam Niyamasabha</a>
+                        Keralam Legislature Secretariat</a>
                     <a class="btn-link text-white" href="https://kerala.gov.in/" target="_blank"><i
                             class="fas fa-angle-right text-white me-2"></i>
-                        Government of Kerala</a>
+                        Government of Keralam</a>
                     <a class="btn-link text-white" href="https://www.agker.cag.gov.in/" target="_blank"><i
                             class="fas fa-angle-right text-white me-2"></i>
                         Accountant General Kerala</a>

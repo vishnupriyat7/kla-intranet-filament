@@ -31,7 +31,7 @@ class ComplaintRegisterResource extends Resource
     {
         if (static::$employeeCache === null) {
             try {
-                $response = Http::get(env('EMPLOYEE_API_URL'));
+                $response = Http::withHeaders(['X-Api-Key' => (string) env('EMPLOYEE_API_KEY', '')])->get(env('EMPLOYEE_API_URL'));
                 if ($response->successful()) {
                     static::$employeeCache = collect($response->json());
                 } else {

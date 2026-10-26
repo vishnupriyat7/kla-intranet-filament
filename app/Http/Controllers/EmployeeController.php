@@ -18,7 +18,7 @@ class EmployeeController extends Controller
     {
         $apiUrl = env('EMPLOYEE_API_URL');
         try {
-            $response = Http::get($apiUrl);
+            $response = Http::withHeaders(['X-Api-Key' => (string) env('EMPLOYEE_API_KEY', '')])->get($apiUrl);
             if ($response->successful()) {
                 $employees = $response->json();
                 return DataTables::of($employees)
@@ -40,7 +40,7 @@ class EmployeeController extends Controller
     {
         $apiUrl = env('EMPLOYEE_API_URL');
         try {
-            $response = Http::get($apiUrl);
+            $response = Http::withHeaders(['X-Api-Key' => (string) env('EMPLOYEE_API_KEY', '')])->get($apiUrl);
             $employees = $response->json();
             $filteredEmployee = collect($employees)->firstWhere('attendanceId', $attendanceId);
             if ($response->successful()) {
@@ -57,7 +57,7 @@ class EmployeeController extends Controller
     {
         try {
 
-            $response = Http::get(env('EMPLOYEE_API_URL'));
+            $response = Http::withHeaders(['X-Api-Key' => (string) env('EMPLOYEE_API_KEY', '')])->get(env('EMPLOYEE_API_URL'));
             // dd($response->json());
 
             if ($response->successful()) {
