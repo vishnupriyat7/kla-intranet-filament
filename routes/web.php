@@ -4,7 +4,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\ComplaintRegisterController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/index-other', [HomeController::class, 'indexOther'])->name('home.index-other');
@@ -17,8 +16,6 @@ Route::post('/upload-request/save', [HomeController::class, 'storeUploadRequest'
 Route::get('/upload-request/check-status', action: [HomeController::class, 'checkStatus'])->name('home.check-upload-request');
 Route::get('/advanced-search', [HomeController::class, 'advancedSearch'])->name('home.advanced-search');
 
-//Complaint Register
-Route::get('/employees/list', [EmployeeController::class, 'list']);
 
 
 Route::get('/employees', [EmployeeController::class, 'index'])->name('home.employees');
@@ -29,18 +26,7 @@ Route::get('/retired-staff', [EmployeeController::class, 'retiredStaff'])->name(
 Route::get('/retired-staff/data', [EmployeeController::class, 'getRetiredEmployees'])->name('retired-staff.data');
 Route::get('/retired-staff/{id}', [EmployeeController::class, 'retiredStaffShow'])->name('retired-staff.show');
 
-// IT Complaint Register routes for dynamic dropdowns
 
-Route::get('/get-floors/{location}', [ComplaintRegisterController::class, 'getFloors']);
-Route::get('/get-rooms/{location}/{floor}', [ComplaintRegisterController::class, 'getRooms']);
-//IT Complaint Register store
-Route::post('/complaintregister/store', [ComplaintRegisterController::class, 'store'])->name('complaintregister.store');
-//Live screen
-Route::get('/complaintregister/live-screen', [ComplaintRegisterController::class, 'liveScreen']);
-Route::get('/complaintregister/live-data', [ComplaintRegisterController::class, 'liveData']);
-Route::view('/complaintregister/live-iframe', 'complaintregister.live-iframe');
-Route::post('/complaintregister/take-ticket/{ticket}', [ComplaintRegisterController::class, 'takeTicket']);
-Route::post('/complaintregister/resolve-ticket/{ticket}', [ComplaintRegisterController::class, 'resolveTicket']);
 
 
 Route::get('/dashboard', function () {

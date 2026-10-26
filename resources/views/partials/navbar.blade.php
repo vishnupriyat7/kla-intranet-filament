@@ -144,21 +144,6 @@
                             </div>
 
 
-                            <!-- <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                    IT Complaint Register
-                                </a>
-                                <div class="dropdown-menu m-0 drop-bg rounded-0">
-                                    <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                        data-bs-target="#complaintregisterModal">
-                                        <i class="bi bi-plus-circle me-2"></i> Raise Ticket
-                                    </a>
-                                    <a class="dropdown-item" href="/complaintregister/live-screen" target="_blank">
-                                        <i class="bi bi-display me-2 text-primary"></i>
-                                    </a>
-                                </div>
-                            </div> -->
-
                             <a href="http://172.24.18.28/attendance-mgmt-backend/booking_tv" class="nav-item nav-link"
                                 target="_blank">
                                 Today's Meetings

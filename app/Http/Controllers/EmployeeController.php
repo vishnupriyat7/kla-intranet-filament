@@ -52,28 +52,6 @@ class EmployeeController extends Controller
         }
     }
 
-    // for IT Complaint Register employee list
-    public function list()
-    {
-        try {
-
-            $response = Http::withHeaders(['X-Api-Key' => (string) env('EMPLOYEE_API_KEY', '')])->get(env('EMPLOYEE_API_URL'));
-            // dd($response->json());
-
-            if ($response->successful()) {
-                return response()->json($response->json())
-                    ->header('Cache-Control', 'no-store');
-            }
-
-            return response()->json([])
-                ->header('Cache-Control', 'no-store');
-        } catch (\Exception $e) {
-
-            return response()->json([])
-                ->header('Cache-Control', 'no-store');
-        }
-    }
-
     public function retiredStaff()
     {
         return view('employees.retired-staff');
