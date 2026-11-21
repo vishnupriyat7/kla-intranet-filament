@@ -31,6 +31,12 @@ class UserResource extends Resource
         return Auth::check() && Auth::user()->isSuperAdmin();
     }
 
+    // Block direct URL access (list/create/edit) for non-superadmin users
+    public static function canViewAny(): bool
+    {
+        return Auth::check() && Auth::user()->isSuperAdmin();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
